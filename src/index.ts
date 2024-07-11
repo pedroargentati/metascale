@@ -1,8 +1,9 @@
 import express from 'express';
-import routes from './routes/routes.js';
+import * as core from "express-serve-static-core";
+import routes from './routes/routes';
 
-const app = express();
-const defaultProt = 8080;
+const app: core.Express = express();
+const defaultProt: number = 8080;
 
 app.use('/', routes);
 
