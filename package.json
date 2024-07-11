@@ -1,0 +1,14 @@
+{
+  "name": "metascale",
+  "version": "1.0.0",
+  "description": "Challange Vivo",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "author": "Cicada",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
