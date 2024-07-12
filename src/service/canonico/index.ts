@@ -1,6 +1,8 @@
-import { getCanonicoBanco } from '../../dao/canonico';
-import { ICanonico } from '../../models/canonico';
+import { get } from '../../dao';
 
-export const getCanonicoService = async (): Promise<ICanonico[]> => {
-	return await getCanonicoBanco();
+const CANONICO_COLLECTION: string = 'canonico';
+
+export const getCanonicoService = async (): Promise<any> => {
+	const canonicos = await get(CANONICO_COLLECTION);
+	return canonicos;
 };
