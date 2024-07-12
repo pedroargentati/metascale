@@ -13,6 +13,7 @@ type Operacao<T> = (col: Collection<Document>) => Promise<T>;
  * @param {Operacao} operacao Operação a ser executada.
  */
 async function executaOperacao<T>(collection: string, operacao: Operacao<T>): Promise<T> {
+	console.log(`[DB :: Canonico] Iniciando operação na collection: ${collection}.`);
 	try {
 		await mg.connect();
 
@@ -32,6 +33,7 @@ async function executaOperacao<T>(collection: string, operacao: Operacao<T>): Pr
  * Retorna todas as coleções do banco de dados.
  */
 export async function get(collection: string) {
+	console.log(`[DB :: Canonico] Iniciando operação get: ${collection}.`);
 	return executaOperacao(collection, async (col: Collection<Document>) => {
 		return await col.find().toArray();
 	});
@@ -41,6 +43,7 @@ export async function get(collection: string) {
  * Retorna uma coleção do banco de dados.
  */
 export async function getOne(collection: string, id: string): Promise<any> {
+	console.log(`[DB :: Canonico] Iniciando operação getOne: ${collection}.`);
 	return executaOperacao(collection, async (col: Collection<Document>) => {
 		return await col.findOne({ _id: new ObjectId(id) });
 	});
@@ -50,6 +53,7 @@ export async function getOne(collection: string, id: string): Promise<any> {
  * Insere um documento no banco de dados.
  */
 export async function insert(collection: string, data: any): Promise<any> {
+	console.log(`[DB :: Canonico] Iniciando operação insert: ${collection}.`);
 	return executaOperacao(collection, async (col: Collection<Document>) => {
 		return await col.insertOne(data);
 	});
@@ -57,6 +61,8 @@ export async function insert(collection: string, data: any): Promise<any> {
 
 // Update one document
 export async function update(collection: string, id: string, data: any): Promise<any> {
+	console.log(`[DB :: Canonico] Iniciando operação update: ${collection}.`);
+
 	return executaOperacao(collection, async (col: Collection<Document>) => {
 		return await col.updateOne({ _id: new ObjectId(id) }, { $set: data });
 	});
@@ -64,6 +70,7 @@ export async function update(collection: string, id: string, data: any): Promise
 
 // Delete one document
 export async function deleteOne(collection: string, id: string): Promise<any> {
+	console.log(`[DB :: Canonico] Iniciando operação deleteOne: ${collection}.`);
 	return executaOperacao(collection, async (col: Collection<Document>) => {
 		return await col.deleteOne({ _id: new ObjectId(id) });
 	});

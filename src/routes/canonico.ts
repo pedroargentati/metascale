@@ -8,11 +8,13 @@ export async function get(req: Request, res: Response) {
 // GET ALL
 
 export async function getAllCanonico(req: Request, res: Response): Promise<any> {
+	console.log('[ROUTES :: Canonico] Iniciando getAllCanonico.');
 	try {
 		const canonicos = await getCanonicoService();
-		canonicos?.length ? res.status(204) : res.status(200).send(canonicos);
+		res.status(200).send(canonicos);
 	} catch (error: any) {
-		res.status(500).send('Erro ao buscar os canônicos: ' + error);
+		console.error(`[ROUTES :: Canonico] Erro ao buscar os canônicos: ${error}`);
+		res.status(500).send(`Erro ao buscar os canônicos: ${error}`);
 	}
 }
 
