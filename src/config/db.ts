@@ -1,8 +1,10 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 
-const MONGO_URI: string =
-	'mongodb+srv://gkazukionishi:5UtFlBjb2hX3KAOT@metascale01.pkk8qir.mongodb.net/?retryWrites=true&w=majority&appName=Metascale01';
-
+const MONGO_URI: string = process.env.MONGO_URI!;
+console.log('process.env.MONGO_URI', process.env.MONGO_URI);
+if (!MONGO_URI) {
+	throw new Error('MONGO_URI não foi localizada. Verifique o arquivo .env');
+}
 /**
  * Create a new MongoClient instance with the provided MONGO_URI and ServerApiVersion.v1
  */
