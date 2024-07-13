@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getCanonicoService } from '../service/canonico';
+import { getCanonicoByIdService, getCanonicoService } from '../service/canonico';
 
 export async function get(req: Request, res: Response) {
 	res.send('Bem-vindo à API!');
@@ -19,7 +19,21 @@ export async function getAllCanonico(req: Request, res: Response): Promise<any> 
 }
 
 // GET BY ID
+
+export async function getCanonicoById(req: Request, res: Response): Promise<any> {
+	console.log('[ROUTES :: Canonico] Iniciando getCanonicoById.');
+	const { id } = req.params;
+	try {
+		const canonicos = await getCanonicoByIdService(id);
+		res.status(200).send(canonicos);
+	} catch (error: any) {
+		console.error(`[ROUTES :: Canonico] Erro ao buscar  com ID ${id}: ${error.message}`);
+		res.status(500).send(`Erro ao buscar o canônico com ID ${id}: ${error.message}`);
+	}
+}
+
 // POST
+
 // PUT
 // DELETE (?)
 
