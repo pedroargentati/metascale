@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getCanonicoByIdService, getCanonicoService } from '../service/canonico';
+import { getCanonicoByIdService, getCanonicoService, updateCanonicoService } from '../service/canonico';
 
 export async function get(req: Request, res: Response) {
 	res.send('Bem-vindo à API!');
@@ -31,10 +31,22 @@ export async function getCanonicoById(req: Request, res: Response): Promise<any>
 		res.status(500).send(`Erro ao buscar o canônico com ID ${id}: ${error.message}`);
 	}
 }
-
 // POST
 
 // PUT
+export async function updateCanonico(req: Request, res: Response): Promise<any> {
+	console.log('[ROUTES :: Canonico] Iniciando updateCanonico.');
+	const { id } = req.params;
+	const data = req.body;
+	try {
+		const result = await updateCanonicoService(id, data);
+		res.status(200).send(result);
+	} catch (error: any) {
+		console.error(`[ROUTES :: Erro ao atualizar o canônico com ID  ${id}: ${error.message}`);
+		res.status(500).send(`Erro ao atualizar o canônico com ID ${id}: ${error.message}`);
+	}
+}
+
 // DELETE (?)
 
 // /canonico/:id/load
