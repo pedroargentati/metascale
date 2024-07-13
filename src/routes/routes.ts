@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllCanonico, getCanonicoById, updateCanonico } from './canonico';
+import { createCanonico, getAllCanonico, getCanonicoById, updateCanonico } from './canonico';
 import { logRequest, logError } from '../middlewares/loggerMiddleware';
 import { asyncHandler } from '../middlewares/asyncHandler';
 import { errorHandler } from '../middlewares/globalExptionHandler';
@@ -18,6 +18,9 @@ router.get('/canonicos', asyncHandler(getAllCanonico));
 
 /** Listar canônicos por ID. */
 router.get('/canonicos/:id', asyncHandler(getCanonicoById));
+
+/** Criar canônicos. */
+router.post('/canonicos', asyncHandler(createCanonico));
 
 /** Atualizar canônicos. */
 router.put('/canonicos/:id', asyncHandler(updateCanonico));
