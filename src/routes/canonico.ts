@@ -40,6 +40,10 @@ export async function updateCanonico(req: Request, res: Response): Promise<any> 
 	const { id } = req.params;
 	const data = req.body;
 	try {
+		if (!data || !Object.keys(data).length) {
+			throw new IntegrationError('O corpo da requisição não pode estar vazio.', 400);
+		}
+
 		const result = await updateCanonicoService(id, data);
 		res.status(200).send(result);
 	} catch (error: any) {
