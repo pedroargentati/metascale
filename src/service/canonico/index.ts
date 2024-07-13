@@ -1,4 +1,4 @@
-import { get, getOne, update } from '../../dao';
+import { get, getOne, insert, update } from '../../dao';
 import { IntegrationError } from '../../errors/IntegrationError';
 
 const CANONICO_COLLECTION: string = 'canonico';
@@ -24,6 +24,15 @@ export const getCanonicoByIdService = async (id: string): Promise<any> => {
 		return canonicos;
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao buscar o canônico: ${error.message}`, 500);
+	}
+};
+
+export const createCanonicoService = async (data: any): Promise<any> => {
+	try {
+		const result = await insert(CANONICO_COLLECTION, data);
+		return result;
+	} catch (error: any) {
+		throw new IntegrationError(`Erro ao criar o canônico: ${error.message}`, 500);
 	}
 };
 

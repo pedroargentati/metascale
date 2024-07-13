@@ -1,5 +1,10 @@
-import { Request, Response } from 'express';
-import { getCanonicoByIdService, getCanonicoService, updateCanonicoService } from '../service/canonico';
+import e, { Request, Response } from 'express';
+import {
+	createCanonicoService,
+	getCanonicoByIdService,
+	getCanonicoService,
+	updateCanonicoService,
+} from '../service/canonico';
 import { IntegrationError } from '../errors/IntegrationError';
 
 export async function get(req: Request, res: Response) {
@@ -32,7 +37,23 @@ export async function getCanonicoById(req: Request, res: Response): Promise<any>
 		throw new IntegrationError(`Erro ao buscar o canônico com ID ${id}: ${error.message}`, error.statusCode);
 	}
 }
+
 // POST
+export async function createCanonico(req: Request, res: Response): Promise<any> {
+	console.log('[ROUTES :: Canonico] Iniciando createCanonico.');
+	const data = req.body;
+	try {
+		if (!data || !Object.keys(data).length) {
+			throw new IntegrationError('O corpo da requisição não pode estar vazio.', 400);
+		}
+
+		const result = await createCanonicoService(data);
+		res.status(201).send(result);
+	} catch (error: any) {
+		console.error(`[ROUTES :: Erro ao criar o canônico: ${error.message}`);
+		throw new IntegrationError(`Erro ao criar o canônico: ${error.message}`, error.statusCode);
+	}
+}
 
 // PUT
 export async function updateCanonico(req: Request, res: Response): Promise<any> {
