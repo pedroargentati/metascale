@@ -1,5 +1,14 @@
+/** DAO Operations */
 import { get, getOne, insert, update } from '../../dao';
+
+/** Errors */
 import { IntegrationError } from '../../errors/IntegrationError';
+
+/** Interfaces */
+import { IParametro } from '../../interfaces/parametros';
+
+/** Client Operations */
+import { fetchDataController } from '../client/client';
 
 const CANONICO_COLLECTION: string = 'canonico';
 
@@ -30,6 +39,12 @@ export const getCanonicoByIdService = async (id: string): Promise<any> => {
 export const createCanonicoService = async (data: any): Promise<any> => {
 	try {
 		validateCanonico(data);
+
+		const { chamadas } = data;
+
+		for (const chamada of chamadas) {
+			const vivoServiceResult = await fetchDataController(chamada.url, chamadas.parametros as IParametro[]);
+		}
 
 		const result = await insert(CANONICO_COLLECTION, data);
 		return result;
