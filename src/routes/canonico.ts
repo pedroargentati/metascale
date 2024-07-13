@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getCanonicoByIdService, getCanonicoService, updateCanonicoService } from '../service/canonico';
+import { IntegrationError } from '../errors/IntegrationError';
 
 export async function get(req: Request, res: Response) {
 	res.send('Bem-vindo à API!');
@@ -14,7 +15,7 @@ export async function getAllCanonico(req: Request, res: Response): Promise<any> 
 		res.status(200).send(canonicos);
 	} catch (error: any) {
 		console.error(`[ROUTES :: Canonico] Erro ao buscar os canônicos: ${error}`);
-		res.status(500).send(`Erro ao buscar os canônicos: ${error}`);
+		throw new IntegrationError(error.message, error.statusCode);
 	}
 }
 
@@ -27,8 +28,8 @@ export async function getCanonicoById(req: Request, res: Response): Promise<any>
 		const canonicos = await getCanonicoByIdService(id);
 		res.status(200).send(canonicos);
 	} catch (error: any) {
-		console.error(`[ROUTES :: Canonico] Erro ao buscar  com ID ${id}: ${error.message}`);
-		res.status(500).send(`Erro ao buscar o canônico com ID ${id}: ${error.message}`);
+		console.error(`[ROUTES :: Canonico] Erro ao buscar com ID ${id}: ${error.message}`);
+		throw new IntegrationError(`Erro ao buscar o canônico com ID ${id}: ${error.message}`, error.statusCode);
 	}
 }
 // POST
@@ -43,7 +44,7 @@ export async function updateCanonico(req: Request, res: Response): Promise<any> 
 		res.status(200).send(result);
 	} catch (error: any) {
 		console.error(`[ROUTES :: Erro ao atualizar o canônico com ID  ${id}: ${error.message}`);
-		res.status(500).send(`Erro ao atualizar o canônico com ID ${id}: ${error.message}`);
+		throw new IntegrationError(`Erro ao atualizar o canônico com ID ${id}: ${error.message}`, error.statusCode);
 	}
 }
 

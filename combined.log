@@ -29,3 +29,32 @@
 2024-07-13T19:11:10.013Z info: Requisição :: Método: GET :: URL: /canonicos/66913fd799f18e511f9f3152 :: Status: 200
 2024-07-13T19:13:06.459Z info: Requisição :: Método: PUT :: URL: /canonicos/66913fd799f18e511f9f3152 :: Status: 200
 2024-07-13T19:13:10.790Z info: Requisição :: Método: GET :: URL: /canonicos/66913fd799f18e511f9f3152 :: Status: 200
+2024-07-13T20:11:13.777Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-13T20:18:44.492Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-13T20:19:09.702Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-13T20:19:40.799Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-13T20:20:38.385Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-13T20:20:49.536Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-13T20:21:51.257Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-13T20:25:41.679Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-13T20:26:40.812Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-13T20:26:40.824Z error: Error: Erro ao buscar os canônicos: Canônicos não encontrados.
+    at D:\dev\faculdade\4ano\metascale\src\routes\canonico.ts:19:9
+    at Generator.throw (<anonymous>)
+    at rejected (D:\dev\faculdade\4ano\metascale\src\routes\canonico.ts:6:65)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-07-13T20:27:39.846Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-13T20:27:39.858Z error: Error: Erro ao buscar os canônicos: Canônicos não encontrados.
+    at D:\dev\faculdade\4ano\metascale\src\routes\canonico.ts:19:9
+    at Generator.throw (<anonymous>)
+    at rejected (D:\dev\faculdade\4ano\metascale\src\routes\canonico.ts:6:65)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-07-13T20:27:48.336Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-13T20:27:48.341Z error: Error: Erro ao buscar os canônicos: Canônicos não encontrados.
+    at D:\dev\faculdade\4ano\metascale\src\routes\canonico.ts:19:9
+    at Generator.throw (<anonymous>)
+    at rejected (D:\dev\faculdade\4ano\metascale\src\routes\canonico.ts:6:65)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+2024-07-13T20:28:21.974Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-13T20:29:04.226Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-13T20:33:57.390Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200

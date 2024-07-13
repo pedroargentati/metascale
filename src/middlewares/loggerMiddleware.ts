@@ -28,5 +28,4 @@ export const logError = (error: Error, request: Request, response: Response, nex
 	logger.error(`[ERRO] :: Método: ${request.method} :: URL: ${request.url} :: Status: ${response.statusCode}`, {
 		stack: error.stack,
 	});
-	response.status(500).send('Algo deu errado!');
 };
