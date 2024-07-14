@@ -9,8 +9,8 @@ import { fetchDataController } from '../client/client';
 import DynamoDBService from '../client/dynamodb/DynamoDBService';
 
 /** Métodos de Validações/Processamento de dados. */
-import { processCanonicoData } from './etl-processor';
-import { validateCanonico } from './validations';
+import { processCanonicoData } from './etl/etl-processor';
+import { validateCanonico } from './validations/validations';
 
 const CANONICO_COLLECTION: string = 'canonico';
 

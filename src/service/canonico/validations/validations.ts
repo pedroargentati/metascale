@@ -1,4 +1,4 @@
-import { IntegrationError } from '../../errors/IntegrationError';
+import { IntegrationError } from '../../../errors/IntegrationError';
 
 /** Métodos Validadores */
 export const validateCanonico = (data: any): void => {
