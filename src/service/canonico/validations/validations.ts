@@ -94,5 +94,5 @@ export const validateCanonico = (data: any): void => {
 			);
 		}
 	}
-	throw new CumulativeIntegrationError(cumulativeIntegrationExceptions);
+	if (cumulativeIntegrationExceptions.length) throw new CumulativeIntegrationError(cumulativeIntegrationExceptions);
 };
