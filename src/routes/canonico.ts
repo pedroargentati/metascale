@@ -44,7 +44,7 @@ export async function createCanonico(req: Request, res: Response): Promise<any> 
 	const data = req.body;
 	try {
 		const result = await createCanonicoService(data);
-		res.status(201).send(result);
+		res.status(200).send(result);
 	} catch (error: any) {
 		console.error(`[ROUTES :: Erro ao criar o canônico: ${error.message}`);
 		throw new IntegrationError(`Erro ao criar o canônico: ${error.message}`, error.statusCode);
