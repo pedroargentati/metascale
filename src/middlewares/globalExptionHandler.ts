@@ -24,7 +24,7 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
 		return res.status(400).json({
 			status: 400,
 			message: 'Erros de validação encontrados: ',
-			errors: err.exceptions.map((exception) => exception.message),
+			errors: err.exceptions?.map((exception) => exception.message),
 		});
 	}
 
