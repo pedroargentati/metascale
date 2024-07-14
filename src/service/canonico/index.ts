@@ -4,12 +4,13 @@ import { get, getOne, insert, update } from '../../dao';
 /** Errors */
 import { IntegrationError } from '../../errors/IntegrationError';
 
-/** Interfaces */
-import { IParametro } from '../../interfaces/parametros';
-
 /** Client Operations */
 import { fetchDataController } from '../client/client';
 import DynamoDBService from '../client/dynamodb/DynamoDBService';
+
+/** Métodos de Validações/Processamento de dados. */
+import { processCanonicoData } from './etl-processor';
+import { validateCanonico } from './validations';
 
 const CANONICO_COLLECTION: string = 'canonico';
 
@@ -48,18 +49,22 @@ export const createCanonicoService = async (data: any): Promise<any> => {
 		validateCanonico(data);
 
 		const { chamadas } = data;
+		const responses = [];
 
 		for (const chamada of chamadas) {
 			try {
-				const vivoServiceResult = await fetchDataController(chamada.url, chamadas.parametros as IParametro[]);
+				const vivoServiceResult = await fetchDataController(chamada.url, chamada.parametros);
+				responses.push(vivoServiceResult);
 			} catch (error: any) {
 				throw new IntegrationError(`Erro ao buscar os dados da chamada: ${error.message}`, 500);
 			}
 		}
 
+		// Processamento e montagem do canônico usando os metadados
+		const processedData = processCanonicoData(data, responses);
+
 		const dynamoDBService: DynamoDBService = DynamoDBService.getInstance('Canonicos');
-		/** inclui o canônico no dynamo. */
-		const result = await dynamoDBService.addItem(data);
+		const result = await dynamoDBService.addItem(processedData);
 
 		return result;
 	} catch (error: any) {
@@ -80,48 +85,5 @@ export const updateCanonicoService = async (id: string, data: any): Promise<any>
 		return result;
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao atualizar o canônico: ${error.message}`, 500);
-	}
-};
-
-/** Métodos Validadores */
-export const validateCanonico = (data: any): void => {
-	if (!data || !Object.keys(data).length) {
-		throw new IntegrationError('O corpo da requisição não pode estar vazio.', 400);
-	}
-
-	if (!data.nome || !data.descricao || !data.chamadas) {
-		throw new IntegrationError('Os campos nome, descrição e chamadas são obrigatórios.', 400);
-	}
-
-	const { chamadas } = data;
-
-	if (!Array.isArray(chamadas) || !chamadas.length) {
-		throw new IntegrationError('O campo chamadas deve ser um array e não pode estar vazio.', 400);
-	}
-
-	for (const chamada of chamadas) {
-		if (
-			!chamada.ordem ||
-			!chamada.nome ||
-			!chamada.url ||
-			!chamada.descricao ||
-			!chamada.parametros ||
-			!chamada.estrutura
-		) {
-			throw new IntegrationError(
-				'Os campos ordem, nome, url, descrição, parametros e estrutura são obrigatórios.',
-				400,
-			);
-		}
-
-		const { parametros, estrutura } = chamada;
-
-		if (!Array.isArray(parametros) || !parametros.length) {
-			throw new IntegrationError('O campo parametros deve ser um array e não pode estar vazio.', 400);
-		}
-
-		if (!Array.isArray(estrutura) || !estrutura.length) {
-			throw new IntegrationError('O campo estrutura deve ser um array e não pode estar vazio.', 400);
-		}
 	}
 };
