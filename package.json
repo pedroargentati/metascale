@@ -12,9 +12,10 @@
 	"author": "Cicada",
 	"license": "ISC",
 	"dependencies": {
+		"@aws-sdk/client-dynamodb": "^3.614.0",
+		"@aws-sdk/lib-dynamodb": "^3.614.0",
 		"@types/dotenv": "^8.2.0",
 		"@types/winston": "^2.4.4",
-		"aws-sdk": "^2.1659.0",
 		"axios": "^1.7.2",
 		"dotenv": "^16.4.5",
 		"express": "^4.19.2",

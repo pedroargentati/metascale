@@ -1,6 +1,17 @@
 /** Operators */
-import AWS from 'aws-sdk';
-import { DocumentClient } from 'aws-sdk/clients/dynamodb';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import {
+	DynamoDBDocumentClient,
+	PutCommand,
+	GetCommand,
+	UpdateCommand,
+	DeleteCommand,
+	PutCommandOutput,
+	GetCommandOutput,
+	UpdateCommandOutput,
+	DeleteCommandOutput,
+} from '@aws-sdk/lib-dynamodb';
+import { ReturnValue } from '@aws-sdk/client-dynamodb';
 
 /** Services */
 import logger from '../../../config/logger/logger';
@@ -8,13 +19,17 @@ import logger from '../../../config/logger/logger';
 /** Erros */
 import { IntegrationError } from '../../../errors/IntegrationError';
 
-AWS.config.update({
-	accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-	secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+// Configurar o cliente DynamoDB
+const client = new DynamoDBClient({
 	region: process.env.AWS_REGION || 'us-west-2',
+	credentials: {
+		accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+		secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+	},
 });
 
-const dynamoDB: DocumentClient = new AWS.DynamoDB.DocumentClient();
+// Criar o cliente DynamoDBDocument
+const dynamoDB = DynamoDBDocumentClient.from(client);
 
 /**
  * Classe de serviço para operações no DynamoDB.
@@ -24,7 +39,7 @@ class DynamoDBService {
 	private static instance: DynamoDBService;
 
 	/**
-	 * Construtor para inicializar o nome da tabela.
+	 * Construtor privado para evitar instanciamento direto.
 	 * @param {string} tableName - Nome da tabela do DynamoDB.
 	 */
 	private constructor(tableName: string) {
@@ -48,15 +63,16 @@ class DynamoDBService {
 	 * @param {Record<string, any>} item - Objeto a ser adicionado à tabela.
 	 * @returns Promessa resolvendo em sucesso ou erro.
 	 */
-	public async addItem(item: Record<string, any>): Promise<any> {
+	public async addItem(item: Record<string, any>): Promise<PutCommandOutput> {
 		const params = {
 			TableName: this.tableName,
 			Item: item,
 		};
 
 		try {
-			await dynamoDB.put(params).promise();
+			const data = await dynamoDB.send(new PutCommand(params));
 			logger.info(`Item adicionado com sucesso na tabela ${this.tableName}`);
+			return data;
 		} catch (error) {
 			throw new IntegrationError(`Erro ao adicionar item na tabela ${this.tableName}: ${error}`, 500);
 		}
@@ -67,16 +83,15 @@ class DynamoDBService {
 	 * @param {Record<string, any>} key - Chave do item a ser obtido.
 	 * @returns Promessa resolvendo em objeto contendo o item.
 	 */
-	public async getItem(key: Record<string, any>): Promise<any> {
+	public async getItem(key: Record<string, any>): Promise<GetCommandOutput> {
 		const params = {
 			TableName: this.tableName,
 			Key: key,
 		};
 
 		try {
-			const data = await dynamoDB.get(params).promise();
+			const data = await dynamoDB.send(new GetCommand(params));
 			logger.info(`Retorno da tabela ${this.tableName} no dynamoDB: ${data}`);
-
 			return data;
 		} catch (error) {
 			throw new IntegrationError(`Erro ao obter item na tabela ${this.tableName}: ${error}`, 500);
@@ -87,26 +102,25 @@ class DynamoDBService {
 	 * Atualiza um item na tabela do DynamoDB.
 	 * @param {Record<string, any>} key - Chave do item a ser atualizado.
 	 * @param {string} updateExpression - Expressão de atualização do DynamoDB.
-	 * @param {expressionAttributeValues} expressionAttributeValues - Valores de atributo para a expressão de atualização.
+	 * @param {Record<string, any>} expressionAttributeValues - Valores de atributo para a expressão de atualização.
 	 * @returns Promessa resolvendo em objeto contendo o item atualizado.
 	 */
 	public async updateItem(
 		key: Record<string, any>,
 		updateExpression: string,
 		expressionAttributeValues: Record<string, any>,
-	): Promise<any> {
+	): Promise<UpdateCommandOutput> {
 		const params = {
 			TableName: this.tableName,
 			Key: key,
 			UpdateExpression: updateExpression,
 			ExpressionAttributeValues: expressionAttributeValues,
-			ReturnValues: 'ALL_NEW',
+			ReturnValues: 'ALL_NEW' as ReturnValue,
 		};
 
 		try {
-			const data = await dynamoDB.update(params).promise();
+			const data = await dynamoDB.send(new UpdateCommand(params));
 			logger.info(`Item atualizado com sucesso na tabela ${this.tableName}`);
-
 			return data;
 		} catch (error) {
 			throw new IntegrationError(`Erro ao atualizar item na tabela ${this.tableName}: ${error}`, 500);
@@ -118,15 +132,16 @@ class DynamoDBService {
 	 * @param {Record<string, any>} key - Chave do item a ser deletado.
 	 * @returns Promessa resolvendo em sucesso ou erro.
 	 */
-	public async deleteItem(key: Record<string, any>): Promise<any> {
+	public async deleteItem(key: Record<string, any>): Promise<DeleteCommandOutput> {
 		const params = {
 			TableName: this.tableName,
 			Key: key,
 		};
 
 		try {
-			await dynamoDB.delete(params).promise();
+			const data = await dynamoDB.send(new DeleteCommand(params));
 			logger.info(`Item deletado com sucesso na tabela ${this.tableName}`);
+			return data;
 		} catch (error) {
 			throw new IntegrationError(`Erro ao deletar item na tabela ${this.tableName}: ${error}`, 500);
 		}
