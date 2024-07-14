@@ -14,7 +14,7 @@ import { IParametro } from '../../interfaces/parametros';
  * @param {IParametro[]} parametros Parâmetros da requisição.
  * @returns Dados da requisição.
  */
-export const fetchData = async (resourceUrl: string, parametros: IParametro[]) => {
+export const fetchData = async (resourceUrl: string, parametros: IParametro[] = new Array<IParametro>()) => {
 	const { url, queryParams } = handleParameters(resourceUrl, parametros);
 
 	const response = await axios.get(url, { params: queryParams });
