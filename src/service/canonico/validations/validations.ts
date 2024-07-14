@@ -1,3 +1,4 @@
+import { CumulativeIntegrationError } from '../../../errors/CumulativeIntegrationError';
 import { IntegrationError } from '../../../errors/IntegrationError';
 
 /** Métodos Validadores */
@@ -16,39 +17,82 @@ export const validateCanonico = (data: any): void => {
 		throw new IntegrationError('O campo chamadas deve ser um array e não pode estar vazio.', 400);
 	}
 
+	const cumulativeIntegrationExceptions: IntegrationError[] = new Array<IntegrationError>();
+
 	for (const chamada of chamadas) {
 		if (!chamada.ordem) {
-			throw new IntegrationError('[Objeto Chamada] O campo ordem é obrigatório.', 400);
+			cumulativeIntegrationExceptions.push(
+				new IntegrationError(
+					`O campo ordem é obrigatório para chamada ${chamada.nome || '(nome não informado.)'}.`,
+					400,
+				),
+			);
 		}
 
 		if (!chamada.nome) {
-			throw new IntegrationError('[Objeto Chamada] O campo nome é obrigatório.', 400);
+			cumulativeIntegrationExceptions.push(
+				new IntegrationError(
+					`O campo nome é obrigatório para chamada ${chamada.nome || '(nome não informado.)'}.`,
+					400,
+				),
+			);
 		}
 
 		if (!chamada.url) {
-			throw new IntegrationError('[Objeto Chamada] O campo url é obrigatório.', 400);
+			cumulativeIntegrationExceptions.push(
+				new IntegrationError(
+					`O campo url é obrigatório para chamada ${chamada.nome || '(nome não informado.)'}.`,
+					400,
+				),
+			);
 		}
 
 		if (!chamada.descricao) {
-			throw new IntegrationError('[Objeto Chamada] O campo descrição é obrigatório.', 400);
+			cumulativeIntegrationExceptions.push(
+				new IntegrationError(
+					`O campo descrição é obrigatório para chamada ${chamada.nome || '(nome não informado.)'}.`,
+					400,
+				),
+			);
 		}
 
 		if (!chamada.parametros) {
-			throw new IntegrationError('[Objeto Chamada] O campo parametros é obrigatório.', 400);
+			cumulativeIntegrationExceptions.push(
+				new IntegrationError(
+					`O campo parametros é obrigatório para chamada ${chamada.nome || '(nome não informado.)'}.`,
+					400,
+				),
+			);
 		}
 
 		if (!chamada.estrutura) {
-			throw new IntegrationError('[Objeto Chamada] O campo estrutura é obrigatório.', 400);
+			cumulativeIntegrationExceptions.push(
+				new IntegrationError(
+					`O campo estrutura é obrigatório para chamada ${chamada.nome || '(nome não informado.)'}.`,
+					400,
+				),
+			);
 		}
 
 		const { parametros, estrutura } = chamada;
 
 		if (!Array.isArray(parametros) || !parametros.length) {
-			throw new IntegrationError('O campo parametros deve ser um array e não pode estar vazio.', 400);
+			cumulativeIntegrationExceptions.push(
+				new IntegrationError(
+					`O campo parametros deve ser um array e não pode estar vazio para chamada ${chamada.nome || '(nome não informado.)'}.`,
+					400,
+				),
+			);
 		}
 
 		if (!Array.isArray(estrutura) || !estrutura.length) {
-			throw new IntegrationError('O campo estrutura deve ser um array e não pode estar vazio.', 400);
+			cumulativeIntegrationExceptions.push(
+				new IntegrationError(
+					`O campo estrutura deve ser um array e não pode estar vazio para chamada ${chamada.nome || '(nome não informado.)'}.`,
+					400,
+				),
+			);
 		}
 	}
+	throw new CumulativeIntegrationError(cumulativeIntegrationExceptions);
 };

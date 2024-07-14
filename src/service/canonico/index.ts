@@ -68,7 +68,7 @@ export const createCanonicoService = async (data: any): Promise<any> => {
 
 		return result;
 	} catch (error: any) {
-		throw new IntegrationError(error.message, 500);
+		throw error;
 	}
 };
 
