@@ -21,7 +21,6 @@ export const errorHandler = (err: Error, req: Request, res: Response, next: Next
 		});
 	} else if (err instanceof CumulativeIntegrationError) {
 		// Tratamento específico para erros customizados
-		console.log('oi');
 		return res.status(400).json({
 			status: 400,
 			message: 'Erros de validação encontrados: ',
