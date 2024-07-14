@@ -33,6 +33,8 @@ const dynamoDB = DynamoDBDocumentClient.from(client);
 
 /**
  * Classe de serviço para operações no DynamoDB.
+ *
+ * @see https://www.npmjs.com/package/@aws-sdk/client-dynamodb
  */
 class DynamoDBService {
 	private tableName: string;
