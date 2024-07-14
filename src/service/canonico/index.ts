@@ -57,7 +57,7 @@ export const createCanonicoService = async (data: any): Promise<any> => {
 			}
 		}
 
-		const dynamoDBService: DynamoDBService = new DynamoDBService('Canonicos');
+		const dynamoDBService: DynamoDBService = DynamoDBService.getInstance('Canonicos');
 		/** inclui o canônico no dynamo. */
 		const result = await dynamoDBService.addItem(data);
 

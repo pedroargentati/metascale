@@ -21,13 +21,26 @@ const dynamoDB: DocumentClient = new AWS.DynamoDB.DocumentClient();
  */
 class DynamoDBService {
 	private tableName: string;
+	private static instance: DynamoDBService;
 
 	/**
 	 * Construtor para inicializar o nome da tabela.
 	 * @param {string} tableName - Nome da tabela do DynamoDB.
 	 */
-	constructor(tableName: string) {
+	private constructor(tableName: string) {
 		this.tableName = tableName;
+	}
+
+	/**
+	 * Método estático para obter a instância única do serviço.
+	 * @param {string} tableName - Nome da tabela do DynamoDB.
+	 * @returns Instância única de DynamoDBService.
+	 */
+	public static getInstance(tableName: string): DynamoDBService {
+		if (!DynamoDBService.instance) {
+			DynamoDBService.instance = new DynamoDBService(tableName);
+		}
+		return DynamoDBService.instance;
 	}
 
 	/**
