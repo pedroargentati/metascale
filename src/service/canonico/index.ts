@@ -9,6 +9,7 @@ import { IParametro } from '../../interfaces/parametros';
 
 /** Client Operations */
 import { fetchDataController } from '../client/client';
+import DynamoDBService from '../client/dynamodb/DynamoDBService';
 
 const CANONICO_COLLECTION: string = 'canonico';
 
@@ -36,6 +37,12 @@ export const getCanonicoByIdService = async (id: string): Promise<any> => {
 	}
 };
 
+/**
+ * Realiza toda a lógica de validação, chamada de serviços e persistência de um canônico no DynamoDB.
+ *
+ * @param data - Dados do canônico a ser criado.
+ * @returns Promessa resolvendo em objeto contendo o canônico criado.
+ */
 export const createCanonicoService = async (data: any): Promise<any> => {
 	try {
 		validateCanonico(data);
@@ -43,10 +50,17 @@ export const createCanonicoService = async (data: any): Promise<any> => {
 		const { chamadas } = data;
 
 		for (const chamada of chamadas) {
-			const vivoServiceResult = await fetchDataController(chamada.url, chamadas.parametros as IParametro[]);
+			try {
+				const vivoServiceResult = await fetchDataController(chamada.url, chamadas.parametros as IParametro[]);
+			} catch (error: any) {
+				throw new IntegrationError(`Erro ao buscar os dados da chamada: ${error.message}`, 500);
+			}
 		}
 
-		const result = await insert(CANONICO_COLLECTION, data);
+		const dynamoDBService: DynamoDBService = new DynamoDBService('Canonicos');
+		/** inclui o canônico no dynamo. */
+		const result = await dynamoDBService.addItem(data);
+
 		return result;
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao criar o canônico: ${error.message}`, 500);

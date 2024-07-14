@@ -19,11 +19,11 @@ export const fetchData = async (resourceUrl: string, parametros: IParametro[]) =
 
 	const response = await axios.get(url, { params: queryParams });
 
-	if (response.status === 200) {
-		return response.data;
-	} else {
+	if (response.status !== 200) {
 		throw new IntegrationError('Requisição GET falhou com o status:', response.status);
 	}
+
+	return response.data;
 };
 
 /**
