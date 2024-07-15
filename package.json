@@ -73,6 +73,14 @@
 					"sourceType": "module",
 					"ecmaVersion": "latest"
 				}
+			},
+			{
+				"files": [
+					"tests/**/*"
+				],
+				"env": {
+					"jest": true
+				}
 			}
 		],
 		"parser": "@typescript-eslint/parser",
