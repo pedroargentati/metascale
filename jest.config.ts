@@ -1,5 +1,9 @@
 import type { Config } from '@jest/types';
 
+/**
+ * @see https://jestjs.io/docs/configuration
+ */
+
 // Sync object
 const config: Config.InitialOptions = {
 	preset: 'ts-jest',
