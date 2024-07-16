@@ -5,7 +5,7 @@
 	"main": "./src/index.ts",
 	"scripts": {
 		"test": "jest --config jest.config.ts",
-		"testWathAll": "jest --watchAll",
+		"test watch:all": "jest --watchAll",
 		"test:coverage": "jest",
 		"start": "nodemon ./src/index.ts",
 		"lint": "prettier --check . && eslint .",

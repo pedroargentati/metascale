@@ -1,26 +1,69 @@
 import { CumulativeIntegrationError } from '../../../errors/CumulativeIntegrationError';
 import { IntegrationError } from '../../../errors/IntegrationError';
-import { validateCanonico } from '../../../service/canonico/validations/validations';
+import { validateCanonico } from './validations';
 
 describe('validateCanonico', () => {
-	it('should throw CumulativeIntegrationError if data is null', () => {
-		expect(() => validateCanonico(null)).toThrow(CumulativeIntegrationError);
+	it('deve lançar um IntegrationError se os dados forem nulos ou vazios', () => {
+		expect(() => validateCanonico(null)).toThrow(IntegrationError);
+		expect(() => validateCanonico({})).toThrow(IntegrationError);
 	});
 
-	it('should throw IntegrationError if data is missing required fields', () => {
-		const data = {
-			field1: 'value1',
-			field2: 'value2',
-		};
-
+	it('deve lançar um IntegrationError se os campos obrigatórios estiverem ausentes', () => {
+		const data = { nome: 'Nome', descricao: 'Descricao' }; // faltando chamadas
 		expect(() => validateCanonico(data)).toThrow(IntegrationError);
 	});
 
-	it('should not throw any error if data is valid', () => {
+	it('deve lançar um IntegrationError se chamadas não for um array ou estiver vazio', () => {
+		const data = { nome: 'Nome', descricao: 'Descricao', chamadas: {} }; // chamadas não é um array
+		expect(() => validateCanonico(data)).toThrow(IntegrationError);
+
+		data.chamadas = []; // chamadas é um array vazio
+		expect(() => validateCanonico(data)).toThrow(IntegrationError);
+	});
+
+	it('deve lançar um CumulativeIntegrationError se chamadas tiver campos ausentes', () => {
 		const data = {
-			field1: 'value1',
-			field2: 'value2',
-			field3: 'value3',
+			nome: 'Nome',
+			descricao: 'Descricao',
+			chamadas: [{ nome: 'Chamada1' }], // faltando campos obrigatórios em chamadas
+		};
+
+		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
+	});
+
+	it('deve lançar um CumulativeIntegrationError se chamadas.parametros ou chamadas.estrutura não forem um array ou estiverem vazios', () => {
+		const data = {
+			nome: 'Nome',
+			descricao: 'Descricao',
+			chamadas: [
+				{
+					ordem: 1,
+					nome: 'Chamada1',
+					url: 'http://example.com',
+					descricao: 'Descricao',
+					parametros: {}, // não é um array
+					estrutura: [], // array vazio
+				},
+			],
+		};
+
+		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
+	});
+
+	it('não deve lançar um erro se todos os campos obrigatórios estiverem presentes e válidos', () => {
+		const data = {
+			nome: 'Nome',
+			descricao: 'Descricao',
+			chamadas: [
+				{
+					ordem: 1,
+					nome: 'Chamada1',
+					url: 'http://example.com',
+					descricao: 'Descricao',
+					parametros: [{ nome: 'param1' }],
+					estrutura: [{ nome: 'estrutura1' }],
+				},
+			],
 		};
 
 		expect(() => validateCanonico(data)).not.toThrow();
