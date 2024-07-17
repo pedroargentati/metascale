@@ -58,3 +58,6 @@
 2024-07-13T20:28:21.974Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
 2024-07-13T20:29:04.226Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
 2024-07-13T20:33:57.390Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-17T01:21:27.470Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-17T01:21:36.467Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-17T01:22:01.750Z info: Requisição :: Método: GET :: URL: /canonicos/66913fd799f18e511f9f3152 :: Status: 200

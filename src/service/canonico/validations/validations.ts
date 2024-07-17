@@ -65,16 +65,7 @@ export const validateCanonico = (data: any): void => {
 			);
 		}
 
-		if (!chamada.estrutura) {
-			cumulativeIntegrationExceptions.push(
-				new IntegrationError(
-					`O campo estrutura é obrigatório para chamada ${chamada.nome || '(nome não informado.)'}.`,
-					400,
-				),
-			);
-		}
-
-		const { parametros, estrutura } = chamada;
+		const { parametros } = chamada;
 
 		if (!Array.isArray(parametros) || !parametros.length) {
 			cumulativeIntegrationExceptions.push(
@@ -84,15 +75,7 @@ export const validateCanonico = (data: any): void => {
 				),
 			);
 		}
-
-		if (!Array.isArray(estrutura) || !estrutura.length) {
-			cumulativeIntegrationExceptions.push(
-				new IntegrationError(
-					`O campo estrutura deve ser um array e não pode estar vazio para chamada ${chamada.nome || '(nome não informado.)'}.`,
-					400,
-				),
-			);
-		}
 	}
+
 	if (cumulativeIntegrationExceptions.length) throw new CumulativeIntegrationError(cumulativeIntegrationExceptions);
 };

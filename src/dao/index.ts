@@ -62,7 +62,6 @@ export async function insert(collection: string, data: any): Promise<any> {
 // Update one document
 export async function update(collection: string, id: string, data: any): Promise<any> {
 	console.log(`[DB :: Canonico] Iniciando operação update: ${collection}.`);
-
 	return executaOperacao(collection, async (col: Collection<Document>) => {
 		return await col.updateOne({ _id: new ObjectId(id) }, { $set: data });
 	});

@@ -31,7 +31,7 @@ describe('validateCanonico', () => {
 		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
 	});
 
-	it('deve lançar um CumulativeIntegrationError se chamadas.parametros ou chamadas.estrutura não forem um array ou estiverem vazios', () => {
+	it('deve lançar um CumulativeIntegrationError se chamadas.parametros não for um array ou estiver vazio', () => {
 		const data = {
 			nome: 'Nome',
 			descricao: 'Descricao',
@@ -42,7 +42,6 @@ describe('validateCanonico', () => {
 					url: 'http://example.com',
 					descricao: 'Descricao',
 					parametros: {}, // não é um array
-					estrutura: [], // array vazio
 				},
 			],
 		};
@@ -61,7 +60,6 @@ describe('validateCanonico', () => {
 					url: 'http://example.com',
 					descricao: 'Descricao',
 					parametros: [{ nome: 'param1' }],
-					estrutura: [{ nome: 'estrutura1' }],
 				},
 			],
 		};

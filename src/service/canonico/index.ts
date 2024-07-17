@@ -47,8 +47,39 @@ export const getCanonicoByIdService = async (id: string): Promise<any> => {
 export const createCanonicoService = async (data: any): Promise<any> => {
 	try {
 		validateCanonico(data);
+		return await insert(CANONICO_COLLECTION, data);
+	} catch (error: any) {
+		throw error;
+	}
+};
 
-		const { chamadas } = data;
+const getCanonicoExistente = async (id: string): Promise<any> => {
+	const canonicoExistente = await getOne(CANONICO_COLLECTION, id);
+	if (!canonicoExistente) {
+		throw new IntegrationError('Canônico não encontrado', 404);
+	}
+	return canonicoExistente;
+};
+
+export const updateCanonicoService = async (id: string, data: any): Promise<any> => {
+	try {
+		await getCanonicoExistente(id);
+
+		validateCanonico(data);
+
+		// TODO: Agendar reprocessamento de canonicos já inseridos na estrutura anterior
+
+		return await update(CANONICO_COLLECTION, id, data);
+	} catch (error: any) {
+		throw new IntegrationError(`Erro ao atualizar o canônico: ${error.message}`, 500);
+	}
+};
+
+export const loadCanonicoService = async (id: string, data: any): Promise<any> => {
+	try {
+		const canonicoExistente = await getCanonicoExistente(id);
+
+		const { chamadas } = canonicoExistente;
 		const responses = [];
 
 		for (const chamada of chamadas) {
@@ -68,22 +99,6 @@ export const createCanonicoService = async (data: any): Promise<any> => {
 
 		return result;
 	} catch (error: any) {
-		throw error;
-	}
-};
-
-export const updateCanonicoService = async (id: string, data: any): Promise<any> => {
-	try {
-		if (!data || !Object.keys(data).length) {
-			throw new IntegrationError('O corpo da requisição não pode estar vazio.', 400);
-		}
-
-		const result = await update(CANONICO_COLLECTION, id, data);
-		if (result.modifiedCount === 0) {
-			throw new IntegrationError('Nenhum documento foi atualizado', 500);
-		}
-		return result;
-	} catch (error: any) {
-		throw new IntegrationError(`Erro ao atualizar o canônico: ${error.message}`, 500);
+		throw new IntegrationError(`Erro ao carregar o canônico de ID ${id}: ${error.message}`, 500);
 	}
 };
