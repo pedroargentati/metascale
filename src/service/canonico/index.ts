@@ -1,5 +1,5 @@
 /** DAO Operations */
-import { get, getOne, insert, update } from '../../dao';
+import { deleteOne, get, getOne, insert, update } from '../../dao';
 
 /** Errors */
 import { IntegrationError } from '../../errors/IntegrationError';
@@ -47,7 +47,9 @@ export const getCanonicoByIdService = async (id: string): Promise<any> => {
 export const createCanonicoService = async (data: any): Promise<any> => {
 	try {
 		validateCanonico(data);
-		return await insert(CANONICO_COLLECTION, data);
+		const result = await insert(CANONICO_COLLECTION, data);
+		const newId = result.insertedId;
+		return await getOne(CANONICO_COLLECTION, newId);
 	} catch (error: any) {
 		throw error;
 	}
@@ -69,9 +71,21 @@ export const updateCanonicoService = async (id: string, data: any): Promise<any>
 
 		// TODO: Agendar reprocessamento de canonicos já inseridos na estrutura anterior
 
-		return await update(CANONICO_COLLECTION, id, data);
+		await update(CANONICO_COLLECTION, id, data);
+
+		return await getOne(CANONICO_COLLECTION, id);
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao atualizar o canônico: ${error.message}`, 500);
+	}
+};
+
+export const deleteCanonicoService = async (id: string): Promise<any> => {
+	try {
+		await getCanonicoExistente(id);
+		await deleteOne(CANONICO_COLLECTION, id);
+		return true;
+	} catch (error: any) {
+		throw new IntegrationError(`Erro ao deletar o canônico: ${error.message}`, 500);
 	}
 };
 

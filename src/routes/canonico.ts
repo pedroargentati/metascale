@@ -1,6 +1,7 @@
 import e, { Request, Response } from 'express';
 import {
 	createCanonicoService,
+	deleteCanonicoService,
 	getCanonicoByIdService,
 	getCanonicoService,
 	updateCanonicoService,
@@ -65,6 +66,17 @@ export async function updateCanonico(req: Request, res: Response): Promise<any> 
 	}
 }
 
-// DELETE (?)
+// DELETE
+export async function deleteCanonico(req: Request, res: Response): Promise<any> {
+	console.log('[ROUTES :: Canonico] Iniciando deleteCanonico.');
+	const { id } = req.params;
+	try {
+		await deleteCanonicoService(id);
+		res.status(204).send();
+	} catch (error: any) {
+		console.error(`[ROUTES :: Erro ao deletar o canônico com ID ${id}: ${error.message}`);
+		throw new IntegrationError(`Erro ao deletar o canônico com ID ${id}: ${error.message}`, error.statusCode);
+	}
+}
 
 // /canonico/:id/load

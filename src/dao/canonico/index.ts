@@ -15,11 +15,6 @@ export const getCanonicoBanco = async (): Promise<any> => {
 						tipo: 'path',
 						tipoDado: 'number',
 					},
-					{
-						nome: 'name',
-						tipo: 'query',
-						tipoDado: 'string',
-					},
 				],
 			},
 		],
