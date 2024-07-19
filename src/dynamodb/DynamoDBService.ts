@@ -14,10 +14,10 @@ import {
 import { ReturnValue } from '@aws-sdk/client-dynamodb';
 
 /** Services */
-import logger from '../../../config/logger/logger';
+import logger from '../config/logger/logger';
 
 /** Erros */
-import { IntegrationError } from '../../../errors/IntegrationError';
+import { IntegrationError } from '../errors/IntegrationError';
 
 // Configurar o cliente DynamoDB
 const client = new DynamoDBClient({
