@@ -28,11 +28,11 @@ export const getCanonicoService = async (): Promise<any> => {
 
 export const getCanonicoByIdService = async (id: string): Promise<any> => {
 	try {
-		const canonicos = await dynamoDBService.getItem({ nome: id });
-		if (!canonicos) {
+		const canonico = await dynamoDBService.getItem({ nome: id });
+		if (!canonico) {
 			throw new IntegrationError('Canônico não encontrado', 404);
 		}
-		return canonicos;
+		return canonico;
 	} catch (error: any) {
 		throw error;
 	}

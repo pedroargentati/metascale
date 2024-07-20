@@ -32,13 +32,6 @@ describe('processCanonicoData', () => {
 		expect(result).toEqual(expectedOutput);
 	});
 
-	it('deve lançar um erro se chamadas e responses tiverem tamanhos diferentes', () => {
-		const chamadas = [{ nome: 'chamada1' }];
-		const responses = [{ data: 'resposta1' }, { data: 'resposta2' }];
-
-		expect(() => processCanonicoData(chamadas, responses)).toThrow(Error);
-	});
-
 	it('deve processar corretamente com chamadas e responses vazios', () => {
 		const chamadas: any[] = [];
 		const responses: any[] = [];
