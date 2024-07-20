@@ -35,7 +35,7 @@ export async function getCanonicoById(req: Request, res: Response): Promise<any>
 		res.status(200).send(canonicos);
 	} catch (error: any) {
 		console.error(`[ROUTES :: Canonico] Erro ao buscar com ID ${id}: ${error.message}`);
-		throw new IntegrationError(`Erro ao buscar o canônico com ID ${id}: ${error.message}`, error.statusCode);
+		throw new IntegrationError(`Erro ao buscar o canônico com ID: ${id}: ${error.message}`, error.statusCode);
 	}
 }
 

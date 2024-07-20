@@ -67,3 +67,27 @@
 2024-07-18T00:08:03.143Z info: Requisição :: Método: DELETE :: URL: /canonicos/66913fd799f18e511f9f3152 :: Status: 200
 2024-07-18T00:08:22.590Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
 2024-07-18T00:09:20.316Z info: Requisição :: Método: PUT :: URL: /canonicos/66985789df625d2fe43cd685 :: Status: 200
+2024-07-20T00:22:12.010Z info: Requisição :: Método: POST :: URL: /canonicos/clienteProduto :: Status: 200
+2024-07-20T00:22:27.340Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProduto :: Status: 200
+2024-07-20T00:29:18.833Z info: Requisição :: Método: GET :: URL: /canonicos/ :: Status: 200
+2024-07-20T00:29:19.416Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-07-20T00:34:45.758Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProduto :: Status: 200
+2024-07-20T00:34:46.357Z info: Retorno da tabela canonico no dynamoDB: [object Object]
+2024-07-20T00:36:21.842Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProduto :: Status: 200
+2024-07-20T00:36:22.349Z info: Retorno da tabela canonico no dynamoDB: [object Object]
+2024-07-20T00:37:29.022Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProduto :: Status: 200
+2024-07-20T00:37:29.606Z info: Retorno da tabela canonico no dynamoDB: [object Object]
+2024-07-20T00:39:21.779Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProduto :: Status: 200
+2024-07-20T00:39:22.343Z info: Retorno da tabela canonico com a keu [object Object] no dynamoDB: [object Object]
+2024-07-20T00:40:55.524Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProduto :: Status: 200
+2024-07-20T00:40:56.094Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"AOKSJKOMNCOSRD01JLJ4ESGEJFVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"localhost/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-20T00:41:50.514Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProdut :: Status: 200
+2024-07-20T00:41:50.670Z info: Retorno da tabela canonico com a key {"nome":"clienteProdut"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"1FF02L0Q98HBMFJLVQU4HPGS7RVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0}}
+2024-07-20T00:42:58.251Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProdut :: Status: 200
+2024-07-20T00:42:58.917Z info: Retorno da tabela canonico com a key {"nome":"clienteProdut"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"QM0QJ27JKMUIU4DQNMSAQMIT9BVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0}}
+2024-07-20T00:44:41.267Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProdut :: Status: 200
+2024-07-20T00:44:41.842Z info: Retorno da tabela canonico com a key {"nome":"clienteProdut"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"19P34TVRO7T3L9OUL6RL6M90RJVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0}}
+2024-07-20T00:47:04.652Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProdut :: Status: 200
+2024-07-20T00:47:05.140Z info: Retorno da tabela canonico com a key {"nome":"clienteProdut"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"309821UA11FGLIS4U7DEI75A2VVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0}}
+2024-07-20T00:47:14.361Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProduto :: Status: 200
+2024-07-20T00:47:14.519Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"33HBQH5USP2I88TSECPIFHVDH3VV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"localhost/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}

@@ -10,6 +10,9 @@ import {
 	GetCommandOutput,
 	UpdateCommandOutput,
 	DeleteCommandOutput,
+	ScanCommand,
+	ScanCommandOutput,
+	NativeAttributeValue,
 } from '@aws-sdk/lib-dynamodb';
 import { ReturnValue } from '@aws-sdk/client-dynamodb';
 
@@ -85,7 +88,7 @@ class DynamoDBService {
 	 * @param {Record<string, any>} key - Chave do item a ser obtido.
 	 * @returns Promessa resolvendo em objeto contendo o item.
 	 */
-	public async getItem(key: Record<string, any>): Promise<GetCommandOutput> {
+	public async getItem(key: Record<string, any>): Promise<Record<string, NativeAttributeValue> | null> {
 		const params = {
 			TableName: this.tableName,
 			Key: key,
@@ -93,8 +96,12 @@ class DynamoDBService {
 
 		try {
 			const data = await dynamoDB.send(new GetCommand(params));
-			logger.info(`Retorno da tabela ${this.tableName} no dynamoDB: ${data}`);
-			return data;
+
+			logger.info(
+				`Retorno da tabela ${this.tableName} com a key ${JSON.stringify(key)} no dynamoDB: ${JSON.stringify(data)}`,
+			);
+
+			return data?.Item || null;
 		} catch (error) {
 			throw new IntegrationError(`Erro ao obter item na tabela ${this.tableName}: ${error}`, 500);
 		}
@@ -105,18 +112,21 @@ class DynamoDBService {
 	 * @param {Record<string, any>} key - Chave do item a ser atualizado.
 	 * @param {string} updateExpression - Expressão de atualização do DynamoDB.
 	 * @param {Record<string, any>} expressionAttributeValues - Valores de atributo para a expressão de atualização.
+	 * @param {Record<string, string>} [expressionAttributeNames] - Nomes de atributo para a expressão de atualização.
 	 * @returns Promessa resolvendo em objeto contendo o item atualizado.
 	 */
 	public async updateItem(
 		key: Record<string, any>,
 		updateExpression: string,
 		expressionAttributeValues: Record<string, any>,
+		expressionAttributeNames?: Record<string, string>,
 	): Promise<UpdateCommandOutput> {
 		const params = {
 			TableName: this.tableName,
 			Key: key,
 			UpdateExpression: updateExpression,
 			ExpressionAttributeValues: expressionAttributeValues,
+			ExpressionAttributeNames: expressionAttributeNames,
 			ReturnValues: 'ALL_NEW' as ReturnValue,
 		};
 
@@ -146,6 +156,24 @@ class DynamoDBService {
 			return data;
 		} catch (error) {
 			throw new IntegrationError(`Erro ao deletar item na tabela ${this.tableName}: ${error}`, 500);
+		}
+	}
+
+	/**
+	 * Busca todos os itens da tabela do DynamoDB.
+	 * @returns Promessa resolvendo em uma lista contendo todos os itens.
+	 */
+	public async getAllItems(): Promise<Record<string, any>[]> {
+		const params = {
+			TableName: this.tableName,
+		};
+
+		try {
+			const data = await dynamoDB.send(new ScanCommand(params));
+			logger.info(`Todos os itens da tabela ${this.tableName} foram buscados com sucesso`);
+			return data.Items || [];
+		} catch (error) {
+			throw new IntegrationError(`Erro ao buscar todos os itens da tabela ${this.tableName}: ${error}`, 500);
 		}
 	}
 }

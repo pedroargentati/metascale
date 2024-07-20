@@ -1,5 +1,4 @@
 /** DAO Operations */
-import { deleteOne, get, getOne, insert, update } from '../../dao';
 
 /** Errors */
 import { IntegrationError } from '../../errors/IntegrationError';
@@ -14,27 +13,29 @@ import { validateCanonico } from './validations/validations';
 
 const CANONICO_COLLECTION: string = 'canonico';
 
+const dynamoDBService: DynamoDBService = DynamoDBService.getInstance(CANONICO_COLLECTION);
+
 export const getCanonicoService = async (): Promise<any> => {
 	try {
-		const canonicos = await get(CANONICO_COLLECTION);
+		const canonicos = await dynamoDBService.getAllItems();
 		if (!canonicos || !canonicos.length) {
 			throw new IntegrationError('Canônicos não encontrados.', 204);
 		}
 		return canonicos;
 	} catch (error: any) {
-		throw new IntegrationError(`Erro ao buscar os canônicos: ${error.message}`, 500);
+		throw new IntegrationError(`Erro ao buscar os canônicos no dynamo: ${error.message}`, 500);
 	}
 };
 
 export const getCanonicoByIdService = async (id: string): Promise<any> => {
 	try {
-		const canonicos = await getOne(CANONICO_COLLECTION, id);
+		const canonicos = await dynamoDBService.getItem({ nome: id });
 		if (!canonicos) {
 			throw new IntegrationError('Canônico não encontrado', 404);
 		}
 		return canonicos;
 	} catch (error: any) {
-		throw new IntegrationError(`Erro ao buscar o canônico: ${error.message}`, 500);
+		throw new IntegrationError(error.message, 500);
 	}
 };
 
@@ -47,16 +48,17 @@ export const getCanonicoByIdService = async (id: string): Promise<any> => {
 export const createCanonicoService = async (data: any): Promise<any> => {
 	try {
 		validateCanonico(data);
-		const result = await insert(CANONICO_COLLECTION, data);
-		const newId = result.insertedId;
-		return await getOne(CANONICO_COLLECTION, newId);
+		const result = await dynamoDBService.addItem(data);
+		return result; // TODO -> Arrumar
+		// const newId = result.insertedId;
+		// return await getOne(CANONICO_COLLECTION, newId);
 	} catch (error: any) {
 		throw error;
 	}
 };
 
 const getCanonicoExistente = async (id: string): Promise<any> => {
-	const canonicoExistente = await getOne(CANONICO_COLLECTION, id);
+	const canonicoExistente = await dynamoDBService.getItem({ nome: id });
 	if (!canonicoExistente) {
 		throw new IntegrationError('Canônico não encontrado', 404);
 	}
@@ -71,9 +73,9 @@ export const updateCanonicoService = async (id: string, data: any): Promise<any>
 
 		// TODO: Agendar reprocessamento de canonicos já inseridos na estrutura anterior
 
-		await update(CANONICO_COLLECTION, id, data);
+		// await dynamoDBService.updateItem({ nome: id }, data);
 
-		return await getOne(CANONICO_COLLECTION, id);
+		// return await getOne(CANONICO_COLLECTION, id);
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao atualizar o canônico: ${error.message}`, 500);
 	}
@@ -82,7 +84,7 @@ export const updateCanonicoService = async (id: string, data: any): Promise<any>
 export const deleteCanonicoService = async (id: string): Promise<any> => {
 	try {
 		await getCanonicoExistente(id);
-		await deleteOne(CANONICO_COLLECTION, id);
+		// await deleteOne(CANONICO_COLLECTION, id);
 		return true;
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao deletar o canônico: ${error.message}`, 500);
