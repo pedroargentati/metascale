@@ -21,7 +21,7 @@ export async function getAllCanonico(req: Request, res: Response): Promise<any> 
 		const canonicos = await getCanonicoService();
 		res.status(200).send(canonicos);
 	} catch (error: any) {
-		console.error(`[ROUTES :: Canonico] Erro ao buscar os canônicos: ${error}`);
+		logger.error(`[ROUTES :: Canonico] Erro ao buscar os canônicos: ${error}`);
 		throw new IntegrationError(error.message, error.statusCode);
 	}
 }
@@ -35,7 +35,7 @@ export async function getCanonicoById(req: Request, res: Response): Promise<any>
 		const canonicos = await getCanonicoByIdService(id);
 		res.status(200).send(canonicos);
 	} catch (error: any) {
-		console.error(`[ROUTES :: Canonico] Erro ao buscar com ID ${id}: ${error.message}`);
+		logger.error(`[ROUTES :: Canonico] Erro ao buscar com ID ${id}: ${error.message}`);
 		throw new IntegrationError(`Erro ao buscar o canônico com ID: ${id}: ${error.message}`, error.statusCode);
 	}
 }
@@ -48,7 +48,7 @@ export async function createCanonico(req: Request, res: Response): Promise<any> 
 		const result = await createCanonicoService(data);
 		res.status(200).send(result);
 	} catch (error: any) {
-		console.error(`[ROUTES :: Erro ao criar o canônico: ${error.message}`);
+		logger.error(`[ROUTES :: Erro ao criar o canônico: ${error.message}`);
 		throw error;
 	}
 }
@@ -62,7 +62,7 @@ export async function updateCanonico(req: Request, res: Response): Promise<any> 
 		const result = await updateCanonicoService(id, data);
 		res.status(200).send(result);
 	} catch (error: any) {
-		console.error(`[ROUTES :: Erro ao atualizar o canônico com ID  ${id}: ${error.message}`);
+		logger.error(`[ROUTES :: Erro ao atualizar o canônico com ID: ${id}: ${error.message}`);
 		throw new IntegrationError(`Erro ao atualizar o canônico com ID ${id}: ${error.message}`, error.statusCode);
 	}
 }
@@ -75,7 +75,7 @@ export async function deleteCanonico(req: Request, res: Response): Promise<any> 
 		const response = await deleteCanonicoService(id);
 		res.status(200).send(response);
 	} catch (error: any) {
-		console.error(`[ROUTES :: Erro ao deletar o canônico com ID ${id}: ${error.message}`);
+		logger.error(`[ROUTES :: Erro ao deletar o canônico com ID ${id}: ${error.message}`);
 		throw new IntegrationError(`Erro ao deletar o canônico com ID ${id}: ${error.message}`, error.statusCode);
 	}
 }

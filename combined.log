@@ -129,3 +129,13 @@
 2024-07-20T03:02:45.916Z info: [ROUTES :: Canonico] Iniciando getAllCanonico.
 2024-07-20T03:02:45.917Z info: Buscando todos os itens da tabela canonico...
 2024-07-20T03:02:46.494Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-07-20T03:03:36.146Z info: Requisição :: Método: GET :: URL: /canonicos/das :: Status: 200
+2024-07-20T03:03:36.149Z info: [ROUTES :: Canonico] Iniciando getCanonicoById.
+2024-07-20T03:03:36.150Z info: Buscando item na tabela canonico...
+2024-07-20T03:03:36.708Z info: Retorno da tabela canonico com a key {"nome":"das"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"J1J98011F3S3FJKLIS6J8V9C93VV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0}}
+2024-07-20T03:03:36.708Z error: [ROUTES :: Canonico] Erro ao buscar com ID das: Canônico não encontrado
+2024-07-20T03:05:03.514Z info: Requisição :: Método: GET :: URL: /canonicos/das :: Status: 200
+2024-07-20T03:05:03.517Z info: [ROUTES :: Canonico] Iniciando getCanonicoById.
+2024-07-20T03:05:03.518Z info: Buscando item na tabela canonico...
+2024-07-20T03:05:04.072Z info: Retorno da tabela canonico com a key {"nome":"das"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"8LJ6S1OCA8SGIEKK8AJ4V7ISDRVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0}}
+2024-07-20T03:05:04.072Z error: [ROUTES :: Canonico] Erro ao buscar com ID das: Canônico não encontrado

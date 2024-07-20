@@ -34,7 +34,7 @@ export const getCanonicoByIdService = async (id: string): Promise<any> => {
 		}
 		return canonicos;
 	} catch (error: any) {
-		throw new IntegrationError(error.message, 500);
+		throw error;
 	}
 };
 
