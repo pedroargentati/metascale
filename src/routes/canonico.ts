@@ -7,6 +7,7 @@ import {
 	updateCanonicoService,
 } from '../service/canonico';
 import { IntegrationError } from '../errors/IntegrationError';
+import logger from '../config/logger/logger';
 
 export async function get(req: Request, res: Response) {
 	res.send('Bem-vindo à API!');
@@ -15,7 +16,7 @@ export async function get(req: Request, res: Response) {
 // GET ALL
 
 export async function getAllCanonico(req: Request, res: Response): Promise<any> {
-	console.log('[ROUTES :: Canonico] Iniciando getAllCanonico.');
+	logger.info('[ROUTES :: Canonico] Iniciando getAllCanonico.');
 	try {
 		const canonicos = await getCanonicoService();
 		res.status(200).send(canonicos);
@@ -28,7 +29,7 @@ export async function getAllCanonico(req: Request, res: Response): Promise<any> 
 // GET BY ID
 
 export async function getCanonicoById(req: Request, res: Response): Promise<any> {
-	console.log('[ROUTES :: Canonico] Iniciando getCanonicoById.');
+	logger.info('[ROUTES :: Canonico] Iniciando getCanonicoById.');
 	const { id } = req.params;
 	try {
 		const canonicos = await getCanonicoByIdService(id);
@@ -41,7 +42,7 @@ export async function getCanonicoById(req: Request, res: Response): Promise<any>
 
 // POST
 export async function createCanonico(req: Request, res: Response): Promise<any> {
-	console.log('[ROUTES :: Canonico] Iniciando createCanonico.');
+	logger.info('[ROUTES :: Canonico] Iniciando createCanonico.');
 	const data = req.body;
 	try {
 		const result = await createCanonicoService(data);
@@ -54,7 +55,7 @@ export async function createCanonico(req: Request, res: Response): Promise<any> 
 
 // PUT
 export async function updateCanonico(req: Request, res: Response): Promise<any> {
-	console.log('[ROUTES :: Canonico] Iniciando updateCanonico.');
+	logger.info('[ROUTES :: Canonico] Iniciando updateCanonico.');
 	const { id } = req.params;
 	const data = req.body;
 	try {
@@ -68,7 +69,7 @@ export async function updateCanonico(req: Request, res: Response): Promise<any> 
 
 // DELETE
 export async function deleteCanonico(req: Request, res: Response): Promise<any> {
-	console.log('[ROUTES :: Canonico] Iniciando deleteCanonico.');
+	logger.info('[ROUTES :: Canonico] Iniciando deleteCanonico.');
 	const { id } = req.params;
 	try {
 		const response = await deleteCanonicoService(id);

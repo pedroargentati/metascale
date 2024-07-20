@@ -122,3 +122,10 @@
 2024-07-20T02:07:05.826Z info: Item adicionado com sucesso na tabela canonico
 2024-07-20T02:11:43.037Z info: Requisição :: Método: POST :: URL: /canonicos/ :: Status: 200
 2024-07-20T02:11:43.606Z info: Item adicionado com sucesso na tabela canonico
+2024-07-20T03:01:58.342Z info: Requisição :: Método: GET :: URL: /canonicos/ :: Status: 200
+2024-07-20T03:01:58.345Z info: Buscando todos os itens da tabela canonico...
+2024-07-20T03:01:58.911Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-07-20T03:02:45.913Z info: Requisição :: Método: GET :: URL: /canonicos/ :: Status: 200
+2024-07-20T03:02:45.916Z info: [ROUTES :: Canonico] Iniciando getAllCanonico.
+2024-07-20T03:02:45.917Z info: Buscando todos os itens da tabela canonico...
+2024-07-20T03:02:46.494Z info: Todos os itens da tabela canonico foram buscados com sucesso

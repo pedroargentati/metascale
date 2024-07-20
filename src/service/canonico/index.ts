@@ -50,10 +50,7 @@ export const createCanonicoService = async (data: any): Promise<any> => {
 
 		data.chamadas.sort((a: any, b: any) => a.ordem - b.ordem);
 
-		await dynamoDBService.addItem(data);
-
-		const dynamoDBServiceForCanonicoData: DynamoDBService = new DynamoDBService(data.nome);
-		dynamoDBServiceForCanonicoData.createTable();
+		await dynamoDBService.addItem(data).then(() => new DynamoDBService(data.nome).createTable());
 
 		return data;
 	} catch (error: any) {
