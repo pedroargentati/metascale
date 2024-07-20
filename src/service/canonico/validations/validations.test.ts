@@ -31,6 +31,24 @@ describe('validateCanonico', () => {
 		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
 	});
 
+	it('deve lançar um CumulativeIntegrationError se chamadas.nome não for informada.', () => {
+		const data = {
+			nome: 'Nome',
+			descricao: 'Descricao',
+			chamadas: [
+				{
+					ordem: 1,
+					nome: '', // nome não informado
+					url: 'http://example.com',
+					descricao: 'Descricao',
+					parametros: {}, // não é um array
+				},
+			],
+		};
+
+		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
+	});
+
 	it('deve lançar um CumulativeIntegrationError se chamadas.parametros não for um array ou estiver vazio', () => {
 		const data = {
 			nome: 'Nome',
