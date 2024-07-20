@@ -7,11 +7,9 @@ import {
 	UpdateCommand,
 	DeleteCommand,
 	PutCommandOutput,
-	GetCommandOutput,
 	UpdateCommandOutput,
 	DeleteCommandOutput,
 	ScanCommand,
-	ScanCommandOutput,
 	NativeAttributeValue,
 } from '@aws-sdk/lib-dynamodb';
 import { ReturnValue } from '@aws-sdk/client-dynamodb';
@@ -43,7 +41,7 @@ class DynamoDBService {
 	private tableName: string;
 
 	/**
-	 * Construtor privado para evitar instanciamento direto.
+	 * Construtor da classe.
 	 * @param {string} tableName - Nome da tabela do DynamoDB.
 	 */
 	public constructor(tableName: string) {

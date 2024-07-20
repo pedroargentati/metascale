@@ -30,6 +30,7 @@ router.delete('/canonicos/:id', asyncHandler(deleteCanonico));
 
 // Middleware para tratamento de erros
 router.use(errorHandler);
+// Middleware para logar erros
 router.use(logError);
 
 export default router;

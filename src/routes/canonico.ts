@@ -14,7 +14,6 @@ export async function get(req: Request, res: Response) {
 }
 
 // GET ALL
-
 export async function getAllCanonico(req: Request, res: Response): Promise<any> {
 	logger.info('[ROUTES :: Canonico] Iniciando getAllCanonico.');
 	try {
@@ -27,7 +26,6 @@ export async function getAllCanonico(req: Request, res: Response): Promise<any> 
 }
 
 // GET BY ID
-
 export async function getCanonicoById(req: Request, res: Response): Promise<any> {
 	logger.info('[ROUTES :: Canonico] Iniciando getCanonicoById.');
 	const { id } = req.params;
