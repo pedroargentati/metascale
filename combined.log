@@ -91,3 +91,34 @@
 2024-07-20T00:47:05.140Z info: Retorno da tabela canonico com a key {"nome":"clienteProdut"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"309821UA11FGLIS4U7DEI75A2VVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0}}
 2024-07-20T00:47:14.361Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProduto :: Status: 200
 2024-07-20T00:47:14.519Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"33HBQH5USP2I88TSECPIFHVDH3VV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"localhost/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-20T00:50:59.086Z info: Requisição :: Método: POST :: URL: /canonicos/ :: Status: 200
+2024-07-20T00:51:38.502Z info: Requisição :: Método: POST :: URL: /canonicos/ :: Status: 200
+2024-07-20T00:53:26.652Z info: Requisição :: Método: POST :: URL: /canonicos/ :: Status: 200
+2024-07-20T00:53:27.213Z info: Item adicionado com sucesso na tabela canonico
+2024-07-20T00:53:36.228Z info: Requisição :: Método: GET :: URL: /canonicos/ :: Status: 200
+2024-07-20T00:53:36.389Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-07-20T00:54:20.996Z info: Requisição :: Método: POST :: URL: /canonicos/ :: Status: 200
+2024-07-20T00:54:21.150Z info: Item adicionado com sucesso na tabela canonico
+2024-07-20T00:54:24.736Z info: Requisição :: Método: GET :: URL: /canonicos/ :: Status: 200
+2024-07-20T00:54:24.890Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-07-20T00:59:37.387Z info: Requisição :: Método: POST :: URL: /canonicos/ :: Status: 200
+2024-07-20T00:59:37.969Z info: Item adicionado com sucesso na tabela canonico
+2024-07-20T00:59:41.235Z info: Requisição :: Método: POST :: URL: /canonicos/ :: Status: 200
+2024-07-20T00:59:41.392Z info: Item adicionado com sucesso na tabela canonico
+2024-07-20T01:01:21.828Z info: Requisição :: Método: POST :: URL: /canonicos/ :: Status: 200
+2024-07-20T01:01:22.422Z info: Item adicionado com sucesso na tabela canonico
+2024-07-20T01:42:26.661Z info: Requisição :: Método: POST :: URL: /canonicos/ :: Status: 200
+2024-07-20T02:03:01.671Z info: Requisição :: Método: DELETE :: URL: /canonicos/getAllVivo :: Status: 200
+2024-07-20T02:03:02.236Z info: Retorno da tabela canonico com a key {"nome":"getAllVivo"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"O8EFHUKORJ80H11N34I45L1N8NVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"getAllVivo","chamadas":[{"ordem":2,"nome":"getAllVivo","parametros":[{"tipoDado":"string","nome":"all","tipo":"path"}],"url":"https://localhost:8080/allvivo","descricao":"Todos os produtos"}],"id":2,"descricao":"Todos os produtos"}}
+2024-07-20T02:03:20.186Z info: Requisição :: Método: GET :: URL: /canonicos/getAllVivo :: Status: 200
+2024-07-20T02:03:20.352Z info: Retorno da tabela canonico com a key {"nome":"getAllVivo"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"7S0VN04MK013EJBDLLV8Q253GJVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"getAllVivo","chamadas":[{"ordem":2,"nome":"getAllVivo","parametros":[{"tipoDado":"string","nome":"all","tipo":"path"}],"url":"https://localhost:8080/allvivo","descricao":"Todos os produtos"}],"id":2,"descricao":"Todos os produtos"}}
+2024-07-20T02:05:49.697Z info: Requisição :: Método: DELETE :: URL: /canonicos/getAllVivo :: Status: 200
+2024-07-20T02:05:50.280Z info: Retorno da tabela canonico com a key {"nome":"getAllVivo"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"5MHQG6VVK5CO3U4K6CLRK0VCK3VV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"getAllVivo","chamadas":[{"ordem":2,"nome":"getAllVivo","parametros":[{"tipoDado":"string","nome":"all","tipo":"path"}],"url":"https://localhost:8080/allvivo","descricao":"Todos os produtos"}],"id":2,"descricao":"Todos os produtos"}}
+2024-07-20T02:05:50.449Z info: Item deletado com sucesso na tabela canonico
+2024-07-20T02:05:56.345Z info: Requisição :: Método: GET :: URL: /canonicos/getAllVivo :: Status: 200
+2024-07-20T02:05:56.509Z info: Retorno da tabela canonico com a key {"nome":"getAllVivo"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"2HMR1HTQRBUATV6DCUP8NLDDC7VV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0}}
+2024-07-20T02:06:55.458Z info: Requisição :: Método: POST :: URL: /canonicos/ :: Status: 200
+2024-07-20T02:07:05.237Z info: Requisição :: Método: POST :: URL: /canonicos/ :: Status: 200
+2024-07-20T02:07:05.826Z info: Item adicionado com sucesso na tabela canonico
+2024-07-20T02:11:43.037Z info: Requisição :: Método: POST :: URL: /canonicos/ :: Status: 200
+2024-07-20T02:11:43.606Z info: Item adicionado com sucesso na tabela canonico

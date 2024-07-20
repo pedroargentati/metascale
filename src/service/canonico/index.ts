@@ -1,5 +1,3 @@
-/** DAO Operations */
-
 /** Errors */
 import { IntegrationError } from '../../errors/IntegrationError';
 
@@ -10,10 +8,11 @@ import DynamoDBService from '../../dynamodb/DynamoDBService';
 /** Métodos de Validações/Processamento de dados. */
 import { processCanonicoData } from './etl/etl-processor';
 import { validateCanonico } from './validations/validations';
+import { IParametro } from '../../interfaces/parametros';
 
 const CANONICO_COLLECTION: string = 'canonico';
 
-const dynamoDBService: DynamoDBService = DynamoDBService.getInstance(CANONICO_COLLECTION);
+const dynamoDBService: DynamoDBService = new DynamoDBService(CANONICO_COLLECTION);
 
 export const getCanonicoService = async (): Promise<any> => {
 	try {
@@ -48,10 +47,15 @@ export const getCanonicoByIdService = async (id: string): Promise<any> => {
 export const createCanonicoService = async (data: any): Promise<any> => {
 	try {
 		validateCanonico(data);
-		const result = await dynamoDBService.addItem(data);
-		return result; // TODO -> Arrumar
-		// const newId = result.insertedId;
-		// return await getOne(CANONICO_COLLECTION, newId);
+
+		data.chamadas.sort((a: any, b: any) => a.ordem - b.ordem);
+
+		await dynamoDBService.addItem(data);
+
+		const dynamoDBServiceForCanonicoData: DynamoDBService = new DynamoDBService(data.nome);
+		dynamoDBServiceForCanonicoData.createTable();
+
+		return data;
 	} catch (error: any) {
 		throw error;
 	}
@@ -83,9 +87,14 @@ export const updateCanonicoService = async (id: string, data: any): Promise<any>
 
 export const deleteCanonicoService = async (id: string): Promise<any> => {
 	try {
-		await getCanonicoExistente(id);
-		// await deleteOne(CANONICO_COLLECTION, id);
-		return true;
+		const canonico = await getCanonicoExistente(id);
+
+		if (!canonico) {
+			throw new IntegrationError('Canônico não encontrado', 404);
+		}
+
+		await dynamoDBService.deleteItem({ nome: id });
+		return canonico;
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao deletar o canônico: ${error.message}`, 500);
 	}
@@ -96,22 +105,41 @@ export const loadCanonicoService = async (id: string, data: any): Promise<any> =
 		const canonicoExistente = await getCanonicoExistente(id);
 
 		const { chamadas } = canonicoExistente;
-		const responses = [];
 
+		const chamadasPorOrdem = new Map();
 		for (const chamada of chamadas) {
+			if (!chamadasPorOrdem.has(chamada.ordem)) {
+				chamadasPorOrdem.set(chamada.ordem, [chamada]);
+			} else {
+				chamadasPorOrdem.get(chamada.ordem).push(chamada);
+			}
+		}
+
+		const responses = [];
+		for (const ordem of chamadasPorOrdem.keys()) {
 			try {
-				const vivoServiceResult = await fetchDataController(chamada.url, chamada.parametros);
-				responses.push(vivoServiceResult);
+				const chamadasDaOrdem = chamadasPorOrdem.get(ordem);
+
+				const requisicoesDisparadas = chamadasDaOrdem.map(
+					(chamada: { url: string; parametros: IParametro[] }) =>
+						fetchDataController(chamada.url, chamada.parametros, data),
+				);
+
+				const resolvedResponses = await Promise.all(requisicoesDisparadas).catch((error) => {
+					throw new IntegrationError(`Erro ao buscar os dados da chamada: ${error.message}`, 500);
+				});
+
+				responses.push(...resolvedResponses);
 			} catch (error: any) {
 				throw new IntegrationError(`Erro ao buscar os dados da chamada: ${error.message}`, 500);
 			}
 		}
 
 		// Processamento e montagem do canônico usando os metadados
-		const processedData = processCanonicoData(data, responses);
+		const dadoCanonico = processCanonicoData(chamadas, responses);
 
-		const dynamoDBService: DynamoDBService = DynamoDBService.getInstance('Canonicos');
-		const result = await dynamoDBService.addItem(processedData);
+		const dynamoDBServiceForCanonicoData: DynamoDBService = new DynamoDBService(canonicoExistente.nome);
+		const result = await dynamoDBServiceForCanonicoData.addItem(dadoCanonico);
 
 		return result;
 	} catch (error: any) {

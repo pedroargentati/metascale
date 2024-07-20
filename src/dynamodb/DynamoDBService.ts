@@ -1,5 +1,5 @@
 /** Operators */
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { CreateTableCommand, CreateTableCommandInput, DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import {
 	DynamoDBDocumentClient,
 	PutCommand,
@@ -41,26 +41,13 @@ const dynamoDB = DynamoDBDocumentClient.from(client);
  */
 class DynamoDBService {
 	private tableName: string;
-	private static instance: DynamoDBService;
 
 	/**
 	 * Construtor privado para evitar instanciamento direto.
 	 * @param {string} tableName - Nome da tabela do DynamoDB.
 	 */
-	private constructor(tableName: string) {
+	public constructor(tableName: string) {
 		this.tableName = tableName;
-	}
-
-	/**
-	 * Método estático para obter a instância única do serviço.
-	 * @param {string} tableName - Nome da tabela do DynamoDB.
-	 * @returns Instância única de DynamoDBService.
-	 */
-	public static getInstance(tableName: string): DynamoDBService {
-		if (!DynamoDBService.instance) {
-			DynamoDBService.instance = new DynamoDBService(tableName);
-		}
-		return DynamoDBService.instance;
 	}
 
 	/**
@@ -69,6 +56,7 @@ class DynamoDBService {
 	 * @returns Promessa resolvendo em sucesso ou erro.
 	 */
 	public async addItem(item: Record<string, any>): Promise<PutCommandOutput> {
+		logger.info(`Adicionando item na tabela ${this.tableName}...`);
 		const params = {
 			TableName: this.tableName,
 			Item: item,
@@ -89,6 +77,7 @@ class DynamoDBService {
 	 * @returns Promessa resolvendo em objeto contendo o item.
 	 */
 	public async getItem(key: Record<string, any>): Promise<Record<string, NativeAttributeValue> | null> {
+		logger.info(`Buscando item na tabela ${this.tableName}...`);
 		const params = {
 			TableName: this.tableName,
 			Key: key,
@@ -121,6 +110,7 @@ class DynamoDBService {
 		expressionAttributeValues: Record<string, any>,
 		expressionAttributeNames?: Record<string, string>,
 	): Promise<UpdateCommandOutput> {
+		logger.info(`Atualizando item na tabela ${this.tableName}...`);
 		const params = {
 			TableName: this.tableName,
 			Key: key,
@@ -145,6 +135,7 @@ class DynamoDBService {
 	 * @returns Promessa resolvendo em sucesso ou erro.
 	 */
 	public async deleteItem(key: Record<string, any>): Promise<DeleteCommandOutput> {
+		logger.info(`Deletando item da tabela ${this.tableName}...`);
 		const params = {
 			TableName: this.tableName,
 			Key: key,
@@ -164,6 +155,7 @@ class DynamoDBService {
 	 * @returns Promessa resolvendo em uma lista contendo todos os itens.
 	 */
 	public async getAllItems(): Promise<Record<string, any>[]> {
+		logger.info(`Buscando todos os itens da tabela ${this.tableName}...`);
 		const params = {
 			TableName: this.tableName,
 		};
@@ -174,6 +166,36 @@ class DynamoDBService {
 			return data.Items || [];
 		} catch (error) {
 			throw new IntegrationError(`Erro ao buscar todos os itens da tabela ${this.tableName}: ${error}`, 500);
+		}
+	}
+
+	/**
+	 * Cria a tabela no DynamoDB.
+	 *
+	 * @returns Promessa resolvendo em sucesso.
+	 * @throws {IntegrationError} - Erro ao criar a tabela.
+	 *
+	 * @see https://docs.aws.amazon.com/pt_br/amazondynamodb/latest/developerguide/WorkingWithTables.html
+	 */
+	public async createTable(): Promise<any> {
+		logger.info(`Criando tabela ${this.tableName} no DynamoDB...`);
+		try {
+			const params: CreateTableCommandInput = {
+				TableName: this.tableName,
+				KeySchema: [{ AttributeName: 'ID', KeyType: 'HASH' }],
+				AttributeDefinitions: [{ AttributeName: 'ID', AttributeType: 'S' }],
+				ProvisionedThroughput: {
+					ReadCapacityUnits: 5,
+					WriteCapacityUnits: 5,
+				},
+			};
+
+			const data = await client.send(new CreateTableCommand(params));
+			logger.info(`Tabela ${this.tableName} criada com sucesso!`);
+
+			return data;
+		} catch (error) {
+			throw new IntegrationError(`Erro ao criar tabela ${this.tableName}: ${error}`, 500);
 		}
 	}
 }

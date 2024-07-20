@@ -49,6 +49,31 @@ describe('validateCanonico', () => {
 		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
 	});
 
+	it('deve lançar um CumulativeIntegrationError se chamadas possui o campo name repetido ', () => {
+		const data = {
+			nome: 'Nome',
+			descricao: 'Descricao',
+			chamadas: [
+				{
+					ordem: 1,
+					nome: 'Chamada1', // nome repetido
+					url: 'http://example.com',
+					descricao: 'Descricao',
+					parametros: [{ nome: 'param1' }],
+				},
+				{
+					ordem: 1,
+					nome: 'Chamada1', // nome repetido
+					url: 'http://example.com',
+					descricao: 'Descricao',
+					parametros: [{ nome: 'param1' }],
+				},
+			],
+		};
+
+		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
+	});
+
 	it('não deve lançar um erro se todos os campos obrigatórios estiverem presentes e válidos', () => {
 		const data = {
 			nome: 'Nome',

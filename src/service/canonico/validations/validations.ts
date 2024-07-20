@@ -65,6 +65,20 @@ export const validateCanonico = (data: any): void => {
 			);
 		}
 
+		// Verificação de nomes de chamadas duplicadas
+		const nameCount = chamadas.reduce((acc: { [key: string]: number }, chamada) => {
+			acc[chamada.nome] = (acc[chamada.nome] || 0) + 1;
+			return acc;
+		}, {});
+
+		const duplicateNames = Object.keys(nameCount).filter((name) => nameCount[name] > 1);
+
+		duplicateNames.forEach((name) => {
+			cumulativeIntegrationExceptions.push(
+				new IntegrationError(`O nome '${name}' aparece mais de uma vez nas chamadas.`, 400),
+			);
+		});
+
 		const { parametros } = chamada;
 
 		if (!Array.isArray(parametros) || !parametros.length) {

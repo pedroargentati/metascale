@@ -5,25 +5,17 @@
  * @param responses - Respostas das chamadas aos serviços.
  * @returns Dados processados.
  */
-export const processCanonicoData = (data: any, responses: any[]): any => {
-	const canonicData = { ...data, canonicFields: {} };
+export const processCanonicoData = (chamadas: any[], responses: any[]): any => {
+	const dadoCanonico = [];
 
-	for (const response of responses) {
+	for (const [index, chamada] of chamadas.entries()) {
+		const response = responses[index];
+
+		dadoCanonico.push({
+			requestName: chamada.nome,
+			response: response,
+		});
 	}
 
-	return canonicData;
-};
-
-/**
- * Processa campos aninhados conforme os metadados.
- *
- * @param result - Resultado da chamada ao serviço.
- * @param subFields - Campos aninhados para processamento.
- * @returns Dados processados.
- */
-export const processSubFields = (result: any, subFields: any[]): any[] => {
-	return subFields.map((subField) => {
-		const processedSubField: any = {};
-		return processedSubField;
-	});
+	return dadoCanonico;
 };
