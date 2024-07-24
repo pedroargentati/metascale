@@ -12,15 +12,15 @@ import { IParametro } from '../../interfaces/parametros';
  * @throws IntegrationError
  * @returns Retorna os dados da requisição.
  */
-export const fetchDataController = async (resourceUrl: string, params: IParametro[], data: any) => {
+export const fetchDataController = async (resourceUrl: string, params: IParametro[], dadosParametros: any) => {
 	if (!resourceUrl || resourceUrl.trim().length === 0) {
 		throw new IntegrationError('A URL da requisição não pode ser nula ou vazia.', 400);
 	}
 
 	try {
-		const data = await fetchData(resourceUrl, params);
+		const data = await fetchData(resourceUrl, params, dadosParametros);
 		return data;
 	} catch (error) {
-		throw new IntegrationError('Erro ao tentar buscar dados da URL.', 500);
+		throw error;
 	}
 };

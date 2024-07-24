@@ -4,6 +4,7 @@ import {
 	deleteCanonicoService,
 	getCanonicoByIdService,
 	getCanonicoService,
+	loadCanonicoService,
 	updateCanonicoService,
 } from '../service/canonico';
 import { IntegrationError } from '../errors/IntegrationError';
@@ -75,5 +76,19 @@ export async function deleteCanonico(req: Request, res: Response): Promise<any> 
 	} catch (error: any) {
 		logger.error(`[ROUTES :: Erro ao deletar o canônico com ID ${id}: ${error.message}`);
 		throw new IntegrationError(`Erro ao deletar o canônico com ID ${id}: ${error.message}`, error.statusCode);
+	}
+}
+
+// LOAD
+export async function loadCanonico(req: Request, res: Response): Promise<any> {
+	logger.info('[ROUTES :: Canonico] Iniciando loadCanonico.');
+	const { nome } = req.params;
+	const dadosParametros = req.body;
+	try {
+		const response = await loadCanonicoService(nome, dadosParametros);
+		res.status(200).send(response);
+	} catch (error: any) {
+		logger.error(`[ROUTES :: Erro ao carregar o canônico com nome ${nome}: ${error.message}`);
+		throw error;
 	}
 }

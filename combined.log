@@ -139,3 +139,89 @@
 2024-07-20T03:05:03.518Z info: Buscando item na tabela canonico...
 2024-07-20T03:05:04.072Z info: Retorno da tabela canonico com a key {"nome":"das"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"8LJ6S1OCA8SGIEKK8AJ4V7ISDRVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0}}
 2024-07-20T03:05:04.072Z error: [ROUTES :: Canonico] Erro ao buscar com ID das: Canônico não encontrado
+2024-07-24T22:56:46.706Z info: Requisição :: Método: POST :: URL: /canonicos :: Status: 200
+2024-07-24T22:56:46.709Z info: [ROUTES :: Canonico] Iniciando createCanonico.
+2024-07-24T22:56:46.710Z info: Adicionando item na tabela canonico...
+2024-07-24T22:56:47.654Z info: Item adicionado com sucesso na tabela canonico
+2024-07-24T22:56:47.655Z info: Criando tabela clienteProduto no DynamoDB...
+2024-07-24T22:56:47.846Z info: Tabela clienteProduto criada com sucesso!
+2024-07-24T23:01:22.308Z info: Requisição :: Método: POST :: URL: /canonicos/clienteProduto/load :: Status: 200
+2024-07-24T23:01:22.311Z info: [ROUTES :: Canonico] Iniciando loadCanonico.
+2024-07-24T23:01:22.312Z info: Buscando item na tabela canonico...
+2024-07-24T23:01:22.891Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"L949KM6BS5KLARHTTON8DMRMFJVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://demo3931920.mockable.io/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-24T23:01:23.692Z error: [ROUTES :: Erro ao carregar o canônico com nome clienteProduto: Erro ao carregar o canônico de ID clienteProduto: Erro ao buscar os dados da chamada: Erro ao buscar os dados da chamada: Erro ao tentar buscar dados da URL.
+2024-07-24T23:04:04.837Z info: Requisição :: Método: POST :: URL: /canonicos/clienteProduto/load :: Status: 200
+2024-07-24T23:04:04.840Z info: [ROUTES :: Canonico] Iniciando loadCanonico.
+2024-07-24T23:04:04.841Z info: Buscando item na tabela canonico...
+2024-07-24T23:04:05.430Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"MC4H8USE9IP936OICGIGG7L3MVVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://demo3931920.mockable.io/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-24T23:04:05.614Z error: [ROUTES :: Erro ao carregar o canônico com nome clienteProduto: Erro ao carregar o canônico de ID clienteProduto: Erro ao buscar os dados da chamada: Erro ao buscar os dados da chamada: Erro ao tentar buscar dados da URL.
+2024-07-24T23:04:07.576Z info: Requisição :: Método: POST :: URL: /canonicos/clienteProduto/load :: Status: 200
+2024-07-24T23:04:07.577Z info: [ROUTES :: Canonico] Iniciando loadCanonico.
+2024-07-24T23:04:07.577Z info: Buscando item na tabela canonico...
+2024-07-24T23:04:07.739Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"CIISJ99P4S15V49H6VBK5FDSC3VV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://demo3931920.mockable.io/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-24T23:04:07.887Z error: [ROUTES :: Erro ao carregar o canônico com nome clienteProduto: Erro ao carregar o canônico de ID clienteProduto: Erro ao buscar os dados da chamada: Erro ao buscar os dados da chamada: Erro ao tentar buscar dados da URL.
+2024-07-24T23:04:26.801Z info: Requisição :: Método: POST :: URL: /canonicos/clienteProduto/load :: Status: 200
+2024-07-24T23:04:26.803Z info: [ROUTES :: Canonico] Iniciando loadCanonico.
+2024-07-24T23:04:26.803Z info: Buscando item na tabela canonico...
+2024-07-24T23:04:26.967Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"HAF2A3B3QBGP393MO2JQR4T2ORVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://demo3931920.mockable.io/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-24T23:04:26.968Z error: [ROUTES :: Erro ao carregar o canônico com nome clienteProduto: Erro ao carregar o canônico de ID clienteProduto: Erro ao buscar os dados da chamada: Erro ao buscar os dados da chamada: Erro ao tentar buscar dados da URL.
+2024-07-24T23:04:49.554Z info: Requisição :: Método: POST :: URL: /canonicos/clienteProduto/load :: Status: 200
+2024-07-24T23:04:49.557Z info: [ROUTES :: Canonico] Iniciando loadCanonico.
+2024-07-24T23:04:49.558Z info: Buscando item na tabela canonico...
+2024-07-24T23:04:50.126Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"MSV1SJF7O16ACULLM0PQTDR9VRVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://demo3931920.mockable.io/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-24T23:04:50.792Z error: [ROUTES :: Erro ao carregar o canônico com nome clienteProduto: Erro ao carregar o canônico de ID clienteProduto: Erro ao buscar os dados da chamada: Erro ao buscar os dados da chamada: Erro ao tentar buscar dados da URL.
+2024-07-24T23:05:26.255Z info: Requisição :: Método: POST :: URL: /canonicos/clienteProduto/load :: Status: 200
+2024-07-24T23:05:26.259Z info: [ROUTES :: Canonico] Iniciando loadCanonico.
+2024-07-24T23:05:26.260Z info: Buscando item na tabela canonico...
+2024-07-24T23:05:26.864Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"L00BK3ILCD4LD042TSSDVJVG8FVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://demo3931920.mockable.io/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-24T23:05:27.030Z error: [ROUTES :: Erro ao carregar o canônico com nome clienteProduto: Erro ao carregar o canônico de ID clienteProduto: Erro ao buscar os dados da chamada: Erro ao buscar os dados da chamada: Erro ao tentar buscar dados da URL.
+2024-07-24T23:06:18.793Z info: Requisição :: Método: POST :: URL: /canonicos/clienteProduto/load :: Status: 200
+2024-07-24T23:06:18.797Z info: [ROUTES :: Canonico] Iniciando loadCanonico.
+2024-07-24T23:06:18.797Z info: Buscando item na tabela canonico...
+2024-07-24T23:06:19.403Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"VGUMP1Q28S313FI5MP4BA8QC33VV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://demo3931920.mockable.io/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-24T23:06:19.611Z error: [ROUTES :: Erro ao carregar o canônico com nome clienteProduto: Erro ao carregar o canônico de ID clienteProduto: Erro ao buscar os dados da chamada: Erro ao buscar os dados da chamada: Erro ao tentar buscar dados da URL.
+2024-07-24T23:07:17.985Z info: Requisição :: Método: POST :: URL: /canonicos/clienteProduto/load :: Status: 200
+2024-07-24T23:07:17.989Z info: [ROUTES :: Canonico] Iniciando loadCanonico.
+2024-07-24T23:07:17.990Z info: Buscando item na tabela canonico...
+2024-07-24T23:07:18.581Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"LDDRBFBSR12BN4VHTVSFGOSG6NVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://demo3931920.mockable.io/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-24T23:07:18.750Z error: [ROUTES :: Erro ao carregar o canônico com nome clienteProduto: Erro ao carregar o canônico de ID clienteProduto: Erro ao buscar os dados da chamada: Erro ao buscar os dados da chamada: teste: Error: unable to verify the first certificate
+2024-07-24T23:07:55.015Z info: Requisição :: Método: POST :: URL: /canonicos/clienteProduto/load :: Status: 200
+2024-07-24T23:07:55.015Z info: [ROUTES :: Canonico] Iniciando loadCanonico.
+2024-07-24T23:07:55.016Z info: Buscando item na tabela canonico...
+2024-07-24T23:07:55.183Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"QT0AVNGFIB3UFNAOUVNSRIC0O3VV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://demo3931920.mockable.io/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-24T23:07:55.329Z error: [ROUTES :: Erro ao carregar o canônico com nome clienteProduto: Erro ao carregar o canônico de ID clienteProduto: Erro ao buscar os dados da chamada: Erro ao buscar os dados da chamada: teste: Error: unable to verify the first certificate
+2024-07-24T23:07:57.564Z info: Requisição :: Método: POST :: URL: /canonicos/clienteProduto/load :: Status: 200
+2024-07-24T23:07:57.564Z info: [ROUTES :: Canonico] Iniciando loadCanonico.
+2024-07-24T23:07:57.565Z info: Buscando item na tabela canonico...
+2024-07-24T23:07:57.723Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"QTL1U74FNJJBJTJP49BOLBAJKVVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://demo3931920.mockable.io/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-24T23:07:57.870Z error: [ROUTES :: Erro ao carregar o canônico com nome clienteProduto: Erro ao carregar o canônico de ID clienteProduto: Erro ao buscar os dados da chamada: Erro ao buscar os dados da chamada: teste: Error: unable to verify the first certificate
+2024-07-24T23:16:42.015Z info: Requisição :: Método: DELETE :: URL: /canonicos/clienteProduto :: Status: 200
+2024-07-24T23:16:42.019Z info: [ROUTES :: Canonico] Iniciando deleteCanonico.
+2024-07-24T23:16:42.020Z info: Buscando item na tabela canonico...
+2024-07-24T23:16:42.604Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"CI317D8KRGJER1KGRAUI2PVATBVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://demo3931920.mockable.io/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-24T23:16:42.605Z info: Deletando item da tabela canonico...
+2024-07-24T23:16:42.768Z info: Item deletado com sucesso na tabela canonico
+2024-07-24T23:17:59.901Z info: Requisição :: Método: POST :: URL: /canonicos :: Status: 200
+2024-07-24T23:17:59.902Z info: [ROUTES :: Canonico] Iniciando createCanonico.
+2024-07-24T23:17:59.903Z info: Adicionando item na tabela canonico...
+2024-07-24T23:18:00.073Z info: Item adicionado com sucesso na tabela canonico
+2024-07-24T23:18:00.078Z info: Criando tabela clienteProduto no DynamoDB...
+2024-07-24T23:18:00.270Z info: Tabela clienteProduto criada com sucesso!
+2024-07-24T23:18:51.082Z info: Requisição :: Método: POST :: URL: /canonicos :: Status: 200
+2024-07-24T23:18:51.083Z info: [ROUTES :: Canonico] Iniciando createCanonico.
+2024-07-24T23:18:51.083Z info: Adicionando item na tabela canonico...
+2024-07-24T23:18:51.247Z info: Item adicionado com sucesso na tabela canonico
+2024-07-24T23:18:51.247Z info: Criando tabela clienteProduto no DynamoDB...
+2024-07-24T23:18:51.433Z info: Tabela clienteProduto criada com sucesso!
+2024-07-24T23:19:03.536Z info: Requisição :: Método: POST :: URL: /canonicos/clienteProduto/load :: Status: 200
+2024-07-24T23:19:03.537Z info: [ROUTES :: Canonico] Iniciando loadCanonico.
+2024-07-24T23:19:03.537Z info: Buscando item na tabela canonico...
+2024-07-24T23:19:03.703Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"1HQ5TO716616PAEADPME8KB567VV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://clienteprodutovivo.free.beeceptor.com/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-24T23:19:04.670Z info: Adicionando item na tabela clienteProduto...
+2024-07-24T23:19:04.846Z error: [ROUTES :: Erro ao carregar o canônico com nome clienteProduto: Erro ao carregar o canônico de ID clienteProduto: Erro ao adicionar item na tabela clienteProduto: ValidationException: One or more parameter values were invalid: Missing the key ID in the item
+2024-07-24T23:19:50.622Z info: Requisição :: Método: POST :: URL: /canonicos/clienteProduto/load :: Status: 200
+2024-07-24T23:19:50.625Z info: [ROUTES :: Canonico] Iniciando loadCanonico.
+2024-07-24T23:19:50.626Z info: Buscando item na tabela canonico...
+2024-07-24T23:19:51.215Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"UFNKSEMLLBU2I7D6G804E79RHRVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://clienteprodutovivo.free.beeceptor.com/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-07-24T23:19:51.852Z info: Adicionando item na tabela clienteProduto...
+2024-07-24T23:19:52.015Z info: Item adicionado com sucesso na tabela clienteProduto

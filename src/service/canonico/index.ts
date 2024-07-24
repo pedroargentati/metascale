@@ -97,7 +97,7 @@ export const deleteCanonicoService = async (id: string): Promise<any> => {
 	}
 };
 
-export const loadCanonicoService = async (id: string, data: any): Promise<any> => {
+export const loadCanonicoService = async (id: string, dadosParametros: any): Promise<any> => {
 	try {
 		const canonicoExistente = await getCanonicoExistente(id);
 
@@ -119,7 +119,7 @@ export const loadCanonicoService = async (id: string, data: any): Promise<any> =
 
 				const requisicoesDisparadas = chamadasDaOrdem.map(
 					(chamada: { url: string; parametros: IParametro[] }) =>
-						fetchDataController(chamada.url, chamada.parametros, data),
+						fetchDataController(chamada.url, chamada.parametros, dadosParametros),
 				);
 
 				const resolvedResponses = await Promise.all(requisicoesDisparadas).catch((error) => {
@@ -133,7 +133,7 @@ export const loadCanonicoService = async (id: string, data: any): Promise<any> =
 		}
 
 		// Processamento e montagem do canônico usando os metadados
-		const dadoCanonico = processCanonicoData(chamadas, responses);
+		const dadoCanonico = processCanonicoData(chamadas, responses, dadosParametros);
 
 		const dynamoDBServiceForCanonicoData: DynamoDBService = new DynamoDBService(canonicoExistente.nome);
 		const result = await dynamoDBServiceForCanonicoData.addItem(dadoCanonico);
