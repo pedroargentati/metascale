@@ -38,12 +38,6 @@ export const getCanonicoByIdService = async (id: string): Promise<any> => {
 	}
 };
 
-/**
- * Realiza toda a lógica de validação, chamada de serviços e persistência de um canônico no DynamoDB.
- *
- * @param data - Dados do canônico a ser criado.
- * @returns Promessa resolvendo em objeto contendo o canônico criado.
- */
 export const createCanonicoService = async (data: any): Promise<any> => {
 	try {
 		validateCanonico(data);

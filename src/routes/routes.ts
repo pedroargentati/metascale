@@ -27,6 +27,7 @@ router.get('/canonicos', asyncHandler(getAllCanonico));
 /** Listar canônicos por ID. */
 router.get('/canonicos/:id', asyncHandler(getCanonicoById));
 
+/** Carregar dados de canônicos */
 router.post('/canonicos/:nome/load', asyncHandler(loadCanonico));
 
 /** Criar canônicos. */
