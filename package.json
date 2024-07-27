@@ -9,7 +9,9 @@
 		"test:coverage": "jest",
 		"start": "nodemon ./src/index.ts",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"start-prod": "node ./dist/src/index.js",
+		"build": "tsc"
 	},
 	"author": "Cicada",
 	"license": "ISC",

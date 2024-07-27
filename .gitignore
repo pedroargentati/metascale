@@ -4,3 +4,6 @@ node_modules
 tsconfig.json
 .eslintignore
 /coverage
+/dist
+combined.log
+package-lock.json

@@ -225,3 +225,7 @@
 2024-07-24T23:19:51.215Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"UFNKSEMLLBU2I7D6G804E79RHRVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://clienteprodutovivo.free.beeceptor.com/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
 2024-07-24T23:19:51.852Z info: Adicionando item na tabela clienteProduto...
 2024-07-24T23:19:52.015Z info: Item adicionado com sucesso na tabela clienteProduto
+2024-07-27T00:46:21.351Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-07-27T00:46:21.354Z info: [ROUTES :: Canonico] Iniciando getAllCanonico.
+2024-07-27T00:46:21.355Z info: Buscando todos os itens da tabela canonico...
+2024-07-27T00:46:21.923Z info: Todos os itens da tabela canonico foram buscados com sucesso
