@@ -37,6 +37,7 @@ router.post('/canonicos', asyncHandler(createCanonico));
 /** Atualizar canônicos. */
 router.put('/canonicos/:id', asyncHandler(updateCanonico));
 
+/** Atualizar parcialmente canônicos. */
 router.patch('/canonicos/:id', asyncHandler(updatePartialCanonico));
 
 /** Deletar canônico */

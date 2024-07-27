@@ -14,15 +14,15 @@ const CANONICO_COLLECTION: string = 'canonico';
 
 const dynamoDBService: DynamoDBService = new DynamoDBService(CANONICO_COLLECTION);
 
-export const getCanonicoService = async (): Promise<any> => {
+export const getCanonicoService = async (status_canonico: string): Promise<any> => {
 	try {
-		const canonicos = await dynamoDBService.getAllItems();
+		const canonicos = await dynamoDBService.getAllItems(status_canonico);
 		if (!canonicos || !canonicos.length) {
 			throw new IntegrationError('Canônicos não encontrados.', 204);
 		}
 		return canonicos;
 	} catch (error: any) {
-		throw new IntegrationError(`Erro ao buscar os canônicos no dynamo: ${error.message}`, 500);
+		throw error;
 	}
 };
 
