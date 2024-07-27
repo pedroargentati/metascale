@@ -9,7 +9,6 @@ import DynamoDBService from '../../dynamodb/DynamoDBService';
 import { processCanonicoData } from './etl/etl-processor';
 import { validateCanonico } from './validations/validations';
 import { IParametro } from '../../interfaces/parametros';
-import { ScanCommandInput } from '@aws-sdk/lib-dynamodb';
 
 const CANONICO_COLLECTION: string = 'canonico';
 
