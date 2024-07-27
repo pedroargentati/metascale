@@ -68,6 +68,8 @@ export const updatePartialCanonicoService = async (id: string, data: any): Promi
 			throw new IntegrationError('Canônico não encontrado', 404);
 		}
 
+		if (data.status_canonico === canonicoExistente.status_canonico) return;
+
 		const updateExpression: string = 'SET status_canonico = :status_canonico';
 		const expressionAttributeValues: any = { ':status_canonico': data.status_canonico };
 
