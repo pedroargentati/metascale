@@ -9,6 +9,7 @@ import DynamoDBService from '../../dynamodb/DynamoDBService';
 import { processCanonicoData } from './etl/etl-processor';
 import { validateCanonico } from './validations/validations';
 import { IParametro } from '../../interfaces/parametros';
+import { ScanCommandInput } from '@aws-sdk/lib-dynamodb';
 
 const CANONICO_COLLECTION: string = 'canonico';
 
@@ -16,7 +17,13 @@ const dynamoDBService: DynamoDBService = new DynamoDBService(CANONICO_COLLECTION
 
 export const getCanonicoService = async (status_canonico: string): Promise<any> => {
 	try {
-		const canonicos = await dynamoDBService.getAllItems(status_canonico);
+		const params: Record<string, any> = {
+			FilterExpression: '#status_canonico = :status_canonico',
+			ExpressionAttributeNames: { '#status_canonico': 'status_canonico' },
+			ExpressionAttributeValues: { ':status_canonico': status_canonico },
+		};
+
+		const canonicos = await dynamoDBService.getAllItems(status_canonico !== 'T' ? params : {});
 		if (!canonicos || !canonicos.length) {
 			throw new IntegrationError('Canônicos não encontrados.', 204);
 		}

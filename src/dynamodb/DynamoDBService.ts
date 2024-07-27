@@ -152,20 +152,15 @@ class DynamoDBService {
 	/**
 	 * Busca todos os itens da tabela do DynamoDB.
 	 *
-	 * @param {string} status_canonico - Status dos itens a serem buscados.
+	 * @param {Record<string, any>} requestParams - parâmetros de busca.
 	 * @returns Promessa resolvendo em uma lista contendo todos os itens.
 	 */
-	public async getAllItems(status_canonico: string): Promise<Record<string, any>[]> {
+	public async getAllItems(requestParams: Record<string, any> | {}): Promise<Record<string, any>[]> {
 		logger.info(`Buscando todos os itens da tabela ${this.tableName}...`);
 		const params: ScanCommandInput = {
 			TableName: this.tableName,
+			...(requestParams || {}),
 		};
-
-		if (status_canonico !== 'T') {
-			params.FilterExpression = '#status_canonico = :status_canonico';
-			params.ExpressionAttributeNames = { '#status_canonico': 'status_canonico' };
-			params.ExpressionAttributeValues = { ':status_canonico': status_canonico };
-		}
 
 		try {
 			const data = await dynamoDB.send(new ScanCommand(params));
