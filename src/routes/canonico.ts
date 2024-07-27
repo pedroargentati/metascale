@@ -6,6 +6,7 @@ import {
 	getCanonicoService,
 	loadCanonicoService,
 	updateCanonicoService,
+	updatePartialCanonicoService,
 } from '../service/canonico';
 import { IntegrationError } from '../errors/IntegrationError';
 import logger from '../config/logger/logger';
@@ -62,6 +63,20 @@ export async function updateCanonico(req: Request, res: Response): Promise<any> 
 		res.status(200).send(result);
 	} catch (error: any) {
 		logger.error(`[ROUTES :: Erro ao atualizar o canônico com ID: ${id}: ${error.message}`);
+		throw new IntegrationError(`Erro ao atualizar o canônico com ID ${id}: ${error.message}`, error.statusCode);
+	}
+}
+
+// PATCH
+export async function updatePartialCanonico(req: Request, res: Response): Promise<any> {
+	logger.info('[ROUTES :: Canonico] Iniciando updatePartialCanonico.');
+	const { id } = req.params;
+	const data = req.body;
+	try {
+		const result = await updatePartialCanonicoService(id, data);
+		res.status(200).send(result);
+	} catch (error: any) {
+		logger.error(`[ROUTES :: Erro ao atualizar o canônico com ID ${id}: ${error.message}`);
 		throw new IntegrationError(`Erro ao atualizar o canônico com ID ${id}: ${error.message}`, error.statusCode);
 	}
 }

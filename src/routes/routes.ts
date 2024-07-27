@@ -6,6 +6,7 @@ import {
 	getCanonicoById,
 	loadCanonico,
 	updateCanonico,
+	updatePartialCanonico,
 } from './canonico';
 import { logRequest, logError } from '../middlewares/loggerMiddleware';
 import { asyncHandler } from '../middlewares/asyncHandler';
@@ -35,6 +36,8 @@ router.post('/canonicos', asyncHandler(createCanonico));
 
 /** Atualizar canônicos. */
 router.put('/canonicos/:id', asyncHandler(updateCanonico));
+
+router.patch('/canonicos/:id', asyncHandler(updatePartialCanonico));
 
 /** Deletar canônico */
 router.delete('/canonicos/:id', asyncHandler(deleteCanonico));
