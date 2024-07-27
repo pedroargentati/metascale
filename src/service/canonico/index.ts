@@ -130,9 +130,9 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 		const dadoCanonico = processCanonicoData(chamadas, responses, dadosParametros);
 
 		const dynamoDBServiceForCanonicoData: DynamoDBService = new DynamoDBService(canonicoExistente.nome);
-		const result = await dynamoDBServiceForCanonicoData.addItem(dadoCanonico);
+		await dynamoDBServiceForCanonicoData.addItem(dadoCanonico);
 
-		return result;
+		return dadoCanonico;
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao carregar o canônico de ID ${id}: ${error.message}`, 500);
 	}
