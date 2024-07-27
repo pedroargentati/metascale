@@ -1,10 +1,4 @@
-FROM public.ecr.aws/amazonlinux/amazonlinux:latest
-
-RUN yum update -y && \
-  rm -rf /var/cache/yum
-
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \ 
-  && apt-get install -y nodejs
+FROM node:20
 
 WORKDIR /app/metascale/
 
