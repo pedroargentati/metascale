@@ -8,15 +8,37 @@ const swaggerOptions = {
 		info: {
 			title: 'Metascale API',
 			version: '1.0.0',
-			description: 'API Documentation for Metascale project',
+			description: 'Documentação da API do Metascale.',
 			contact: {
 				name: 'Cicada',
 			},
-			servers: [
-				{
-					url: 'http://localhost:8000',
+		},
+		servers: [
+			{
+				url: 'http://localhost:8080',
+			},
+		],
+		components: {
+			schemas: {
+				Canonico: {
+					type: 'object',
+					properties: {
+						id: {
+							type: 'string',
+							description: 'O identificador único do canônico.',
+						},
+						nome: {
+							type: 'string',
+							description: 'O nome do canônico.',
+						},
+						descricao: {
+							type: 'string',
+							description: 'Uma descrição do canônico.',
+						},
+					},
+					required: ['id', 'nome'],
 				},
-			],
+			},
 		},
 	},
 	apis: ['./src/routes/*.ts'],
