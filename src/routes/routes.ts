@@ -11,7 +11,6 @@ import {
 import { logRequest, logError } from '../middlewares/loggerMiddleware';
 import { asyncHandler } from '../middlewares/asyncHandler';
 import { errorHandler } from '../middlewares/globalExptionHandler';
-import { loadCanonicoService } from '../service/canonico';
 
 const router = express.Router();
 

@@ -9,6 +9,7 @@ import DynamoDBService from '../../dynamodb/DynamoDBService';
 import { processCanonicoData } from './etl/etl-processor';
 import { validateCanonico } from './validations/validations';
 import { IParametro } from '../../interfaces/parametros';
+import buildCanonical from 'canonical-builder';
 
 const CANONICO_COLLECTION: string = 'canonico';
 
@@ -155,7 +156,8 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 		}
 
 		// Processamento e montagem do canônico usando os metadados
-		const dadoCanonico = processCanonicoData(chamadas, responses, dadosParametros);
+		let dadoCanonico = processCanonicoData(chamadas, responses, dadosParametros);
+		// dadoCanonico = buildCanonical(canonicoExistente, dadosParametros, dadoCanonico);
 
 		const dynamoDBServiceForCanonicoData: DynamoDBService = new DynamoDBService(canonicoExistente.nome);
 		await dynamoDBServiceForCanonicoData.addItem(dadoCanonico);
