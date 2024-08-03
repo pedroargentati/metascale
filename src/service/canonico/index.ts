@@ -48,12 +48,20 @@ export const getCanonicoByIdService = async (id: string): Promise<any> => {
 
 const salvarCanonico = async (data: any): Promise<any> => {
 	data.chamadas.sort((a: any, b: any) => a.ordem - b.ordem);
+
+	if (!data.versao) {
+		data.versao = 1;
+	} else {
+		data.versao += 1;
+	}
+
 	await dynamoDBService.putItem(data);
 };
 
 export const createCanonicoService = async (data: any): Promise<any> => {
 	try {
 		validateCanonico(data);
+		delete data.versao;
 
 		const canonicoComMesmoNome = await getCanonico(data.nome);
 		if (canonicoComMesmoNome && canonicoComMesmoNome.statusCanonico !== CANONICO_STATUS_ATIVO) {
