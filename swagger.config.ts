@@ -9,7 +9,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
 		info: {
 			title: 'Metascale API',
 			version: '1.0.0',
-			description: 'Documentação da API do Metascale.',
+			description: `Documentação da API do Metascale.`,
 			contact: {
 				name: 'Cicada',
 			},
