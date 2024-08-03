@@ -34,8 +34,9 @@ const calculaChavePelosParametrosDasChamadas = (chamadas: any[], dadosParametros
 export const processCanonicoData = (canonico: any, responses: any[], dadosParametros: any): any => {
 	const chamadas = canonico.chamadas;
 
-	const dadoCanonico: { ID: string; data: any } = {
+	const dadoCanonico: { ID: string; versao: number; data: any } = {
 		ID: calculaChavePelosParametrosDasChamadas(chamadas, dadosParametros),
+		versao: canonico.versao,
 		data: null,
 	};
 
