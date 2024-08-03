@@ -21,6 +21,8 @@ router.use(logRequest);
  * @swagger
  * /:
  *   get:
+ *     tags:
+ *         - Canonicos
  *     summary: Exibe uma mensagem de boas-vindas.
  *     description: Endpoint que exibe uma mensagem de boas-vindas ao acessar a API.
  *     responses:
@@ -40,6 +42,8 @@ router.get('/', (req, res) => {
  * @swagger
  * /canonico:
  *   get:
+ *     tags:
+ *         - Canonicos
  *     summary: Listar todos canônicos.
  *     description: Retorna uma lista com todos os canônicos disponíveis.
  *     responses:
@@ -58,6 +62,8 @@ router.get('/canonico', asyncHandler(getAllCanonico));
  * @swagger
  * /canonico/{id}:
  *   get:
+ *     tags:
+ *         - Canonicos
  *     summary: Listar canônico por ID.
  *     description: Retorna um canônico específico com base no ID fornecido.
  *     parameters:
@@ -83,6 +89,8 @@ router.get('/canonico/:id', asyncHandler(getCanonicoById));
  * @swagger
  * /canonico/{nome}/load:
  *   post:
+ *     tags:
+ *         - Canonicos
  *     summary: Carregar dados de canônicos.
  *     description: Carrega dados para um canônico específico identificado pelo nome.
  *     parameters:
@@ -104,6 +112,8 @@ router.post('/canonico/:id/load', asyncHandler(loadCanonico));
  * @swagger
  * /canonico:
  *   post:
+ *     tags:
+ *         - Canonicos
  *     summary: Criar canônicos.
  *     description: Cria um novo canônico.
  *     requestBody:
@@ -124,6 +134,8 @@ router.post('/canonico', asyncHandler(createCanonico));
  * @swagger
  * /canonico/{id}:
  *   put:
+ *     tags:
+ *         - Canonicos
  *     summary: Atualizar canônicos.
  *     description: Atualiza um canônico existente com base no ID fornecido.
  *     parameters:
@@ -153,6 +165,8 @@ router.put('/canonico/:id', asyncHandler(updateCanonico));
  * @swagger
  * /canonico/{id}:
  *   patch:
+ *     tags:
+ *         - Canonicos
  *     summary: Atualizar parcialmente canônicos.
  *     description: Atualiza parcialmente um canônico existente com base no ID fornecido.
  *     parameters:
@@ -182,6 +196,8 @@ router.patch('/canonico/:id', asyncHandler(updatePartialCanonico));
  * @swagger
  * /canonico/{id}:
  *   delete:
+ *     tags:
+ *         - Canonicos
  *     summary: Deletar canônico.
  *     description: Deleta um canônico específico com base no ID fornecido.
  *     parameters:

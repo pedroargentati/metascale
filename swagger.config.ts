@@ -2,9 +2,10 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { Express } from 'express';
 
-const swaggerOptions = {
+const swaggerOptions: swaggerJSDoc.Options = {
 	swaggerDefinition: {
 		openapi: '3.0.0',
+		tags: [{ name: 'Canonicos' }],
 		info: {
 			title: 'Metascale API',
 			version: '1.0.0',
@@ -41,11 +42,12 @@ const swaggerOptions = {
 			},
 		},
 	},
+
 	apis: ['./src/routes/*.ts'],
 };
 
-const swaggerDocs = swaggerJSDoc(swaggerOptions);
+const openapiSpecification = swaggerJSDoc(swaggerOptions);
 
 export function setupSwagger(app: Express): void {
-	app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+	app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 }
