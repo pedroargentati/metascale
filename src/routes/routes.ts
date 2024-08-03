@@ -38,7 +38,7 @@ router.get('/', (req, res) => {
 
 /**
  * @swagger
- * /canonicos:
+ * /canonico:
  *   get:
  *     summary: Listar todos canônicos.
  *     description: Retorna uma lista com todos os canônicos disponíveis.
@@ -52,11 +52,11 @@ router.get('/', (req, res) => {
  *               items:
  *                 $ref: '#/components/schemas/Canonico'
  */
-router.get('/canonicos', asyncHandler(getAllCanonico));
+router.get('/canonico', asyncHandler(getAllCanonico));
 
 /**
  * @swagger
- * /canonicos/{id}:
+ * /canonico/{id}:
  *   get:
  *     summary: Listar canônico por ID.
  *     description: Retorna um canônico específico com base no ID fornecido.
@@ -77,11 +77,11 @@ router.get('/canonicos', asyncHandler(getAllCanonico));
  *       404:
  *         description: Canônico não encontrado.
  */
-router.get('/canonicos/:id', asyncHandler(getCanonicoById));
+router.get('/canonico/:id', asyncHandler(getCanonicoById));
 
 /**
  * @swagger
- * /canonicos/{nome}/load:
+ * /canonico/{nome}/load:
  *   post:
  *     summary: Carregar dados de canônicos.
  *     description: Carrega dados para um canônico específico identificado pelo nome.
@@ -98,11 +98,11 @@ router.get('/canonicos/:id', asyncHandler(getCanonicoById));
  *       400:
  *         description: Erro ao carregar dados.
  */
-router.post('/canonicos/:id/load', asyncHandler(loadCanonico));
+router.post('/canonico/:id/load', asyncHandler(loadCanonico));
 
 /**
  * @swagger
- * /canonicos:
+ * /canonico:
  *   post:
  *     summary: Criar canônicos.
  *     description: Cria um novo canônico.
@@ -118,11 +118,11 @@ router.post('/canonicos/:id/load', asyncHandler(loadCanonico));
  *       400:
  *         description: Erro na criação do canônico.
  */
-router.post('/canonicos', asyncHandler(createCanonico));
+router.post('/canonico', asyncHandler(createCanonico));
 
 /**
  * @swagger
- * /canonicos/{id}:
+ * /canonico/{id}:
  *   put:
  *     summary: Atualizar canônicos.
  *     description: Atualiza um canônico existente com base no ID fornecido.
@@ -147,11 +147,11 @@ router.post('/canonicos', asyncHandler(createCanonico));
  *       404:
  *         description: Canônico não encontrado.
  */
-router.put('/canonicos/:id', asyncHandler(updateCanonico));
+router.put('/canonico/:id', asyncHandler(updateCanonico));
 
 /**
  * @swagger
- * /canonicos/{id}:
+ * /canonico/{id}:
  *   patch:
  *     summary: Atualizar parcialmente canônicos.
  *     description: Atualiza parcialmente um canônico existente com base no ID fornecido.
@@ -176,11 +176,11 @@ router.put('/canonicos/:id', asyncHandler(updateCanonico));
  *       404:
  *         description: Canônico não encontrado.
  */
-router.patch('/canonicos/:id', asyncHandler(updatePartialCanonico));
+router.patch('/canonico/:id', asyncHandler(updatePartialCanonico));
 
 /**
  * @swagger
- * /canonicos/{id}:
+ * /canonico/{id}:
  *   delete:
  *     summary: Deletar canônico.
  *     description: Deleta um canônico específico com base no ID fornecido.
@@ -197,7 +197,7 @@ router.patch('/canonicos/:id', asyncHandler(updatePartialCanonico));
  *       404:
  *         description: Canônico não encontrado.
  */
-router.delete('/canonicos/:id', asyncHandler(deleteCanonico));
+router.delete('/canonico/:id', asyncHandler(deleteCanonico));
 
 // Middleware para tratamento de erros
 router.use(errorHandler);

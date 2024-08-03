@@ -32,8 +32,8 @@ export async function getCanonicoById(req: Request, res: Response): Promise<any>
 	logger.info('[ROUTES :: Canonico] Iniciando getCanonicoById.');
 	const { id } = req.params;
 	try {
-		const canonicos = await getCanonicoByIdService(id);
-		res.status(200).send(canonicos);
+		const canonico = await getCanonicoByIdService(id);
+		res.status(200).send(canonico);
 	} catch (error: any) {
 		logger.error(`[ROUTES :: Canonico] Erro ao buscar com ID ${id}: ${error.message}`);
 		throw new IntegrationError(`Erro ao buscar o canônico com ID: ${id}: ${error.message}`, error.statusCode);

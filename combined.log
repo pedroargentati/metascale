@@ -229,3 +229,61 @@
 2024-07-27T00:46:21.354Z info: [ROUTES :: Canonico] Iniciando getAllCanonico.
 2024-07-27T00:46:21.355Z info: Buscando todos os itens da tabela canonico...
 2024-07-27T00:46:21.923Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-08-03T19:32:55.946Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-08-03T19:32:55.949Z info: [ROUTES :: Canonico] Iniciando getAllCanonico.
+2024-08-03T19:32:55.950Z info: Buscando todos os itens da tabela canonico...
+2024-08-03T19:32:56.568Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-08-03T19:32:56.569Z error: [ROUTES :: Canonico] Erro ao buscar os canônicos: Error: Canônicos não encontrados.
+2024-08-03T19:34:13.174Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-08-03T19:34:13.175Z info: [ROUTES :: Canonico] Iniciando getAllCanonico.
+2024-08-03T19:34:13.175Z info: Buscando todos os itens da tabela canonico...
+2024-08-03T19:34:13.660Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-08-03T19:34:34.610Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProduto :: Status: 200
+2024-08-03T19:34:34.612Z info: [ROUTES :: Canonico] Iniciando getCanonicoById.
+2024-08-03T19:34:34.613Z info: Buscando item na tabela canonico...
+2024-08-03T19:34:34.767Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"UBB3ROB3HE9QJ2GET6MG8GBR6NVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"statusCanonico":"A","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://clienteprodutovivo.free.beeceptor.com/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"nome":"clienteProduto","descricao":"Produtos do Cliente"}}
+2024-08-03T19:34:55.299Z info: Requisição :: Método: POST :: URL: /canonicos :: Status: 200
+2024-08-03T19:34:55.300Z info: [ROUTES :: Canonico] Iniciando createCanonico.
+2024-08-03T19:34:55.301Z error: [ROUTES :: Erro ao criar o canônico: Os campos nome, descrição, chamadas e tipoPosProcessamento são obrigatórios.
+2024-08-03T19:35:08.479Z info: Requisição :: Método: POST :: URL: /canonicos :: Status: 200
+2024-08-03T19:35:08.480Z info: [ROUTES :: Canonico] Iniciando createCanonico.
+2024-08-03T19:35:08.480Z info: Buscando item na tabela canonico...
+2024-08-03T19:35:08.631Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto1"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"7DJM7RGSQ0UOIC3OTOIHG8VQOFVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0}}
+2024-08-03T19:35:08.632Z info: Adicionando item na tabela canonico...
+2024-08-03T19:35:08.789Z info: Item adicionado com sucesso na tabela canonico
+2024-08-03T19:35:08.790Z info: Criando tabela clienteProduto1 no DynamoDB...
+2024-08-03T19:35:08.973Z info: Tabela clienteProduto1 criada com sucesso!
+2024-08-03T19:35:19.024Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProduto1 :: Status: 200
+2024-08-03T19:35:19.024Z info: [ROUTES :: Canonico] Iniciando getCanonicoById.
+2024-08-03T19:35:19.025Z info: Buscando item na tabela canonico...
+2024-08-03T19:35:19.175Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto1"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"N0HK30O78T9NU1CTDJMHHMOUVFVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto1","tipoPosProcessamento":"DEFAULT","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://clienteprodutovivo.free.beeceptor.com/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-08-03T19:35:53.032Z info: Requisição :: Método: PUT :: URL: /canonicos/clienteProduto1 :: Status: 200
+2024-08-03T19:35:53.033Z info: [ROUTES :: Canonico] Iniciando updateCanonico.
+2024-08-03T19:35:53.033Z info: Buscando item na tabela canonico...
+2024-08-03T19:35:53.189Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto1"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"BAENEVJJ819R1ABG1E0ES0RST3VV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto1","tipoPosProcessamento":"DEFAULT","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://clienteprodutovivo.free.beeceptor.com/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-08-03T19:35:53.192Z error: [ROUTES :: Erro ao atualizar o canônico com ID: clienteProduto1: Erro ao atualizar o canônico: Os campos nome, descrição, chamadas e tipoPosProcessamento são obrigatórios.
+2024-08-03T19:36:05.989Z info: Requisição :: Método: PUT :: URL: /canonicos/clienteProduto1 :: Status: 200
+2024-08-03T19:36:05.989Z info: [ROUTES :: Canonico] Iniciando updateCanonico.
+2024-08-03T19:36:05.990Z info: Buscando item na tabela canonico...
+2024-08-03T19:36:06.144Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto1"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"JPDHHPFVC3RUPH9LEFVMG3JA1FVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto1","tipoPosProcessamento":"DEFAULT","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://clienteprodutovivo.free.beeceptor.com/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-08-03T19:36:06.144Z info: Adicionando item na tabela canonico...
+2024-08-03T19:36:06.303Z info: Item adicionado com sucesso na tabela canonico
+2024-08-03T19:36:31.731Z info: Requisição :: Método: DELETE :: URL: /canonicos/clienteProduto1 :: Status: 200
+2024-08-03T19:36:31.732Z info: [ROUTES :: Canonico] Iniciando deleteCanonico.
+2024-08-03T19:36:31.732Z info: Buscando item na tabela canonico...
+2024-08-03T19:36:31.889Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto1"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"5KHFUNA0FVVGCPPVDGRMQCJM5BVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"nome":"clienteProduto1","tipoPosProcessamento":"CUSTOM","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"localhost/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente"}}
+2024-08-03T19:36:31.890Z info: Atualizando item na tabela canonico...
+2024-08-03T19:36:32.047Z info: Item atualizado com sucesso na tabela canonico
+2024-08-03T19:36:47.627Z info: Requisição :: Método: GET :: URL: /canonicos :: Status: 200
+2024-08-03T19:36:47.628Z info: [ROUTES :: Canonico] Iniciando getAllCanonico.
+2024-08-03T19:36:47.628Z info: Buscando todos os itens da tabela canonico...
+2024-08-03T19:36:47.784Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-08-03T19:36:54.033Z info: Requisição :: Método: GET :: URL: /canonicos/clienteProduto1 :: Status: 200
+2024-08-03T19:36:54.033Z info: [ROUTES :: Canonico] Iniciando getCanonicoById.
+2024-08-03T19:36:54.034Z info: Buscando item na tabela canonico...
+2024-08-03T19:36:54.187Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto1"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"E2G241PSAJLUR716GMMMQJ8TV7VV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"statusCanonico":"I","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"localhost/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"nome":"clienteProduto1","tipoPosProcessamento":"CUSTOM","descricao":"Produtos do Cliente"}}
+2024-08-03T19:40:36.487Z info: Requisição :: Método: POST :: URL: /canonico :: Status: 200
+2024-08-03T19:40:36.490Z info: [ROUTES :: Canonico] Iniciando createCanonico.
+2024-08-03T19:40:36.491Z info: Buscando item na tabela canonico...
+2024-08-03T19:40:37.067Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto1"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"N9HOJ1ESVGCO9R15SB967QQP6FVV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"statusCanonico":"I","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"localhost/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"nome":"clienteProduto1","tipoPosProcessamento":"CUSTOM","descricao":"Produtos do Cliente"}}
+2024-08-03T19:40:37.067Z error: [ROUTES :: Erro ao criar o canônico: Canônico com o nome clienteProduto1 já existe e está inativo. Por favor verifique com o administrador a possibilidade da sua exclusão permanente
