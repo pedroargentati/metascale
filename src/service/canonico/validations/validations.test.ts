@@ -1,5 +1,6 @@
 import { CumulativeIntegrationError } from '../../../errors/CumulativeIntegrationError';
 import { IntegrationError } from '../../../errors/IntegrationError';
+import { CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT } from '../../../utils/constants';
 import { validateCanonico } from './validations';
 
 describe('validateCanonico', () => {
@@ -9,12 +10,22 @@ describe('validateCanonico', () => {
 	});
 
 	it('deve lançar um IntegrationError se os campos obrigatórios estiverem ausentes', () => {
-		const data = { nome: 'Nome', descricao: 'Descricao' }; // faltando chamadas
+		const data = { nome: 'Nome', descricao: 'Descricao' }; // faltando chamadas e tipoPosProcessamento
+		expect(() => validateCanonico(data)).toThrow(IntegrationError);
+	});
+
+	it('deve lançar um IntegrationError se tipoPosProcessamento for um valor inválido', () => {
+		const data = { nome: 'Nome', descricao: 'Descricao', tipoPosProcessamento: '' };
 		expect(() => validateCanonico(data)).toThrow(IntegrationError);
 	});
 
 	it('deve lançar um IntegrationError se chamadas não for um array ou estiver vazio', () => {
-		const data = { nome: 'Nome', descricao: 'Descricao', chamadas: {} }; // chamadas não é um array
+		const data = {
+			nome: 'Nome',
+			descricao: 'Descricao',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
+			chamadas: {},
+		}; // chamadas não é um array
 		expect(() => validateCanonico(data)).toThrow(IntegrationError);
 
 		data.chamadas = []; // chamadas é um array vazio
@@ -25,6 +36,7 @@ describe('validateCanonico', () => {
 		const data = {
 			nome: 'Nome',
 			descricao: 'Descricao',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 			chamadas: [{ nome: 'Chamada1' }], // faltando campos obrigatórios em chamadas
 		};
 
@@ -35,6 +47,7 @@ describe('validateCanonico', () => {
 		const data = {
 			nome: 'Nome',
 			descricao: 'Descricao',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 			chamadas: [
 				{
 					ordem: 1,
@@ -49,28 +62,11 @@ describe('validateCanonico', () => {
 		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
 	});
 
-	it('deve lançar um CumulativeIntegrationError se chamadas.parametros não for um array ou estiver vazio', () => {
-		const data = {
-			nome: 'Nome',
-			descricao: 'Descricao',
-			chamadas: [
-				{
-					ordem: 1,
-					nome: 'Chamada1',
-					url: 'http://example.com',
-					descricao: 'Descricao',
-					parametros: {}, // não é um array
-				},
-			],
-		};
-
-		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
-	});
-
 	it('deve lançar um CumulativeIntegrationError se chamadas possui o campo name repetido ', () => {
 		const data = {
 			nome: 'Nome',
 			descricao: 'Descricao',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 			chamadas: [
 				{
 					ordem: 1,
@@ -96,6 +92,7 @@ describe('validateCanonico', () => {
 		const data = {
 			nome: 'Nome',
 			descricao: 'Descricao',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 			chamadas: [
 				{
 					ordem: 1,

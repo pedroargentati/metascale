@@ -19,8 +19,7 @@ export async function get(req: Request, res: Response) {
 export async function getAllCanonico(req: Request, res: Response): Promise<any> {
 	logger.info('[ROUTES :: Canonico] Iniciando getAllCanonico.');
 	try {
-		const { status_canonico = 'T' } = req.query; // status em que os canônicos serão buscados. Default: T
-		const canonicos = await getCanonicoService(status_canonico as string);
+		const canonicos = await getCanonicoService();
 		res.status(200).send(canonicos);
 	} catch (error: any) {
 		logger.error(`[ROUTES :: Canonico] Erro ao buscar os canônicos: ${error}`);
@@ -98,13 +97,13 @@ export async function deleteCanonico(req: Request, res: Response): Promise<any> 
 // LOAD
 export async function loadCanonico(req: Request, res: Response): Promise<any> {
 	logger.info('[ROUTES :: Canonico] Iniciando loadCanonico.');
-	const { nome } = req.params;
+	const { id } = req.params;
 	const dadosParametros = req.body;
 	try {
-		const response = await loadCanonicoService(nome, dadosParametros);
+		const response = await loadCanonicoService(id, dadosParametros);
 		res.status(200).send(response);
 	} catch (error: any) {
-		logger.error(`[ROUTES :: Erro ao carregar o canônico com nome ${nome}: ${error.message}`);
+		logger.error(`[ROUTES :: Erro ao carregar o canônico com nome ${id}: ${error.message}`);
 		throw error;
 	}
 }

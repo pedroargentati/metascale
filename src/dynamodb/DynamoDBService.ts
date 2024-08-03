@@ -50,11 +50,11 @@ class DynamoDBService {
 	}
 
 	/**
-	 * Adiciona um item à tabela do DynamoDB.
+	 * Adiciona ou substitui um item na tabela do DynamoDB.
 	 * @param {Record<string, any>} item - Objeto a ser adicionado à tabela.
 	 * @returns Promessa resolvendo em sucesso ou erro.
 	 */
-	public async addItem(item: Record<string, any>): Promise<PutCommandOutput> {
+	public async putItem(item: Record<string, any>): Promise<PutCommandOutput> {
 		logger.info(`Adicionando item na tabela ${this.tableName}...`);
 		const params = {
 			TableName: this.tableName,

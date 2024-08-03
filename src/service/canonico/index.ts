@@ -2,56 +2,71 @@
 import { IntegrationError } from '../../errors/IntegrationError';
 
 /** Client Operations */
-import { fetchDataController } from '../client/client';
 import DynamoDBService from '../../dynamodb/DynamoDBService';
+import { fetchDataController } from '../client/client';
 
 /** Métodos de Validações/Processamento de dados. */
+import { IParametro } from '../../interfaces/parametros';
+import { CANONICO_STATUS_ATIVO, CANONICO_STATUS_INATIVO } from '../../utils/constants';
 import { processCanonicoData } from './etl/etl-processor';
 import { validateCanonico } from './validations/validations';
-import { IParametro } from '../../interfaces/parametros';
-import buildCanonical from 'canonical-builder';
 
 const CANONICO_COLLECTION: string = 'canonico';
 
 const dynamoDBService: DynamoDBService = new DynamoDBService(CANONICO_COLLECTION);
 
-export const getCanonicoService = async (status_canonico: string): Promise<any> => {
-	try {
-		const params: Record<string, any> = {
-			FilterExpression: '#status_canonico = :status_canonico',
-			ExpressionAttributeNames: { '#status_canonico': 'status_canonico' },
-			ExpressionAttributeValues: { ':status_canonico': status_canonico },
-		};
+export const getCanonicoService = async (): Promise<any> => {
+	const params: Record<string, any> = {
+		FilterExpression: '#statusCanonico = :statusCanonico',
+		ExpressionAttributeNames: { '#statusCanonico': 'statusCanonico' },
+		ExpressionAttributeValues: { ':statusCanonico': CANONICO_STATUS_ATIVO },
+	};
 
-		const canonicos = await dynamoDBService.getAllItems(status_canonico !== 'T' ? params : {});
-		if (!canonicos || !canonicos.length) {
-			throw new IntegrationError('Canônicos não encontrados.', 204);
-		}
-		return canonicos;
-	} catch (error: any) {
-		throw error;
+	const canonicos = await dynamoDBService.getAllItems(params);
+	if (!canonicos || !canonicos.length) {
+		throw new IntegrationError('Canônicos não encontrados.', 204);
 	}
+	return canonicos;
+};
+
+const getCanonico = async (id: string): Promise<any> => {
+	const canonico = await dynamoDBService.getItem({ nome: id });
+	return canonico;
+};
+
+const isCanonicoValidoParaUso = async (canonico: any): Promise<boolean> => {
+	return canonico && canonico.statusCanonico === CANONICO_STATUS_ATIVO;
 };
 
 export const getCanonicoByIdService = async (id: string): Promise<any> => {
-	try {
-		const canonico = await dynamoDBService.getItem({ nome: id });
-		if (!canonico) {
-			throw new IntegrationError('Canônico não encontrado', 404);
-		}
-		return canonico;
-	} catch (error: any) {
-		throw error;
+	const canonico = await getCanonico(id);
+	if (!isCanonicoValidoParaUso(canonico)) {
+		throw new IntegrationError('Canônico não encontrado', 404);
 	}
+	return canonico;
+};
+
+const salvarCanonico = async (data: any): Promise<any> => {
+	data.chamadas.sort((a: any, b: any) => a.ordem - b.ordem);
+	await dynamoDBService.putItem(data);
 };
 
 export const createCanonicoService = async (data: any): Promise<any> => {
 	try {
 		validateCanonico(data);
 
-		data.chamadas.sort((a: any, b: any) => a.ordem - b.ordem);
+		const canonicoComMesmoNome = await getCanonico(data.nome);
+		if (canonicoComMesmoNome && canonicoComMesmoNome.statusCanonico !== CANONICO_STATUS_ATIVO) {
+			throw new IntegrationError(
+				`Canônico com o nome ${data.nome} já existe e está inativo. Por favor verifique com o administrador a possibilidade da sua exclusão permanente`,
+				409,
+			);
+		} else if (canonicoComMesmoNome) {
+			throw new IntegrationError(`Canônico com o nome ${data.nome} já existe`, 409);
+		}
 
-		await dynamoDBService.addItem(data).then(() => new DynamoDBService(data.nome).createTable());
+		await salvarCanonico(data);
+		new DynamoDBService(data.nome).createTable();
 
 		return data;
 	} catch (error: any) {
@@ -59,28 +74,20 @@ export const createCanonicoService = async (data: any): Promise<any> => {
 	}
 };
 
-const getCanonicoExistente = async (id: string): Promise<any> => {
-	const canonicoExistente = await dynamoDBService.getItem({ nome: id });
-	if (!canonicoExistente) {
-		throw new IntegrationError('Canônico não encontrado', 404);
-	}
-	return canonicoExistente;
+const atualizaStatusDoCanonico = async (id: string, status: string): Promise<any> => {
+	const updateExpression: string = 'SET statusCanonico = :statusCanonico';
+	const expressionAttributeValues: any = { ':statusCanonico': status };
+
+	await dynamoDBService.updateItem({ nome: id }, updateExpression, expressionAttributeValues);
 };
 
 export const updatePartialCanonicoService = async (id: string, data: any): Promise<any> => {
 	try {
-		const canonicoExistente = await getCanonicoExistente(id);
+		const _ = await getCanonicoByIdService(id);
 
-		if (!canonicoExistente) {
-			throw new IntegrationError('Canônico não encontrado', 404);
+		if (data.statusCanonico) {
+			await atualizaStatusDoCanonico(id, data.statusCanonico);
 		}
-
-		if (data.status_canonico === canonicoExistente.status_canonico) return;
-
-		const updateExpression: string = 'SET status_canonico = :status_canonico';
-		const expressionAttributeValues: any = { ':status_canonico': data.status_canonico };
-
-		await dynamoDBService.updateItem({ nome: id }, updateExpression, expressionAttributeValues);
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao atualizar o canônico: ${error.message}`, 500);
 	}
@@ -88,18 +95,13 @@ export const updatePartialCanonicoService = async (id: string, data: any): Promi
 
 export const updateCanonicoService = async (id: string, data: any): Promise<any> => {
 	try {
-		const canonicoExistente = await getCanonicoExistente(id);
-
-		if (!canonicoExistente) {
-			throw new IntegrationError('Canônico não encontrado', 404);
-		}
+		const _ = await getCanonicoByIdService(id);
 
 		validateCanonico(data);
 
-		// await dynamoDBService.updateItem({ nome: id }, data);
+		await salvarCanonico(data);
 
-		// TODO: Agendar reprocessamento de canonicos já inseridos na estrutura anterior
-		// return await getOne(CANONICO_COLLECTION, id);
+		return data;
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao atualizar o canônico: ${error.message}`, 500);
 	}
@@ -107,13 +109,10 @@ export const updateCanonicoService = async (id: string, data: any): Promise<any>
 
 export const deleteCanonicoService = async (id: string): Promise<any> => {
 	try {
-		const canonico = await getCanonicoExistente(id);
+		const canonico = await getCanonicoByIdService(id);
 
-		if (!canonico) {
-			throw new IntegrationError('Canônico não encontrado', 404);
-		}
+		await atualizaStatusDoCanonico(id, CANONICO_STATUS_INATIVO);
 
-		await dynamoDBService.deleteItem({ nome: id });
 		return canonico;
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao deletar o canônico: ${error.message}`, 500);
@@ -122,7 +121,7 @@ export const deleteCanonicoService = async (id: string): Promise<any> => {
 
 export const loadCanonicoService = async (id: string, dadosParametros: any): Promise<any> => {
 	try {
-		const canonicoExistente = await getCanonicoExistente(id);
+		const canonicoExistente = await getCanonicoByIdService(id);
 
 		const { chamadas } = canonicoExistente;
 
@@ -141,8 +140,8 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 				const chamadasDaOrdem = chamadasPorOrdem.get(ordem);
 
 				const requisicoesDisparadas = chamadasDaOrdem.map(
-					(chamada: { url: string; parametros: IParametro[] }) =>
-						fetchDataController(chamada.url, chamada.parametros, dadosParametros),
+					(chamada: { url: string; parametros: IParametro[]; nome: string }) =>
+						fetchDataController(chamada.url, chamada.parametros, dadosParametros[chamada.nome]),
 				);
 
 				const resolvedResponses = await Promise.all(requisicoesDisparadas).catch((error) => {
@@ -155,12 +154,10 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 			}
 		}
 
-		// Processamento e montagem do canônico usando os metadados
-		let dadoCanonico = processCanonicoData(chamadas, responses, dadosParametros);
-		// dadoCanonico = buildCanonical(canonicoExistente, dadosParametros, dadoCanonico);
+		let dadoCanonico = processCanonicoData(canonicoExistente, responses, dadosParametros);
 
 		const dynamoDBServiceForCanonicoData: DynamoDBService = new DynamoDBService(canonicoExistente.nome);
-		await dynamoDBServiceForCanonicoData.addItem(dadoCanonico);
+		await dynamoDBServiceForCanonicoData.putItem(dadoCanonico);
 
 		return dadoCanonico;
 	} catch (error: any) {

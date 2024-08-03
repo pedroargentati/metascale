@@ -98,7 +98,7 @@ router.get('/canonicos/:id', asyncHandler(getCanonicoById));
  *       400:
  *         description: Erro ao carregar dados.
  */
-router.post('/canonicos/:nome/load', asyncHandler(loadCanonico));
+router.post('/canonicos/:id/load', asyncHandler(loadCanonico));
 
 /**
  * @swagger

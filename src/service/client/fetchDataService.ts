@@ -37,7 +37,7 @@ export const fetchData = async (
  * @param {IParametro[]} parametros Parâmetros da requisição.
  * @returns URL e query params da requisição.
  */
-export const handleParameters = (resourceUrl: string, parametros: IParametro[], dadosParametros: any) => {
+export const handleParameters = (resourceUrl: string, parametros: IParametro[], dadosParametros: any = {}) => {
 	let url: string = resourceUrl;
 	const queryParams: { [key: string]: string | number | boolean } = {};
 
