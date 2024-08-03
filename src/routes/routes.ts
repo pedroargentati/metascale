@@ -7,10 +7,11 @@ import {
 	loadCanonico,
 	updateCanonico,
 	updatePartialCanonico,
-} from './canonico';
+} from './canonico/canonico';
 import { logRequest, logError } from '../middlewares/loggerMiddleware';
 import { asyncHandler } from '../middlewares/asyncHandler';
 import { errorHandler } from '../middlewares/globalExptionHandler';
+import { produceMessage, consumeMessages } from './kafka/kafka-controller';
 
 const router = express.Router();
 
@@ -214,6 +215,9 @@ router.patch('/canonico/:id', asyncHandler(updatePartialCanonico));
  *         description: Canônico não encontrado.
  */
 router.delete('/canonico/:id', asyncHandler(deleteCanonico));
+
+router.post('/produce', produceMessage);
+router.post('/consume', consumeMessages);
 
 // Middleware para tratamento de erros
 router.use(errorHandler);
