@@ -114,9 +114,25 @@ router.post('/canonico/:id/load', asyncHandler(loadCanonico));
  * /canonico:
  *   post:
  *     tags:
- *         - Canonicos
+ *       - Canonicos
  *     summary: Criar canônicos.
- *     description: Cria um novo canônico.
+ *     description: |
+ *       Cria um novo canônico. O processo de criação inclui:
+ *       - Validação dos dados fornecidos.
+ *       - Verificação se o nome do canônico já existe e se está ativo.
+ *       - Salvamento do canônico e criação da tabela correspondente no DynamoDB.
+ *       Exceções que podem ser lançadas:
+ *       - O corpo da requisição não pode estar vazio.
+ *       - Os campos nome, descrição, chamadas e tipoPosProcessamento são obrigatórios.
+ *       - O campo tipoPosProcessamento deve ter valores válidos.
+ *       - O campo chamadas deve ser um array e não pode estar vazio.
+ *       - O campo ordem é obrigatório para cada chamada.
+ *       - O campo nome é obrigatório para cada chamada.
+ *       - O campo url é obrigatório para cada chamada.
+ *       - O campo descrição é obrigatório para cada chamada.
+ *       - Nomes de chamadas duplicados não são permitidos.
+ *       - Canônico com o nome já existe e está inativo.
+ *       - Canônico com o nome já existe.
  *     requestBody:
  *       required: true
  *       content:
@@ -127,7 +143,11 @@ router.post('/canonico/:id/load', asyncHandler(loadCanonico));
  *       201:
  *         description: Canônico criado com sucesso.
  *       400:
- *         description: Erro na criação do canônico.
+ *         description: |
+ *           Erro na criação do canônico. Veja a descrição para mais detalhes.
+ *       409:
+ *         description: |
+ *           Conflito ao criar o canônico. Veja a descrição para mais detalhes.
  */
 router.post('/canonico', asyncHandler(createCanonico));
 
