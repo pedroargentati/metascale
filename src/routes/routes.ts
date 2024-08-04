@@ -216,7 +216,62 @@ router.patch('/canonico/:id', asyncHandler(updatePartialCanonico));
  */
 router.delete('/canonico/:id', asyncHandler(deleteCanonico));
 
+/**
+ * @swagger
+ * /produce:
+ *   post:
+ *     tags:
+ *       - Job
+ *     summary: Produzir uma mensagem para um tópico do Kafka.
+ *     description: Produz uma mensagem para um tópico do Kafka.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               topic:
+ *                 type: string
+ *                 description: O tópico do Kafka para produzir.
+ *                 example: my-topic
+ *               message:
+ *                 type: object
+ *                 description: A mensagem a ser produzida.
+ *                 example: { "key": "value" }
+ *     responses:
+ *       200:
+ *         description: Mensagem produzida com sucesso.
+ *       500:
+ *         description: Erro ao produzir a mensagem.
+ */
 router.post('/produce', produceMessage);
+
+/**
+ * @swagger
+ * /consume:
+ *   post:
+ *     tags:
+ *       - Job
+ *     summary: Iniciar o consumo de mensagens de um tópico do Kafka.
+ *     description: Inicia o consumo de mensagens de um tópico do Kafka.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               topic:
+ *                 type: string
+ *                 description: O tópico do Kafka para consumir.
+ *                 example: my-topic
+ *     responses:
+ *       200:
+ *         description: Consumo da mensagem iniciado.
+ *       500:
+ *         description: Erro ao consumir a mensagem.
+ */
 router.post('/consume', consumeMessages);
 
 // Middleware para tratamento de erros
