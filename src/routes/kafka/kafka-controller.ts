@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import KafkaService from '../../service/kafka/service/kafka-service';
+import KafkaService from '../../service/kafka/kafka-service';
 import logger from '../../config/logger/logger';
 
 /**

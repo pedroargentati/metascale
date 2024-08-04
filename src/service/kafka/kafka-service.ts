@@ -1,4 +1,4 @@
-import kafka from '../config/kafka.config';
+import kafka from '../../config/kafka/kafka.config';
 
 /**
  * @description Classe KafkaService para produzir e consumir mensagens do Kafka.
