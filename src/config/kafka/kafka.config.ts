@@ -1,8 +1,8 @@
-import { Kafka, Partitioners, logLevel } from 'kafkajs';
+import { Kafka, logLevel } from 'kafkajs';
 
 const kafka = new Kafka({
 	clientId: process.env.KAFKA_CLIENT_ID,
-	brokers: [process.env.KAFKA_BROKER!],
+	brokers: process.env.KAFKA_BROKERS!.split(','),
 	logLevel: logLevel.INFO,
 });
 
