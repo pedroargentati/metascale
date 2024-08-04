@@ -29,7 +29,7 @@ export const consumeMessages = (req: Request, res: Response) => {
 	try {
 		const { topic } = req.body;
 		KafkaService.consume(topic, (message: any) => {
-			console.log(`Received message: ${JSON.stringify(message)}`);
+			console.log(`Mensagem recebida: ${JSON.stringify(message)}`);
 		});
 		res.status(200).send('Consumo da mensagem iniciado.');
 	} catch (error) {
