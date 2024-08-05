@@ -360,3 +360,72 @@
 2024-08-03T21:54:48.892Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-standalone-preset.js :: Status: 200
 2024-08-03T21:54:48.893Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-init.js :: Status: 200
 2024-08-03T21:54:48.962Z info: Requisição :: Método: GET :: URL: /api-docs/favicon-32x32.png :: Status: 200
+2024-08-04T16:03:57.045Z info: Requisição :: Método: GET :: URL: /api-docs/ :: Status: 200
+2024-08-04T16:03:57.075Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui.css :: Status: 200
+2024-08-04T16:03:57.077Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-bundle.js :: Status: 200
+2024-08-04T16:03:57.079Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-standalone-preset.js :: Status: 200
+2024-08-04T16:03:57.085Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-init.js :: Status: 200
+2024-08-04T16:03:57.369Z info: Requisição :: Método: GET :: URL: /api-docs/favicon-32x32.png :: Status: 200
+2024-08-04T16:08:48.356Z info: Requisição :: Método: GET :: URL: /api-docs/ :: Status: 200
+2024-08-04T16:08:48.379Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui.css :: Status: 200
+2024-08-04T16:08:48.382Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-bundle.js :: Status: 200
+2024-08-04T16:08:48.383Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-standalone-preset.js :: Status: 200
+2024-08-04T16:08:48.384Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-init.js :: Status: 200
+2024-08-04T16:08:48.642Z info: Requisição :: Método: GET :: URL: /api-docs/favicon-32x32.png :: Status: 200
+2024-08-04T16:10:35.267Z info: Requisição :: Método: GET :: URL: /api-docs/ :: Status: 200
+2024-08-04T16:10:35.296Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui.css :: Status: 200
+2024-08-04T16:10:35.297Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-bundle.js :: Status: 200
+2024-08-04T16:10:35.298Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-standalone-preset.js :: Status: 200
+2024-08-04T16:10:35.298Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-init.js :: Status: 200
+2024-08-04T16:10:35.603Z info: Requisição :: Método: GET :: URL: /api-docs/favicon-32x32.png :: Status: 200
+2024-08-04T16:18:02.435Z info: Requisição :: Método: GET :: URL: /api-docs/ :: Status: 200
+2024-08-04T16:18:02.485Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui.css :: Status: 200
+2024-08-04T16:18:02.491Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-bundle.js :: Status: 200
+2024-08-04T16:18:02.492Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-standalone-preset.js :: Status: 200
+2024-08-04T16:18:02.500Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-init.js :: Status: 200
+2024-08-04T16:18:02.851Z info: Requisição :: Método: GET :: URL: /api-docs/favicon-32x32.png :: Status: 200
+2024-08-04T22:33:12.690Z info: Requisição :: Método: POST :: URL: /canonicos/produce :: Status: 200
+2024-08-04T22:33:24.938Z info: Requisição :: Método: POST :: URL: /produce :: Status: 200
+2024-08-04T22:33:24.938Z info: [ROUTES :: Kafka] Iniciando produceMessage.
+2024-08-04T22:33:24.940Z error: [ROUTES :: Kafka] Erro ao produzir a mensagem: KafkaJSNonRetriableError: Failed to connect: broker at index 0 is invalid "undefined"
+2024-08-04T22:35:17.490Z info: Requisição :: Método: GET :: URL: /api-docs/ :: Status: 200
+2024-08-04T22:35:17.527Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-bundle.js :: Status: 200
+2024-08-04T22:35:17.529Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui.css :: Status: 200
+2024-08-04T22:35:17.532Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-standalone-preset.js :: Status: 200
+2024-08-04T22:35:17.545Z info: Requisição :: Método: GET :: URL: /api-docs/swagger-ui-init.js :: Status: 200
+2024-08-04T22:35:17.936Z info: Requisição :: Método: GET :: URL: /api-docs/favicon-32x32.png :: Status: 200
+2024-08-04T22:37:36.869Z info: Requisição :: Método: POST :: URL: /produce :: Status: 200
+2024-08-04T22:37:36.871Z info: [ROUTES :: Kafka] Iniciando produceMessage.
+2024-08-04T22:37:36.872Z error: [ROUTES :: Kafka] Erro ao produzir a mensagem: KafkaJSNonRetriableError: Failed to connect: broker at index 0 is invalid "undefined"
+2024-08-04T22:42:15.347Z info: Requisição :: Método: POST :: URL: /produce :: Status: 200
+2024-08-04T22:42:15.349Z info: [ROUTES :: Kafka] Iniciando produceMessage.
+2024-08-04T22:42:29.882Z info: Requisição :: Método: POST :: URL: /consume :: Status: 200
+2024-08-04T22:42:29.883Z info: [ROUTES :: Kafka] Iniciando consumeMessages.
+2024-08-04T22:43:16.102Z info: Requisição :: Método: POST :: URL: /produce :: Status: 200
+2024-08-04T22:43:16.104Z info: [ROUTES :: Kafka] Iniciando produceMessage.
+2024-08-04T22:43:27.280Z info: Requisição :: Método: POST :: URL: /produce :: Status: 200
+2024-08-04T22:43:27.280Z info: [ROUTES :: Kafka] Iniciando produceMessage.
+2024-08-04T23:27:42.266Z info: Requisição :: Método: POST :: URL: /consume :: Status: 200
+2024-08-04T23:27:42.268Z info: [ROUTES :: Kafka] Iniciando consumeMessages.
+2024-08-04T23:28:24.113Z info: Requisição :: Método: POST :: URL: /consume :: Status: 200
+2024-08-04T23:28:24.115Z info: [ROUTES :: Kafka] Iniciando consumeMessages.
+2024-08-04T23:33:00.643Z info: Requisição :: Método: POST :: URL: /produce :: Status: 200
+2024-08-04T23:33:00.644Z info: [ROUTES :: Kafka] Iniciando produceMessage.
+2024-08-04T23:39:16.443Z info: Requisição :: Método: POST :: URL: /produce :: Status: 200
+2024-08-04T23:39:16.445Z info: [ROUTES :: Kafka] Iniciando produceMessage.
+2024-08-04T23:40:08.266Z info: Requisição :: Método: POST :: URL: /produce :: Status: 200
+2024-08-04T23:40:08.267Z info: [ROUTES :: Kafka] Iniciando produceMessage.
+2024-08-04T23:44:35.724Z info: Requisição :: Método: POST :: URL: /consume :: Status: 200
+2024-08-04T23:44:35.725Z info: [ROUTES :: Kafka] Iniciando consumeMessages.
+2024-08-04T23:45:09.644Z info: Requisição :: Método: POST :: URL: /consume :: Status: 200
+2024-08-04T23:45:45.007Z info: Requisição :: Método: POST :: URL: /consume :: Status: 200
+2024-08-04T23:45:45.009Z info: [ROUTES :: Kafka] Iniciando consumeMessages.
+2024-08-04T23:45:59.540Z info: Requisição :: Método: POST :: URL: /produce :: Status: 200
+2024-08-04T23:45:59.541Z info: [ROUTES :: Kafka] Iniciando produceMessage.
+2024-08-04T23:46:00.958Z info: Requisição :: Método: POST :: URL: /produce :: Status: 200
+2024-08-04T23:46:00.958Z info: [ROUTES :: Kafka] Iniciando produceMessage.
+2024-08-04T23:46:07.049Z info: Requisição :: Método: POST :: URL: /produce :: Status: 200
+2024-08-04T23:46:07.049Z info: [ROUTES :: Kafka] Iniciando produceMessage.
+2024-08-04T23:46:12.914Z info: Requisição :: Método: POST :: URL: /produce :: Status: 200
+2024-08-04T23:46:12.915Z info: [ROUTES :: Kafka] Iniciando produceMessage.
+2024-08-04T23:46:26.736Z info: Requisição :: Método: POST :: URL: /consume :: Status: 200
