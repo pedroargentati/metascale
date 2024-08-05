@@ -1,6 +1,7 @@
 node_modules
 .env
 .prettierignore
+.vscode
 tsconfig.json
 .eslintignore
 /coverage
