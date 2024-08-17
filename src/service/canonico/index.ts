@@ -10,6 +10,7 @@ import { IParametro } from '../../interfaces/parametros';
 import { CANONICO_STATUS_ATIVO, CANONICO_STATUS_INATIVO } from '../../utils/constants';
 import { processCanonicoData } from './etl/etl-processor';
 import { validateCanonico } from './validations/validations';
+import { reproccessCanonical, synchronizeCanonical } from 'canonical-builder';
 
 const CANONICO_COLLECTION: string = 'canonico';
 
@@ -162,7 +163,7 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 			}
 		}
 
-		let dadoCanonico = processCanonicoData(canonicoExistente, responses, dadosParametros);
+		let dadoCanonico = await processCanonicoData(canonicoExistente, responses, dadosParametros);
 
 		const dynamoDBServiceForCanonicoData: DynamoDBService = new DynamoDBService(canonicoExistente.nome);
 		await dynamoDBServiceForCanonicoData.putItem(dadoCanonico);
@@ -172,3 +173,23 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 		throw new IntegrationError(`Erro ao carregar o canônico de ID ${id}: ${error.message}`, 500);
 	}
 };
+
+export async function sincronizaCanonicoService(id: string, kafkaMessage: any): Promise<any> {
+	try {
+		const canonicoExistente = await getCanonicoByIdService(id);
+
+		await synchronizeCanonical(canonicoExistente, kafkaMessage);
+	} catch (error: any) {
+		throw new IntegrationError(`Erro ao sincronizar o canônico de ID ${id}: ${error.message}`, 500);
+	}
+}
+
+export async function reprocessaCanonicoService(id: string, payloadReprocessamento: any) {
+	try {
+		const canonicoExistente = await getCanonicoByIdService(id);
+
+		await reproccessCanonical(canonicoExistente, payloadReprocessamento);
+	} catch (error: any) {
+		throw new IntegrationError(`Erro ao reprocessar o canônico de ID ${id}: ${error.message}`, 500);
+	}
+}

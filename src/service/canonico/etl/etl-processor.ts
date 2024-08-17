@@ -1,4 +1,4 @@
-import buildCanonical from 'canonical-builder';
+import { buildCanonical } from 'canonical-builder';
 import { IntegrationError } from '../../../errors/IntegrationError';
 import { IParametro } from '../../../interfaces/parametros';
 import {
@@ -31,7 +31,7 @@ const calculaChavePelosParametrosDasChamadas = (chamadas: any[], dadosParametros
  * @param dadosParametros - Dados dos parâmetros.
  * @returns Dados processados.
  */
-export const processCanonicoData = (canonico: any, responses: any[], dadosParametros: any): any => {
+export const processCanonicoData = async (canonico: any, responses: any[], dadosParametros: any): Promise<any> => {
 	const chamadas = canonico.chamadas;
 
 	const dadoCanonico: { ID: string; versao: number; data: any } = {
@@ -53,7 +53,7 @@ export const processCanonicoData = (canonico: any, responses: any[], dadosParame
 		}
 	}
 	if (canonico.tipoPosProcessamento === CANONICO_TIPO_POS_PROCESSAMENTO_CUSTOM) {
-		dadoCanonico.data = buildCanonical(canonico, dadosParametros, dadoCanonico);
+		dadoCanonico.data = await buildCanonical(canonico, dadosParametros, dadoCanonico);
 	}
 
 	return dadoCanonico;
