@@ -8,7 +8,7 @@ import { fetchDataController } from '../client/client';
 /** Métodos de Validações/Processamento de dados. */
 import { IParametro } from '../../interfaces/parametros';
 import { CANONICO_STATUS_ATIVO, CANONICO_STATUS_INATIVO } from '../../utils/constants';
-import { processCanonicoData } from './etl/etl-processor';
+import { processCanonicoDataService } from './etl/etl-processor';
 import { validateCanonico } from './validations/validations';
 import { reproccessCanonical, synchronizeCanonical } from 'canonical-builder';
 
@@ -163,7 +163,7 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 			}
 		}
 
-		let dadoCanonico = await processCanonicoData(canonicoExistente, responses, dadosParametros);
+		let dadoCanonico = await processCanonicoDataService(canonicoExistente, responses, dadosParametros);
 
 		const dynamoDBServiceForCanonicoData: DynamoDBService = new DynamoDBService(canonicoExistente.nome);
 		await dynamoDBServiceForCanonicoData.putItem(dadoCanonico);

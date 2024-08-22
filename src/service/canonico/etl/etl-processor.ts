@@ -31,7 +31,11 @@ const calculaChavePelosParametrosDasChamadas = (chamadas: any[], dadosParametros
  * @param dadosParametros - Dados dos parâmetros.
  * @returns Dados processados.
  */
-export const processCanonicoData = async (canonico: any, responses: any[], dadosParametros: any): Promise<any> => {
+export const processCanonicoDataService = async (
+	canonico: any,
+	responses: any[],
+	dadosParametros: any,
+): Promise<any> => {
 	const chamadas = canonico.chamadas;
 
 	const dadoCanonico: { ID: string; versao: number; data: any } = {

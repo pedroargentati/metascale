@@ -5,11 +5,14 @@ import {
 	getCanonicoByIdService,
 	getCanonicoService,
 	loadCanonicoService,
+	reprocessaCanonicoService,
+	sincronizaCanonicoService,
 	updateCanonicoService,
 	updatePartialCanonicoService,
 } from '../../service/canonico';
 import { IntegrationError } from '../../errors/IntegrationError';
 import logger from '../../config/logger/logger';
+import { processCanonicoDataService } from '../../service/canonico/etl/etl-processor';
 
 export async function get(req: Request, res: Response) {
 	res.send('Bem-vindo à API!');
@@ -104,6 +107,20 @@ export async function loadCanonico(req: Request, res: Response): Promise<any> {
 		res.status(200).send(response);
 	} catch (error: any) {
 		logger.error(`[ROUTES :: Erro ao carregar o canônico com nome ${id}: ${error.message}`);
+		throw error;
+	}
+}
+
+// reprocessa
+export async function reprocessaCanonico(req: Request, res: Response): Promise<any> {
+	logger.info('[ROUTES :: Canonico] Iniciando reprocessaCanonico.');
+	const { id } = req.params;
+	const payloadReprocessamento = req.body;
+	try {
+		const response = await reprocessaCanonicoService(id, payloadReprocessamento);
+		res.status(200).send(response);
+	} catch (error: any) {
+		logger.error(`[ROUTES :: Erro ao processar canônico ${id}: ${error.message}`);
 		throw error;
 	}
 }

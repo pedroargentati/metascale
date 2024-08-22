@@ -5,6 +5,7 @@ import {
 	getAllCanonico,
 	getCanonicoById,
 	loadCanonico,
+	reprocessaCanonico,
 	updateCanonico,
 	updatePartialCanonico,
 } from './canonico/canonico';
@@ -58,6 +59,8 @@ router.get('/', (req, res) => {
  *                 $ref: '#/components/schemas/Canonico'
  */
 router.get('/canonico', asyncHandler(getAllCanonico));
+
+router.post('/canonico/:id/reprocessa', reprocessaCanonico);
 
 /**
  * @swagger
