@@ -108,7 +108,7 @@ export const updateCanonicoService = async (id: string, data: any): Promise<any>
 
 		validateCanonico(data);
 
-		await salvarCanonico({ ...data, versao: canonicoExistente.versao });
+		await salvarCanonico({ ...data, versao: canonicoExistente?.versao });
 
 		return await getCanonicoByIdService(id);
 	} catch (error: any) {
