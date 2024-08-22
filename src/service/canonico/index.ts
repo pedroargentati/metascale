@@ -104,13 +104,13 @@ export const updatePartialCanonicoService = async (id: string, data: any): Promi
 
 export const updateCanonicoService = async (id: string, data: any): Promise<any> => {
 	try {
-		const _ = await getCanonicoByIdService(id);
+		const canonicoExistente = await getCanonicoByIdService(id);
 
 		validateCanonico(data);
 
-		await salvarCanonico(data);
+		await salvarCanonico({ ...data, versao: canonicoExistente.versao });
 
-		return data;
+		return await getCanonicoByIdService(id);
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao atualizar o canônico: ${error.message}`, 500);
 	}

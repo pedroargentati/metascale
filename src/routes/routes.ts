@@ -60,7 +60,7 @@ router.get('/', (req, res) => {
  */
 router.get('/canonico', asyncHandler(getAllCanonico));
 
-router.post('/canonico/:id/reprocessa', reprocessaCanonico);
+router.post('/canonico/:id/reprocessa', asyncHandler(reprocessaCanonico));
 
 /**
  * @swagger
