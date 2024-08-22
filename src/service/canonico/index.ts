@@ -174,13 +174,11 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 	}
 };
 
-export async function sincronizaCanonicoService(id: string, kafkaMessage: any): Promise<any> {
+export async function sincronizaCanonicoService(canonico: any, kafkaMessage: any): Promise<any> {
 	try {
-		const canonicoExistente = await getCanonicoByIdService(id);
-
-		await synchronizeCanonical(canonicoExistente, kafkaMessage);
+		await synchronizeCanonical(canonico, kafkaMessage);
 	} catch (error: any) {
-		throw new IntegrationError(`Erro ao sincronizar o canônico de ID ${id}: ${error.message}`, 500);
+		throw new IntegrationError(`Erro ao sincronizar o canônico de ID ${canonico?.id}: ${error.message}`, 500);
 	}
 }
 

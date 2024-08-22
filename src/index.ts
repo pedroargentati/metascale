@@ -5,19 +5,27 @@ config(); // Carrega variáveis de ambiente do .env no início
 import express from 'express';
 import * as core from 'express-serve-static-core';
 import routes from './routes/routes';
+import consumeAllCanonicos from './app/kafka.app';
+import { INSTANCE_TYPE_API } from './utils/constants';
 
-const app: core.Express = express();
-app.use(express.json());
+let app: core.Express | null = null;
 
-const defaultPort: number = 8080;
+if (process.env.INSTANCE_TYPE === INSTANCE_TYPE_API) {
+	app = express();
+	app.use(express.json());
 
-app.use('/', routes);
-setupSwagger(app);
+	const port = process.env.PORT || 8080;
 
-const port = process.env.PORT || defaultPort;
+	app.use('/', routes);
+	setupSwagger(app);
 
-app.listen(port, () => {
-	console.log(`Servidor está escutando: http://localhost:${port}`);
-});
+	app.listen(port, () => {
+		console.log(`Servidor está escutando: http://localhost:${port}`);
+	});
+} else {
+	(async () => {
+		await consumeAllCanonicos();
+	})();
+}
 
 export default app;
