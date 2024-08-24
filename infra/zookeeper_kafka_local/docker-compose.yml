@@ -1,5 +1,9 @@
 version: '3.8'
 
+networks:
+  testeVivoNetwork:
+    external: true
+
 services:
   zookeeper:
     image: 'bitnami/zookeeper:latest'
