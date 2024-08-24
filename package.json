@@ -21,7 +21,7 @@
 		"@types/dotenv": "^8.2.0",
 		"@types/winston": "^2.4.4",
 		"axios": "^1.7.2",
-		"@internal/canonical-builder": "^1.0.20",
+		"@internal/canonical-builder": "^1.0.0",
 		"dotenv": "^16.4.5",
 		"express": "^4.19.2",
 		"kafkajs": "^2.2.4",
