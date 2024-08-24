@@ -19,6 +19,8 @@ services:
       - '3306'
     volumes:
       - ./db:/docker-entrypoint-initdb.d
+    networks:
+      - testeVivoNetwork
   
   connect:
     image: quay.io/debezium/connect:2.7
@@ -27,10 +29,12 @@ services:
       CONFIG_STORAGE_TOPIC: 'my_connect_configs'
       OFFSET_STORAGE_TOPIC: 'my_connect_offsets'
       STATUS_STORAGE_TOPIC: 'my_connect_statuses'
-      BOOTSTRAP_SERVERS: "db:3306"
+      BOOTSTRAP_SERVERS: "kafka:9094"
     ports:
       - '8083:8083'
     expose:
       - '8083'
     depends_on:
       - db
+    networks:
+      - testeVivoNetwork
