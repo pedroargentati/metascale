@@ -1,0 +1,36 @@
+version: '3.8'
+
+networks:
+  testeVivoNetwork:
+    external: true
+
+services:
+  db:
+    image: mysql:8.0-debian
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'user'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
+  
+  connect:
+    image: quay.io/debezium/connect:2.7
+    restart: always
+    environment:
+      CONFIG_STORAGE_TOPIC: 'my_connect_configs'
+      OFFSET_STORAGE_TOPIC: 'my_connect_offsets'
+      STATUS_STORAGE_TOPIC: 'my_connect_statuses'
+      BOOTSTRAP_SERVERS: "db:3306"
+    ports:
+      - '8083:8083'
+    expose:
+      - '8083'
+    depends_on:
+      - db
