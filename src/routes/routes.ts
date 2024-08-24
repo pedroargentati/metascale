@@ -60,6 +60,75 @@ router.get('/', (req, res) => {
  */
 router.get('/canonico', asyncHandler(getAllCanonico));
 
+/**
+ * @swagger
+ * /canonico/{id}/reprocessa:
+ *   post:
+ *     tags:
+ *       - Canonicos
+ *     summary: Reprocessar um canônico por ID.
+ *     description: Reprocessa um canônico específico usando o ID fornecido e um payload de reprocessamento.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID do canônico a ser reprocessado.
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               payloadReprocessamento:
+ *                 type: object
+ *                 description: Dados necessários para o reprocessamento do canônico.
+ *                 example: {}
+ *     responses:
+ *       200:
+ *         description: Canônico reprocessado com sucesso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Canônico reprocessado com sucesso."
+ *       400:
+ *         description: Requisição inválida.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "ID do canônico inválido ou payload de reprocessamento ausente."
+ *       404:
+ *         description: Requisição inválida.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Canônico não encontrado"
+ *       500:
+ *         description: Erro interno do servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Erro ao reprocessar o canônico de ID {id}: {mensagem de erro}"
+ */
+
 router.post('/canonico/:id/reprocessa', asyncHandler(reprocessaCanonico));
 
 /**
