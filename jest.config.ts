@@ -22,7 +22,6 @@ const config: Config.InitialOptions = {
 		'client.ts',
 		'kafka-service.ts',
 		'fetchDataService.ts',
-		'etl-processor.ts ',
 		'kafka.config.ts',
 		'logger.ts',
 		'DynamoDBService.ts',
