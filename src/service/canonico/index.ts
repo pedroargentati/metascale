@@ -12,10 +12,17 @@ import { processCanonicoDataService } from './etl/etl-processor';
 import { validateCanonico } from './validations/validations';
 import { reproccessCanonical, synchronizeCanonical } from 'canonical-builder';
 
+/** Constantes. */
 const CANONICO_COLLECTION: string = 'canonico';
 
+/** Serviços. */
 const dynamoDBService: DynamoDBService = new DynamoDBService(CANONICO_COLLECTION);
 
+/**
+ * @description Retorna todos os canônicos ativos.
+ *
+ * @returns Canônicos ativos.
+ */
 export const getCanonicoService = async (): Promise<any> => {
 	const params: Record<string, any> = {
 		FilterExpression: '#statusCanonico = :statusCanonico',
@@ -30,15 +37,12 @@ export const getCanonicoService = async (): Promise<any> => {
 	return canonicos;
 };
 
-const getCanonico = async (id: string): Promise<any> => {
-	const canonico = await dynamoDBService.getItem({ nome: id });
-	return canonico;
-};
-
-const isCanonicoValidoParaUso = async (canonico: any): Promise<boolean> => {
-	return canonico && canonico.statusCanonico === CANONICO_STATUS_ATIVO;
-};
-
+/**
+ * @description Retorna o canônico pelo ID.
+ *
+ * @param {string} id - ID do canônico.
+ * @returns Canônico.
+ */
 export const getCanonicoByIdService = async (id: string): Promise<any> => {
 	const canonico = await getCanonico(id);
 	if (!isCanonicoValidoParaUso(canonico)) {
@@ -47,18 +51,12 @@ export const getCanonicoByIdService = async (id: string): Promise<any> => {
 	return canonico;
 };
 
-const salvarCanonico = async (data: any): Promise<any> => {
-	data.chamadas.sort((a: any, b: any) => a.ordem - b.ordem);
-
-	if (!data.versao) {
-		data.versao = 1;
-	} else {
-		data.versao += 1;
-	}
-
-	await dynamoDBService.putItem(data);
-};
-
+/**
+ * @description Cria um canônico.
+ *
+ * @param {any} data - Canônico a ser criado.
+ * @returns Canônico.
+ */
 export const createCanonicoService = async (data: any): Promise<any> => {
 	try {
 		validateCanonico(data);
@@ -83,13 +81,13 @@ export const createCanonicoService = async (data: any): Promise<any> => {
 	}
 };
 
-const atualizaStatusDoCanonico = async (id: string, status: string): Promise<any> => {
-	const updateExpression: string = 'SET statusCanonico = :statusCanonico';
-	const expressionAttributeValues: any = { ':statusCanonico': status };
-
-	await dynamoDBService.updateItem({ nome: id }, updateExpression, expressionAttributeValues);
-};
-
+/**
+ * @description Atualiza o status do canônico.
+ *
+ * @param {string} id - ID do canônico.
+ * @param {string} data - Canônico a ser atualizado parcialmente.
+ * @returns Canônico.
+ */
 export const updatePartialCanonicoService = async (id: string, data: any): Promise<any> => {
 	try {
 		const _ = await getCanonicoByIdService(id);
@@ -102,6 +100,13 @@ export const updatePartialCanonicoService = async (id: string, data: any): Promi
 	}
 };
 
+/**
+ * @description Atualiza o canônico.
+ *
+ * @param {string} id - ID do canônico.
+ * @param {string} data - Canônico a ser atualizado.
+ * @returns Canônico.
+ */
 export const updateCanonicoService = async (id: string, data: any): Promise<any> => {
 	try {
 		const canonicoExistente = await getCanonicoByIdService(id);
@@ -116,6 +121,12 @@ export const updateCanonicoService = async (id: string, data: any): Promise<any>
 	}
 };
 
+/**
+ * @description Deleta o canônico.
+ *
+ * @param {string} id - ID do canônico.
+ * @returns Canônico.
+ */
 export const deleteCanonicoService = async (id: string): Promise<any> => {
 	try {
 		const canonico = await getCanonicoByIdService(id);
@@ -128,6 +139,13 @@ export const deleteCanonicoService = async (id: string): Promise<any> => {
 	}
 };
 
+/**
+ * @description Carrega o canônico.
+ *
+ * @param {string} id - ID do canônico.
+ * @param {any} dadosParametros - Dados dos parâmetros.
+ * @returns Canônico.
+ */
 export const loadCanonicoService = async (id: string, dadosParametros: any): Promise<any> => {
 	try {
 		const canonicoExistente = await getCanonicoByIdService(id);
@@ -174,6 +192,12 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 	}
 };
 
+/**
+ * @description Sincroniza o canônico.
+ *
+ * @param canonico Canônico a ser sincronizado.
+ * @param kafkaMessage Mensagem a ser consumida no kafka.
+ */
 export async function sincronizaCanonicoService(canonico: any, kafkaMessage: any): Promise<any> {
 	try {
 		await synchronizeCanonical(canonico, kafkaMessage);
@@ -182,6 +206,12 @@ export async function sincronizaCanonicoService(canonico: any, kafkaMessage: any
 	}
 }
 
+/**
+ * @description Reprocessa o canônico.
+ *
+ * @param id ID do canônico.
+ * @param payloadReprocessamento Payload de reprocessamento.
+ */
 export async function reprocessaCanonicoService(id: string, payloadReprocessamento: any) {
 	try {
 		const canonicoExistente = await getCanonicoByIdService(id);
@@ -191,3 +221,58 @@ export async function reprocessaCanonicoService(id: string, payloadReprocessamen
 		throw new IntegrationError(`Erro ao reprocessar o canônico de ID ${id}: ${error.message}`, 500);
 	}
 }
+
+/** Métodos auxiliares. */
+
+/**
+ * @description Retorna o canônico pelo ID.
+ *
+ * @param {string} id - ID do canônico.
+ * @returns Canônico.
+ */
+const getCanonico = async (id: string): Promise<any> => {
+	const canonico = await dynamoDBService.getItem({ nome: id });
+	return canonico;
+};
+
+/**
+ * @description Verifica se o canônico é válido para uso.
+ *
+ * @param {any} canonico - Canônico.
+ * @returns {boolean} - Se o canônico é válido para uso.
+ */
+const isCanonicoValidoParaUso = async (canonico: any): Promise<boolean> => {
+	return canonico && canonico.statusCanonico === CANONICO_STATUS_ATIVO;
+};
+
+/**
+ * @description Salva um canônico no DynamoDB.
+ *
+ * @param {string} data - Canônico a ser salvo.
+ * @returns Canônico.
+ */
+const salvarCanonico = async (data: any): Promise<any> => {
+	data.chamadas.sort((a: any, b: any) => a.ordem - b.ordem);
+
+	if (!data.versao) {
+		data.versao = 1;
+	} else {
+		data.versao += 1;
+	}
+
+	await dynamoDBService.putItem(data);
+};
+
+/**
+ * @description Atualiza o status do canônico.
+ *
+ * @param {string} id - ID do canônico.
+ * @param {string} status - Status do canônico.
+ * @returns Canônico.
+ */
+const atualizaStatusDoCanonico = async (id: string, status: string): Promise<any> => {
+	const updateExpression: string = 'SET statusCanonico = :statusCanonico';
+	const expressionAttributeValues: any = { ':statusCanonico': status };
+
+	await dynamoDBService.updateItem({ nome: id }, updateExpression, expressionAttributeValues);
+};
