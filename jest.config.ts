@@ -31,7 +31,6 @@ const config: Config.InitialOptions = {
 		'routes',
 		'routes.ts',
 		'kafka-controller.ts',
-		'etl-processor.ts',
 	],
 };
 
