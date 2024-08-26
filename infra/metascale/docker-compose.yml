@@ -1,0 +1,22 @@
+version: '3.8'
+
+networks:
+  testeVivoNetwork:
+    external: true
+
+services:
+  metascale-api:
+    image: 'metascale:prod'
+    ports:
+      - '8080:8080'
+    environment:
+      - INSTANCE_TYPE=API
+    networks:
+      - testeVivoNetwork
+
+  metascale-kafka:
+    image: 'metascale:prod'
+    environment:
+      - INSTANCE_TYPE=KAFKA
+    networks:
+      - testeVivoNetwork
