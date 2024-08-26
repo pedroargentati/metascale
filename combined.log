@@ -429,3 +429,18 @@
 2024-08-04T23:46:12.914Z info: Requisição :: Método: POST :: URL: /produce :: Status: 200
 2024-08-04T23:46:12.915Z info: [ROUTES :: Kafka] Iniciando produceMessage.
 2024-08-04T23:46:26.736Z info: Requisição :: Método: POST :: URL: /consume :: Status: 200
+2024-08-26T04:34:34.665Z info: Buscando todos os itens da tabela canonico...
+2024-08-26T04:34:34.671Z info: Inicialização baseada no tipo de instância: KAFKA
+2024-08-26T04:34:35.845Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-08-26T04:36:07.323Z info: Buscando todos os itens da tabela canonico...
+2024-08-26T04:36:07.329Z info: Inicialização baseada no tipo de instância: KAFKA
+2024-08-26T04:36:07.899Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-08-26T04:36:47.078Z info: Buscando todos os itens da tabela canonico...
+2024-08-26T04:36:47.085Z info: Inicialização baseada no tipo de instância: KAFKA
+2024-08-26T04:36:47.764Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-08-26T04:43:04.335Z info: Buscando todos os itens da tabela canonico...
+2024-08-26T04:43:04.342Z info: Inicialização baseada no tipo de instância: KAFKA
+2024-08-26T04:43:05.498Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-08-26T04:45:16.072Z info: Buscando todos os itens da tabela canonico...
+2024-08-26T04:45:16.078Z info: Inicialização baseada no tipo de instância: KAFKA
+2024-08-26T04:45:16.670Z info: Todos os itens da tabela canonico foram buscados com sucesso

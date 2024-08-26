@@ -14,6 +14,10 @@ async function consumeAllCanonicos() {
 		kafkaService.consume(canonico.nome, async (message: any) => {
 			sincronizaCanonicoService(canonico, message);
 		});
+
+		kafkaService.consume('db1.VivoTest.Produtos', async (message: any) => {
+			sincronizaCanonicoService(canonico, message);
+		});
 	}
 }
 
