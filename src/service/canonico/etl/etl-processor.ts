@@ -1,4 +1,4 @@
-import { buildCanonical } from 'canonical-builder';
+import { buildCanonical } from '@internal/canonical-builder';
 import { IntegrationError } from '../../../errors/IntegrationError';
 import { IParametro } from '../../../interfaces/parametros';
 import {

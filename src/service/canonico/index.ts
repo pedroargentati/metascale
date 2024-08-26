@@ -10,7 +10,7 @@ import { IParametro } from '../../interfaces/parametros';
 import { CANONICO_STATUS_ATIVO, CANONICO_STATUS_INATIVO } from '../../utils/constants';
 import { processCanonicoDataService } from './etl/etl-processor';
 import { validateCanonico } from './validations/validations';
-import { reproccessCanonical, synchronizeCanonical } from 'canonical-builder';
+import { reproccessCanonical, synchronizeCanonical } from '@internal/canonical-builder';
 
 /** Constantes. */
 const CANONICO_COLLECTION: string = 'canonico';

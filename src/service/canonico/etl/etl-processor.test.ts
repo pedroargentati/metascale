@@ -1,5 +1,5 @@
 import { IntegrationError } from '../../../errors/IntegrationError';
-import { buildCanonical } from 'canonical-builder';
+import { buildCanonical } from '@internal/canonical-builder';
 import {
 	CANONICO_TIPO_POS_PROCESSAMENTO_CUSTOM,
 	CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
@@ -7,7 +7,7 @@ import {
 import { processCanonicoDataService } from './etl-processor';
 
 // Mock da função buildCanonical para os testes
-jest.mock('canonical-builder', () => ({
+jest.mock('@internal/canonical-builder', () => ({
 	buildCanonical: jest.fn(),
 }));
 
