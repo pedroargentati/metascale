@@ -39,12 +39,12 @@ class KafkaService {
 						const receivedMessage = message.value ? JSON.parse(message.value.toString()) : null;
 						callback(receivedMessage);
 					} catch (error: any) {
-						console.error(`[KAFKA :: Erro ao consumir mensagem do tópico ${topic}: ${error.message}`);
+						logger.error(`[KAFKA :: Erro ao consumir mensagem do tópico ${topic}: ${error.message}`);
 					}
 				},
 			});
 		} catch (error: any) {
-			console.error(`[KAFKA :: Erro ao conectar no Kafka ou se inscrever no tópico ${topic}: ${error.message}`);
+			logger.error(`[KAFKA :: Erro ao conectar no Kafka ou se inscrever no tópico ${topic}: ${error.message}`);
 		}
 	}
 
