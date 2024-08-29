@@ -11,6 +11,7 @@ import { CANONICO_STATUS_ATIVO, CANONICO_STATUS_INATIVO } from '../../utils/cons
 import { processCanonicoDataService } from './etl/etl-processor';
 import { validateCanonico } from './validations/validations';
 import { reproccessCanonical, synchronizeCanonical } from '@internal/canonical-builder';
+import logger from '../../config/logger/logger';
 
 /** Constantes. */
 const CANONICO_COLLECTION: string = 'canonico';
@@ -199,10 +200,17 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
  * @param kafkaMessage Mensagem a ser consumida no kafka.
  */
 export async function sincronizaCanonicoService(canonico: any, kafkaMessage: any): Promise<any> {
+	logger.info(
+		`[SERVICE :: Canonico] Iniciando sincronização do canônico ${canonico.nome} do tópico ${kafkaMessage.name}...`,
+	);
 	try {
 		await synchronizeCanonical(canonico, kafkaMessage);
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao sincronizar o canônico de ID ${canonico?.id}: ${error.message}`, 500);
+	} finally {
+		logger.info(
+			`[SERVICE :: Canonico] Fim da sincronização do canônico ${canonico.nome} do tópico ${kafkaMessage.name}.`,
+		);
 	}
 }
 
