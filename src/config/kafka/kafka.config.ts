@@ -14,7 +14,7 @@ let kafka: Kafka;
 if (!IS_DEV) {
 	kafka = new Kafka({
 		clientId: process.env.KAFKA_CLIENT_ID,
-		brokers: process.env.KAFKA_BROKERS!.split(','),
+		brokers: process.env.KAFKA_BROKERS!.split(',') || ['localhost:9092'],
 		logLevel: logLevel.INFO,
 		ssl: true,
 		sasl: {
