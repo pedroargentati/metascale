@@ -9,7 +9,10 @@ async function consumeAllCanonicos() {
 	logger.info('[APP :: Kafka] Iniciando consumeAllCanonicos...');
 	const allCanonicos: Record<string, any>[] = await getCanonicoService();
 	console.log('allCanonicos', allCanonicos);
-	if (!allCanonicos?.length) return;
+	if (!allCanonicos?.length) {
+		logger.info('[APP :: Kafka] Nenhum canônico encontrado para consumir.');
+		return;
+	}
 
 	try {
 		// Consome mensagens de todos os tópicos canônicos
@@ -20,9 +23,30 @@ async function consumeAllCanonicos() {
 			}
 
 			for (const topico of canonico.topicos) {
-				await kafkaService.consume(topico, async (message: any) => {
-					await sincronizaCanonicoService(canonico, message);
-				});
+				kafkaService
+					.consume(topico, async (message: any) => {
+						const startTime: number = new Date().getTime();
+						logger.info(
+							`[APP :: Kafka] Iniciando processamento para o canônico ${canonico.nome} no tópico ${topico}.`,
+						);
+
+						try {
+							await sincronizaCanonicoService(canonico, message);
+						} catch (error: any) {
+							logger.error(
+								`[APP :: Kafka] Erro ao sincronizar canônico ${canonico.nome}: ${error.message}`,
+							);
+						} finally {
+							const endTime: number = new Date().getTime();
+							const duration: number = endTime - startTime;
+							logger.info(
+								`[APP :: Kafka] Tempo de processamento para o canônico ${canonico.nome} no tópico ${topico}: ${duration} ms`,
+							);
+						}
+					})
+					.catch((error: any) => {
+						logger.error(`[APP :: Kafka] Erro ao consumir tópico ${topico}: ${error.message}`);
+					});
 			}
 		}
 	} catch (error: any) {
