@@ -6,7 +6,7 @@ import logger from '../../config/logger/logger';
  */
 class KafkaService {
 	private producer = kafka.producer();
-	private consumer = kafka.consumer({ groupId: process.env.KAFKA_GROUP_ID || '' });
+	private consumer = kafka.consumer({ groupId: process.env.KAFKA_GROUP_ID || 'metascale-group' });
 
 	/**
 	 * Produz uma mensagem para um tópico do Kafka.

@@ -18,7 +18,6 @@ const config: Config.InitialOptions = {
 	collectCoverage: true /** padrão é coletar cobertura */,
 	coveragePathIgnorePatterns: [
 		'index.ts',
-		'kafka.app.ts',
 		'client.ts',
 		'kafka-service.ts',
 		'fetchDataService.ts',
