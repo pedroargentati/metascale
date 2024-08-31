@@ -444,3 +444,13 @@
 2024-08-26T04:45:16.072Z info: Buscando todos os itens da tabela canonico...
 2024-08-26T04:45:16.078Z info: Inicialização baseada no tipo de instância: KAFKA
 2024-08-26T04:45:16.670Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-08-31T02:29:06.488Z info: Inicialização baseada no tipo de instância: API
+2024-08-31T02:29:06.492Z info: Servidor está escutando: http://localhost:8080
+2024-08-31T02:29:47.722Z info: Requisição :: Método: GET :: URL: /canonico :: Status: 200
+2024-08-31T02:29:47.723Z info: [ROUTES :: Canonico] Iniciando getAllCanonico.
+2024-08-31T02:29:47.724Z info: Buscando todos os itens da tabela canonico...
+2024-08-31T02:29:48.624Z info: Todos os itens da tabela canonico foram buscados com sucesso
+2024-08-31T02:31:20.713Z info: Requisição :: Método: GET :: URL: /canonico/clienteProduto :: Status: 200
+2024-08-31T02:31:20.714Z info: [ROUTES :: Canonico] Iniciando getCanonicoById.
+2024-08-31T02:31:20.715Z info: Buscando item na tabela canonico...
+2024-08-31T02:31:20.883Z info: Retorno da tabela canonico com a key {"nome":"clienteProduto"} no dynamoDB: {"$metadata":{"httpStatusCode":200,"requestId":"SSEOJLOIFRTH6CPE9GIHQ13A77VV4KQNSO5AEMVJF66Q9ASUAAJG","attempts":1,"totalRetryDelay":0},"Item":{"statusCanonico":"A","chamadas":[{"ordem":1,"nome":"getClienteProduto","parametros":[{"tipoDado":"number","nome":"id","tipo":"path"}],"url":"https://clienteprodutovivo.free.beeceptor.com/users/{id}/products","descricao":"Retorna os produtos do cliente"}],"descricao":"Produtos do Cliente","versao":5,"nome":"clienteProduto","tipoPosProcessamento":"DEFAULT","topicos":{}}}
