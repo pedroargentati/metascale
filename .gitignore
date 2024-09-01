@@ -8,3 +8,4 @@ tsconfig.json
 /dist
 combined.log
 package-lock.json
+.pem

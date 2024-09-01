@@ -1,0 +1,12 @@
+b-1.metascalekafkacluster.a0hdjf.c7.kafka.us-east-2.amazonaws.com:9092
+b-1.metascalekafkacluster.a0hdjf.c7.kafka.us-east-2.amazonaws.com:9094
+b-1.metascalekafkacluster.a0hdjf.c7.kafka.us-east-2.amazonaws.com:9098
+
+docker run -it --rm bitnami/kafka:latest kafka-topics.sh --list --bootstrap-server b-1.metascalekafkacluster.a0hdjf.c7.kafka.us-east-2.amazonaws.com:9092
+docker run -it --rm bitnami/kafka:latest kafka-topics.sh --list --bootstrap-server b-1.metascalekafkacluster.a0hdjf.c7.kafka.us-east-2.amazonaws.com:9094
+docker run -it --rm bitnami/kafka:latest kafka-topics.sh --list --bootstrap-server b-1.metascalekafkacluster.a0hdjf.c7.kafka.us-east-2.amazonaws.com:9098
+
+pastaKafka/bin/kafka-topics.sh --create --bootstrap-server b-3.metascalekafkacluster.a0hdjf.c7.kafka.us-east-2.amazonaws.com:9098 --command-config client.properties --replication-factor 3 --partitions 1 --topic MSKTutorialTopic
+
+
+https://docs.aws.amazon.com/msk/latest/developerguide/produce-consume.html
