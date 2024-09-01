@@ -1,0 +1,1 @@
+scp -r -i C:/Users/Onishi/Downloads/vivo-mock.pem vivo-mock ec2-user@3.19.221.249:/home/ec2-user/vivo-mock
