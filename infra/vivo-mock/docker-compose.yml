@@ -29,7 +29,10 @@ services:
       CONFIG_STORAGE_TOPIC: 'my_connect_configs'
       OFFSET_STORAGE_TOPIC: 'my_connect_offsets'
       STATUS_STORAGE_TOPIC: 'my_connect_statuses'
-      BOOTSTRAP_SERVERS: "kafka:9094"
+      OFFSET_STORAGE_REPLICATION_FACTOR: 2
+      CONFIG_STORAGE_REPLICATION_FACTOR: 2
+      STATUS_STORAGE_REPLICATION_FACTOR: 2
+      BOOTSTRAP_SERVERS: "b-1.metascalekafkacluster.a0hdjf.c7.kafka.us-east-2.amazonaws.com:9092"
     ports:
       - '8083:8083'
     expose:

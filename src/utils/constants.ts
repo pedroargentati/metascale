@@ -1,3 +1,5 @@
+export const IS_DEV: boolean = process.env.DEV_MODE === 'true';
+
 export const CANONICO_STATUS_ATIVO: string = 'A';
 export const CANONICO_STATUS_INATIVO: string = 'I';
 
