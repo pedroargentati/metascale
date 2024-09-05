@@ -162,7 +162,7 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 			}
 		}
 
-		const responses = [];
+		const responses: any[] = [];
 		for (const ordem of chamadasPorOrdem.keys()) {
 			try {
 				const chamadasDaOrdem = chamadasPorOrdem.get(ordem);
