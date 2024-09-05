@@ -86,7 +86,7 @@ class DynamoDBService {
 			const data = await dynamoDB.send(new GetCommand(params));
 
 			logger.info(
-				`Retorno da tabela ${this.tableName} com a key ${JSON.stringify(key)} no dynamoDB: ${JSON.stringify(data)}`,
+				`Retorno da tabela ${this.tableName} com a key ${JSON.stringify(key)} no dynamoDB: ${JSON.stringify(data?.Item)}`,
 			);
 
 			return data?.Item || null;

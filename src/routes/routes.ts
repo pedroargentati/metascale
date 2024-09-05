@@ -24,7 +24,7 @@ router.use(logRequest);
  * /:
  *   get:
  *     tags:
- *         - Canonicos
+ *         - Other
  *     summary: Exibe uma mensagem de boas-vindas.
  *     description: Endpoint que exibe uma mensagem de boas-vindas ao acessar a API.
  *     responses:

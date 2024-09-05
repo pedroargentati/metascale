@@ -5,7 +5,7 @@ import { Express } from 'express';
 const swaggerOptions: swaggerJSDoc.Options = {
 	swaggerDefinition: {
 		openapi: '3.0.0',
-		tags: [{ name: 'Canonicos' }, { name: 'Job' }],
+		tags: [{ name: 'Canonicos' }, { name: 'Job' }, { name: 'Other' }],
 		info: {
 			title: 'Metascale API',
 			version: '1.0.0',
