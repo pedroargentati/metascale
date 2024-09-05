@@ -13,9 +13,10 @@ async function oauthBearerTokenProvider(region: string) {
 let kafka: Kafka;
 
 if (!IS_DEV) {
+	const brokers = process.env.KAFKA_BROKERS?.split(',') || [];
 	kafka = new Kafka({
 		clientId: process.env.KAFKA_CLIENT_ID,
-		brokers: process.env.KAFKA_BROKERS!.split(','),
+		brokers: brokers,
 		logLevel: logLevel.INFO,
 		ssl: true,
 		sasl: {
