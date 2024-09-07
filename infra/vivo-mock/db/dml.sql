@@ -2,16 +2,17 @@ USE VivoTest;
 
 -- Inserir produtos
 INSERT INTO product (product_name, description, release_date, product_type) VALUES
-('Smartphone XYZ', 'Latest smartphone with advanced features', '2023-01-15', 'PHYSICAL'),
-('Laptop ABC', 'High-performance laptop for professionals', '2022-11-01', 'PHYSICAL'),
-('Headphones DEF', 'Noise-canceling wireless headphones', '2022-07-21', 'PHYSICAL'),
-('Cloud Storage Plan', '1TB cloud storage subscription', '2023-05-10', 'DIGITAL'),
-('E-book Reader', 'Lightweight e-book reader with backlight', '2021-10-02', 'PHYSICAL'),
-('Music Streaming Subscription', 'Unlimited music streaming', '2023-02-22', 'DIGITAL'),
-('Software Suite', 'Office productivity software', '2023-03-05', 'DIGITAL'),
-('Smartwatch GHI', 'Smartwatch with health tracking features', '2022-09-17', 'PHYSICAL'),
-('Online Course Subscription', 'Access to a variety of online courses', '2023-06-30', 'DIGITAL'),
-('Fitness Tracker', 'Wearable fitness tracking device', '2022-12-10', 'PHYSICAL');
+('Smartphone XYZ', 'Latest smartphone with advanced features', '2023-01-15', 'MOBILE'),
+('Laptop ABC', 'High-performance laptop for professionals', '2022-11-01', 'MOBILE'),
+('Headphones DEF', 'Noise-canceling wireless headphones', '2022-07-21', 'VALUE_ADDED_SERVICE'),
+('Cloud Storage Plan', '1TB cloud storage subscription', '2023-05-10', 'VALUE_ADDED_SERVICE'),
+('E-book Reader', 'Lightweight e-book reader with backlight', '2021-10-02', 'MOBILE'),
+('Music Streaming Subscription', 'Unlimited music streaming', '2023-02-22', 'VALUE_ADDED_SERVICE'),
+('Software Suite', 'Office productivity software', '2023-03-05', 'VALUE_ADDED_SERVICE'),
+('Smartwatch GHI', 'Smartwatch with health tracking features', '2022-09-17', 'MOBILE'),
+('Online Course Subscription', 'Access to a variety of online courses', '2023-06-30', 'VALUE_ADDED_SERVICE'),
+('Fitness Tracker', 'Wearable fitness tracking device', '2022-12-10', 'MOBILE');
+
 
 -- Inserir clientes
 INSERT INTO client (customer_name, customer_email, customer_phone, city, state) VALUES
