@@ -33,8 +33,9 @@ async function consumeAllCanonicos() {
 						try {
 							await sincronizaCanonicoService(canonico, message);
 						} catch (error: any) {
-							logger.error(
-								`[APP :: Kafka] Erro ao sincronizar canônico ${canonico.nome}: ${error.message}`,
+							logger.log(
+								'synchronize',
+								`Erro ao sincronizar o canônico de ID ${canonico?.id}: ${error.message}`,
 							);
 						} finally {
 							const endTime: number = new Date().getTime();

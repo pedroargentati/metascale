@@ -189,7 +189,7 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 
 		return dadoCanonico;
 	} catch (error: any) {
-		throw new IntegrationError(`Erro ao carregar o canônico de ID ${id}: ${error.message}`, 500);
+		throw new IntegrationError(`${id}: ${error.message}`, 500);
 	}
 };
 
@@ -226,7 +226,7 @@ export async function reprocessaCanonicoService(id: string, payloadReprocessamen
 
 		await reproccessCanonical(canonicoExistente, payloadReprocessamento);
 	} catch (error: any) {
-		throw new IntegrationError(`Erro ao reprocessar o canônico de ID ${id}: ${error.message}`, 500);
+		throw new IntegrationError(`${id}: ${error.message}`, 500);
 	}
 }
 

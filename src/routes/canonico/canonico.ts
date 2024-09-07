@@ -118,7 +118,7 @@ export async function reprocessaCanonico(req: Request, res: Response): Promise<a
 		const response = await reprocessaCanonicoService(id, payloadReprocessamento);
 		res.status(200).send(response);
 	} catch (error: any) {
-		logger.error(`[ROUTES :: Erro ao processar canônico ${id}: ${error.message}`);
+		logger.log('reprocess', `Erro ao reprocessar o canônico com nome ${id}: ${error.message}`);
 		throw error;
 	}
 }
