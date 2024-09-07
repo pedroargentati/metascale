@@ -16,16 +16,16 @@ INSERT INTO product (product_name, description, release_date, product_type) VALU
 
 -- Inserir clientes
 INSERT INTO client (customer_name, customer_email, customer_phone, city, state) VALUES
-('Alexandre Souza', 'alexandre.souza@email.com', '555-1234', 'São Paulo', 'SP'),
-('Maria Silva', 'maria.silva@email.com', '555-5678', 'Rio de Janeiro', 'RJ'),
-('Carlos Oliveira', 'carlos.oliveira@email.com', '555-8765', 'Curitiba', 'PR'),
-('Fernanda Costa', 'fernanda.costa@email.com', '555-3456', 'Belo Horizonte', 'MG'),
-('Paulo Mendes', 'paulo.mendes@email.com', '555-4321', 'Porto Alegre', 'RS'),
-('Joana Santos', 'joana.santos@email.com', '555-9876', 'Fortaleza', 'CE'),
-('Ricardo Lima', 'ricardo.lima@email.com', '555-6543', 'Salvador', 'BA'),
-('Gabriela Araújo', 'gabriela.araujo@email.com', '555-7654', 'Recife', 'PE'),
-('Pedro Alves', 'pedro.alves@email.com', '555-8767', 'Brasília', 'DF'),
-('Juliana Cardoso', 'juliana.cardoso@email.com', '555-5432', 'Florianópolis', 'SC');
+('Alexandre Souza', 'alexandre.souza@email.com', '(11) 95555-1234', 'São Paulo', 'SP'),
+('Maria Silva', 'maria.silva@email.com', '(21) 95555-5678', 'Rio de Janeiro', 'RJ'),
+('Carlos Oliveira', 'carlos.oliveira@email.com', '(41) 95555-8765', 'Curitiba', 'PR'),
+('Fernanda Costa', 'fernanda.costa@email.com', '(31) 95555-3456', 'Belo Horizonte', 'MG'),
+('Paulo Mendes', 'paulo.mendes@email.com', '(51) 95555-4321', 'Porto Alegre', 'RS'),
+('Joana Santos', 'joana.santos@email.com', '(85) 95555-9876', 'Fortaleza', 'CE'),
+('Ricardo Lima', 'ricardo.lima@email.com', '(71) 95555-6543', 'Salvador', 'BA'),
+('Gabriela Araújo', 'gabriela.araujo@email.com', '(81) 95555-7654', 'Recife', 'PE'),
+('Pedro Alves', 'pedro.alves@email.com', '(61) 95555-8767', 'Brasília', 'DF'),
+('Juliana Cardoso', 'juliana.cardoso@email.com', '(48) 95555-5432', 'Florianópolis', 'SC');
 
 -- Inserir associações entre clientes e produtos
 INSERT INTO customerproduct (customer_id, product_id, association_date, feedback, status, price) VALUES
