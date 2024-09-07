@@ -104,7 +104,7 @@ export async function loadCanonico(req: Request, res: Response): Promise<any> {
 		const response = await loadCanonicoService(id, dadosParametros);
 		res.status(200).send(response);
 	} catch (error: any) {
-		logger.error(`[ROUTES :: Erro ao carregar o canônico com nome ${id}: ${error.message}`);
+		logger.log('load', `Erro ao carregar o canônico com nome ${id}: ${error.message}`);
 		throw error;
 	}
 }

@@ -1,0 +1,9 @@
+07/09/2024 19:10:02:022 [BUSINESS] info: Inicialização baseada no tipo de instância: API
+07/09/2024 19:10:02:022 [BUSINESS] info: Servidor está escutando: http://localhost:8080
+07/09/2024 19:10:14:149 [BUSINESS] info: Inicialização baseada no tipo de instância: API
+07/09/2024 19:10:14:149 [BUSINESS] info: Servidor está escutando: http://localhost:8080
+07/09/2024 19:10:40:405 [BUSINESS] info: Requisição :: Método: POST :: URL: /canonico/aaa/load :: Status: 200
+07/09/2024 19:10:40:405 [BUSINESS] info: [ROUTES :: Canonico] Iniciando loadCanonico.
+07/09/2024 19:10:40:405 [BUSINESS] info: Buscando item na tabela canonico...
+07/09/2024 19:10:41:411 [BUSINESS] info: Retorno da tabela canonico com a key {"nome":"aaa"} no dynamoDB: undefined
+07/09/2024 19:10:41:411 [BUSINESS] load: Erro ao carregar o canônico com nome aaa: Erro ao carregar o canônico de ID aaa: Cannot destructure property 'chamadas' of 'canonicoExistente' as it is null.

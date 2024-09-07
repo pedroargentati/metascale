@@ -1,0 +1,1 @@
+07/09/2024 19:10:41:411 [LOAD] load: Erro ao carregar o canônico com nome aaa: Erro ao carregar o canônico de ID aaa: Cannot destructure property 'chamadas' of 'canonicoExistente' as it is null.
