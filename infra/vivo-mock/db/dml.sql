@@ -27,14 +27,15 @@ INSERT INTO client (customer_name, customer_email, customer_phone, city, state) 
 ('Juliana Cardoso', 'juliana.cardoso@email.com', '555-5432', 'Florianópolis', 'SC');
 
 -- Inserir associações entre clientes e produtos
-INSERT INTO customerproduct (customer_id, product_id, association_date, feedback, status) VALUES
-(1, 1, '2023-06-01', 'Very satisfied with the product', 'ACTIVE'),
-(2, 2, '2023-06-10', 'Good performance, no issues', 'ACTIVE'),
-(3, 3, '2023-06-15', 'Sound quality is amazing', 'ACTIVE'),
-(4, 4, '2023-07-01', 'Easy to use, great value', 'ACTIVE'),
-(5, 5, '2023-07-10', 'Perfect for reading on the go', 'INACTIVE'),
-(6, 6, '2023-07-20', 'Great music selection', 'ACTIVE'),
-(7, 7, '2023-08-01', 'Very useful for work', 'INACTIVE'),
-(8, 8, '2023-08-05', 'Health tracking is excellent', 'ACTIVE'),
-(9, 9, '2023-08-10', 'Wide range of courses available', 'INACTIVE'),
-(10, 10, '2023-08-15', 'Helps track fitness goals effectively', 'ACTIVE');
+INSERT INTO customerproduct (customer_id, product_id, association_date, feedback, status, price) VALUES
+(1, 1, '2023-06-01', 'Very satisfied with the product', 'ACTIVE', 999.99),
+(2, 2, '2023-06-10', 'Good performance, no issues', 'ACTIVE', 1500.00),
+(3, 3, '2023-06-15', 'Sound quality is amazing', 'ACTIVE', 250.00),
+(4, 4, '2023-07-01', 'Easy to use, great value', 'ACTIVE', 120.00),
+(5, 5, '2023-07-10', 'Perfect for reading on the go', 'INACTIVE', 89.99),
+(6, 6, '2023-07-20', 'Great music selection', 'ACTIVE', 10.00),
+(7, 7, '2023-08-01', 'Very useful for work', 'INACTIVE', 199.99),
+(8, 8, '2023-08-05', 'Health tracking is excellent', 'ACTIVE', 300.00),
+(9, 9, '2023-08-10', 'Wide range of courses available', 'INACTIVE', 59.99),
+(10, 10, '2023-08-15', 'Helps track fitness goals effectively', 'ACTIVE', 150.00);
+

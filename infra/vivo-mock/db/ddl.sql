@@ -30,6 +30,7 @@ CREATE TABLE customerproduct (
     product_id INT NOT NULL,
     association_date DATE,
     feedback VARCHAR(255),
+	price DECIMAL(10, 2),
     status ENUM('ACTIVE', 'INACTIVE') NOT NULL,  -- Enum para o status
 
     FOREIGN KEY (customer_id) REFERENCES client(customer_id),
