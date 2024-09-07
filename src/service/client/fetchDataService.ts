@@ -2,10 +2,10 @@
 import axios from 'axios';
 
 /** Errors */
-import { IntegrationError } from '../../errors/IntegrationError';
+import { IntegrationError } from '../../errors/IntegrationError.js';
 
 /** Interfaces */
-import { IParametro } from '../../interfaces/parametros';
+import { IParametro } from '../../interfaces/parametros.js';
 
 /**
  * Realiza a requisição GET.

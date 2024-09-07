@@ -1,13 +1,11 @@
-import { config } from 'dotenv';
-import { setupSwagger } from '../swagger.config';
-config(); // Carrega variáveis de ambiente do .env no início
-
+import 'dotenv/config';
+import { setupSwagger } from '../swagger.config.js';
 import express from 'express';
 import * as core from 'express-serve-static-core';
-import routes from './routes/routes';
-import consumeAllCanonicos from './app/kafka.app';
-import { INSTANCE_TYPE_API } from './utils/constants';
-import logger from './config/logger/logger';
+import routes from './routes/routes.js';
+import consumeAllCanonicos from './consumers/canonicosConsumer.js';
+import { INSTANCE_TYPE_API } from './utils/constants.js';
+import logger from './config/logger/logger.js';
 
 let app: core.Express | null = null;
 

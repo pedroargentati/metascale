@@ -1,6 +1,6 @@
-import { fetchData } from '../client/fetchDataService';
-import { IntegrationError } from '../../errors/IntegrationError';
-import { IParametro } from '../../interfaces/parametros';
+import { fetchData } from '../client/fetchDataService.js';
+import { IntegrationError } from '../../errors/IntegrationError.js';
+import { IParametro } from '../../interfaces/parametros.js';
 
 /**
  * Função para buscar dados de uma URL.

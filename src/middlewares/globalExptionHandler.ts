@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { IntegrationError } from '../errors/IntegrationError';
-import { CumulativeIntegrationError } from '../errors/CumulativeIntegrationError';
+import { IntegrationError } from '../errors/IntegrationError.js';
+import { CumulativeIntegrationError } from '../errors/CumulativeIntegrationError.js';
 
 /**
  * Middleware de tratamento de erros globais.

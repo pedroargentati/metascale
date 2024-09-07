@@ -1,6 +1,6 @@
-import logger from '../config/logger/logger';
-import { getCanonicoService, sincronizaCanonicoService } from '../service/canonico';
-import kafkaService from '../service/kafka/kafka-service';
+import logger from '../config/logger/logger.js';
+import { getCanonicoService, sincronizaCanonicoService } from '../service/canonico/index.js';
+import kafkaService from '../service/kafka/kafka-service.js';
 
 /**
  * Consome todas as mensagens dos tópicos canônicos.

@@ -1,4 +1,4 @@
-import { IntegrationError } from './IntegrationError';
+import { IntegrationError } from './IntegrationError.js';
 
 export class CumulativeIntegrationError {
 	public exceptions: IntegrationError[];

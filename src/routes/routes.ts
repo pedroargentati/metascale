@@ -8,11 +8,11 @@ import {
 	reprocessaCanonico,
 	updateCanonico,
 	updatePartialCanonico,
-} from './canonico/canonico';
-import { logRequest, logError } from '../middlewares/loggerMiddleware';
-import { asyncHandler } from '../middlewares/asyncHandler';
-import { errorHandler } from '../middlewares/globalExptionHandler';
-import { produceMessage, consumeMessages } from './kafka/kafka-controller';
+} from './canonico/canonico.js';
+import { logRequest, logError } from '../middlewares/loggerMiddleware.js';
+import { asyncHandler } from '../middlewares/asyncHandler.js';
+import { errorHandler } from '../middlewares/globalExptionHandler.js';
+import { produceMessage, consumeMessages } from './kafka/kafka-controller.js';
 
 const router = express.Router();
 

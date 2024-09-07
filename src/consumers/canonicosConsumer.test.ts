@@ -1,7 +1,7 @@
-import logger from '../config/logger/logger';
-import { getCanonicoService, sincronizaCanonicoService } from '../service/canonico';
-import kafkaService from '../service/kafka/kafka-service';
-import consumeAllCanonicos from './kafka.app';
+import logger from '../config/logger/logger.js';
+import { getCanonicoService, sincronizaCanonicoService } from '../service/canonico/index.js';
+import kafkaService from '../service/kafka/kafka-service.js';
+import consumeAllCanonicos from './canonicosConsumer.js';
 
 jest.mock('../config/logger/logger');
 jest.mock('../service/canonico');

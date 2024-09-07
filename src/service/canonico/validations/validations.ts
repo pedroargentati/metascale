@@ -1,10 +1,10 @@
-import { CumulativeIntegrationError } from '../../../errors/CumulativeIntegrationError';
-import { IntegrationError } from '../../../errors/IntegrationError';
+import { CumulativeIntegrationError } from '../../../errors/CumulativeIntegrationError.js';
+import { IntegrationError } from '../../../errors/IntegrationError.js';
 import {
 	CANONICO_TIPO_POS_PROCESSAMENTO_CUSTOM,
 	CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 	enumCanonicoTipoPosProcessamento,
-} from '../../../utils/constants';
+} from '../../../utils/constants.js';
 
 /** Métodos Validadores */
 export const validateCanonico = (data: any): void => {

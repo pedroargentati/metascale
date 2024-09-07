@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import KafkaService from '../../service/kafka/kafka-service';
-import logger from '../../config/logger/logger';
+import KafkaService from '../../service/kafka/kafka-service.js';
+import logger from '../../config/logger/logger.js';
 
 /**
  * @description Produz uma mensagem para um tópico do Kafka.

@@ -1,13 +1,10 @@
 {
 	"compilerOptions": {
-		"target": "es6",
-		"module": "commonjs",
+		"module": "Node16",
+		"target": "es2020",
 		"outDir": "./dist",
 		"rootDir": "./",
 		"strict": true,
-		"esModuleInterop": true
-	},
-	"include": [
-		"./tests/load/scripts/**/*.ts"
-	],
+		"allowJs": true,
+	}
 }

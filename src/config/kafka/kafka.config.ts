@@ -1,6 +1,6 @@
 import { Kafka, logLevel } from 'kafkajs';
 import { generateAuthToken } from 'aws-msk-iam-sasl-signer-js';
-import { IS_DEV } from '../../utils/constants';
+import { IS_DEV } from '../../utils/constants.js';
 
 async function oauthBearerTokenProvider(region: string) {
 	//{ region, logger: console, awsDebugCreds: true}

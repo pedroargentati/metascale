@@ -8,9 +8,9 @@ import {
 	reprocessaCanonicoService,
 	updateCanonicoService,
 	updatePartialCanonicoService,
-} from '../../service/canonico';
-import { IntegrationError } from '../../errors/IntegrationError';
-import logger from '../../config/logger/logger';
+} from '../../service/canonico/index.js';
+import { IntegrationError } from '../../errors/IntegrationError.js';
+import logger from '../../config/logger/logger.js';
 
 export async function get(req: Request, res: Response) {
 	res.send('Bem-vindo à API!');

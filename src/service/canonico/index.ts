@@ -1,17 +1,17 @@
 /** Errors */
-import { IntegrationError } from '../../errors/IntegrationError';
+import { IntegrationError } from '../../errors/IntegrationError.js';
 
 /** Client Operations */
-import DynamoDBService from '../../dynamodb/DynamoDBService';
-import { fetchDataController } from '../client/client';
+import DynamoDBService from '../../dynamodb/DynamoDBService.js';
+import { fetchDataController } from '../client/client.js';
 
 /** Métodos de Validações/Processamento de dados. */
-import { IParametro } from '../../interfaces/parametros';
-import { CANONICO_STATUS_ATIVO, CANONICO_STATUS_INATIVO } from '../../utils/constants';
-import { processCanonicoDataService } from './etl/etl-processor';
-import { validateCanonico } from './validations/validations';
+import { IParametro } from '../../interfaces/parametros.js';
+import { CANONICO_STATUS_ATIVO, CANONICO_STATUS_INATIVO } from '../../utils/constants.js';
+import { processCanonicoDataService } from './etl/etl-processor.js';
+import { validateCanonico } from './validations/validations.js';
 import { reproccessCanonical, synchronizeCanonical } from '@internal/canonical-builder';
-import logger from '../../config/logger/logger';
+import logger from '../../config/logger/logger.js';
 
 /** Constantes. */
 const CANONICO_COLLECTION: string = 'canonico';

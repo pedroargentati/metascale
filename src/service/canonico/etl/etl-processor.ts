@@ -1,10 +1,10 @@
 import { buildCanonical } from '@internal/canonical-builder';
-import { IntegrationError } from '../../../errors/IntegrationError';
-import { IParametro } from '../../../interfaces/parametros';
+import { IntegrationError } from '../../../errors/IntegrationError.js';
+import { IParametro } from '../../../interfaces/parametros.js';
 import {
 	CANONICO_TIPO_POS_PROCESSAMENTO_CUSTOM,
 	CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
-} from '../../../utils/constants';
+} from '../../../utils/constants.js';
 
 const calculaChavePelosParametrosDasChamadas = (chamadas: any[], dadosParametros: any): string => {
 	let chave = '';

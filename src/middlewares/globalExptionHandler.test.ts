@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { IntegrationError } from '../errors/IntegrationError';
-import { errorHandler } from './globalExptionHandler'; // ajuste o caminho conforme necessário
-import { CumulativeIntegrationError } from '../errors/CumulativeIntegrationError';
+import { IntegrationError } from '../errors/IntegrationError.js';
+import { errorHandler } from './globalExptionHandler.js'; // ajuste o caminho conforme necessário
+import { CumulativeIntegrationError } from '../errors/CumulativeIntegrationError.js';
 
 describe('Middleware errorHandler', () => {
 	let mockRequest: Partial<Request>;

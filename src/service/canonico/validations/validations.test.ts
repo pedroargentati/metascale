@@ -1,10 +1,10 @@
-import { CumulativeIntegrationError } from '../../../errors/CumulativeIntegrationError';
-import { IntegrationError } from '../../../errors/IntegrationError';
+import { CumulativeIntegrationError } from '../../../errors/CumulativeIntegrationError.js';
+import { IntegrationError } from '../../../errors/IntegrationError.js';
 import {
 	CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 	CANONICO_TIPO_POS_PROCESSAMENTO_CUSTOM,
-} from '../../../utils/constants';
-import { validateCanonico } from './validations';
+} from '../../../utils/constants.js';
+import { validateCanonico } from './validations.js';
 
 // Simulação do enumCanonicoTipoPosProcessamento para os testes
 const enumCanonicoTipoPosProcessamento = new Map([
