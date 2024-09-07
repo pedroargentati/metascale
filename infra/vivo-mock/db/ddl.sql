@@ -8,9 +8,8 @@ CREATE TABLE product (
     product_name VARCHAR(255) NOT NULL,
     description TEXT,
     release_date DATE,
-    product_type ENUM('PHYSICAL', 'DIGITAL') NOT NULL  -- Enum para o tipo de produto
+    product_type ENUM('MOBILE', 'LANDLINE', 'INTERNET', 'IPTV', 'BUNDLE', 'VALUE_ADDED_SERVICE') NOT NULL  -- Enum para o tipo de produto ajustado
 );
-
 
 -- Tabela de Clientes
 CREATE TABLE client (
@@ -30,8 +29,8 @@ CREATE TABLE customerproduct (
     product_id INT NOT NULL,
     association_date DATE,
     feedback VARCHAR(255),
-	price DECIMAL(10, 2),
-    status ENUM('ACTIVE', 'INACTIVE') NOT NULL,  -- Enum para o status
+    price DECIMAL(10, 2),
+    status ENUM('ACTIVE', 'ACTIVATING', 'SUSPENDED', 'CANCELLED') NOT NULL,  -- Enum ajustado para o status
 
     FOREIGN KEY (customer_id) REFERENCES client(customer_id),
     FOREIGN KEY (product_id) REFERENCES product(id)
