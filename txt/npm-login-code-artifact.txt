@@ -1,0 +1,1 @@
+aws codeartifact login --tool npm --repository metascale-dependency-repository --domain metascale --domain-owner 649601077399 --region us-east-2
