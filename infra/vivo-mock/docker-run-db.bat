@@ -1,0 +1,2 @@
+@echo off
+docker run --name db -p 3306:3306 -e MYSQL_DATABASE=db -e MYSQL_USER=user -e MYSQL_PASSWORD=user -e MYSQL_ROOT_PASSWORD=root --network testeVivoNetwork -v ./db:/docker-entrypoint-initdb.d mysql:8.0-debian
