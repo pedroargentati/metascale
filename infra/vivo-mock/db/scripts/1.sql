@@ -1,6 +1,6 @@
 CREATE DATABASE IF NOT EXISTS VivoTest;
 
-USE metascale_database;
+USE VivoTest;
 
 -- Tabela de Produtos/Serviços
 CREATE TABLE product (
@@ -12,7 +12,7 @@ CREATE TABLE product (
 );
 
 -- Tabela de Clientes
-CREATE TABLE client (
+CREATE TABLE customer (
     customer_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_name VARCHAR(255) NOT NULL,
     customer_email VARCHAR(255),
@@ -20,7 +20,6 @@ CREATE TABLE client (
     city VARCHAR(100),
     state VARCHAR(50)
 );
-
 
 -- Tabela de Associação entre Clientes e Produtos (Relacionamento)
 CREATE TABLE customerproduct (
@@ -30,8 +29,8 @@ CREATE TABLE customerproduct (
     association_date DATE,
     feedback VARCHAR(255),
     price DECIMAL(10, 2),
-    status ENUM('ACTIVE', 'ACTIVATING', 'SUSPENDED', 'CANCELLED') NOT NULL,  -- Enum ajustado para o status
+    status ENUM('ACTIVE', 'ACTIVATING', 'SUSPENDED', 'CANCELLED', 'INACTIVE') NOT NULL,  -- Enum ajustado para o status
 
-    FOREIGN KEY (customer_id) REFERENCES client(customer_id),
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id),
     FOREIGN KEY (product_id) REFERENCES product(id)
 );

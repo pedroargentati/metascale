@@ -13,9 +13,8 @@ INSERT INTO product (product_name, description, release_date, product_type) VALU
 ('Online Course Subscription', 'Access to a variety of online courses', '2023-06-30', 'VALUE_ADDED_SERVICE'),
 ('Fitness Tracker', 'Wearable fitness tracking device', '2022-12-10', 'MOBILE');
 
-
 -- Inserir clientes
-INSERT INTO client (customer_name, customer_email, customer_phone, city, state) VALUES
+INSERT INTO customer (customer_name, customer_email, customer_phone, city, state) VALUES
 ('Alexandre Souza', 'alexandre.souza@email.com', '(11) 95555-1234', 'São Paulo', 'SP'),
 ('Maria Silva', 'maria.silva@email.com', '(21) 95555-5678', 'Rio de Janeiro', 'RJ'),
 ('Carlos Oliveira', 'carlos.oliveira@email.com', '(41) 95555-8765', 'Curitiba', 'PR'),
@@ -39,4 +38,3 @@ INSERT INTO customerproduct (customer_id, product_id, association_date, feedback
 (8, 8, '2023-08-05', 'Health tracking is excellent', 'ACTIVE', 300.00),
 (9, 9, '2023-08-10', 'Wide range of courses available', 'INACTIVE', 59.99),
 (10, 10, '2023-08-15', 'Helps track fitness goals effectively', 'ACTIVE', 150.00);
-
