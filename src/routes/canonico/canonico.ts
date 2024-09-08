@@ -4,13 +4,12 @@ import {
 	deleteCanonicoService,
 	getCanonicoByIdService,
 	getCanonicoService,
-	loadCanonicoService,
-	reprocessaCanonicoService,
 	updateCanonicoService,
 	updatePartialCanonicoService,
 } from '../../service/canonico/index.js';
 import { IntegrationError } from '../../errors/IntegrationError.js';
 import logger from '../../config/logger/logger.js';
+import { loadCanonicoService, reprocessaCanonicoService } from '../../service/canonico/etl/index.js';
 
 export async function get(req: Request, res: Response) {
 	res.send('Bem-vindo à API!');

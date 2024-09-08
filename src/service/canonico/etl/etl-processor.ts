@@ -6,6 +6,13 @@ import {
 	CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 } from '../../../utils/constants.js';
 
+/**
+ * Monta a string chave do registro a partir dos parâmetros das chamadas
+ *
+ * @param chamadas - Chamadas que foram disparadas no carregamento
+ * @param dadosParametros - Dados dos parâmetros.
+ * @returns Chave String que representa o dado carregado.
+ */
 const calculaChavePelosParametrosDasChamadas = (chamadas: any[], dadosParametros: any): string => {
 	let chave = '';
 	for (const chamada of chamadas) {
