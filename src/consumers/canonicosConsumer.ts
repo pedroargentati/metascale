@@ -35,7 +35,7 @@ async function consumeAllCanonicos() {
 						} catch (error: any) {
 							logger.log(
 								'synchronize',
-								`Erro ao sincronizar o canônico de ID ${canonico?.id}: ${error.message}`,
+								`Erro ao sincronizar o canônico: ID: ${canonico?.id} | Tópico: ${topico} | Mensagem: ${JSON.stringify(message)} :: ${error.message}`,
 							);
 						} finally {
 							const endTime: number = new Date().getTime();
