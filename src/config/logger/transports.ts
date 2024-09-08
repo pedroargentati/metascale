@@ -7,15 +7,15 @@ import {
 	createReprocessFormat,
 	createDefaultFormat,
 } from './formats.js';
+import { IS_DEV } from '../../utils/constants.js';
 
-const isDevMode = process.env.DEV_MODE === 'true' || true;
 const awsRegion = process.env.AWS_REGION || 'us-east-2';
 
 // Função para criar os transportes de log
 export const createTransports = () => {
 	const transports = [];
 
-	if (isDevMode) {
+	if (IS_DEV) {
 		// Modo desenvolvimento - logs em arquivos e console
 		transports.push(
 			new winston.transports.Console({

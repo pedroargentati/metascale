@@ -189,7 +189,7 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 
 		return dadoCanonico;
 	} catch (error: any) {
-		throw new IntegrationError(`${id}: ${error.message}`, 500);
+		throw new IntegrationError(`${id} | Parâmetros: ${JSON.stringify(dadosParametros)} : ${error.message}`, 500);
 	}
 };
 
