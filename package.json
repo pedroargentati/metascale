@@ -7,7 +7,7 @@
 		"test": "jest --config jest.config.ts",
 		"test:watch:all": "jest --watchAll",
 		"test:coverage": "jest",
-		"start": "nodemon -e ts --exec \"tsx ./src/index.ts\" --verbose",
+		"start": "nodemon -e ts --exec \"tsx ./src/index.ts\"",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"start-prod": "node ./dist/src/index.js",
