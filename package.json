@@ -20,7 +20,7 @@
 		"@aws-sdk/client-cloudwatch-logs": "^3.645.0",
 		"@aws-sdk/client-dynamodb": "^3.616.0",
 		"@aws-sdk/lib-dynamodb": "^3.616.0",
-		"@internal/canonical-builder": "^1.0.18",
+		"@internal/canonical-builder": "^1.0.19",
 		"aws-msk-iam-sasl-signer-js": "github:aws/aws-msk-iam-sasl-signer-js",
 		"axios": "^1.7.2",
 		"dotenv": "^16.4.5",
