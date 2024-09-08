@@ -1,4 +1,4 @@
-import { reproccessCanonical, synchronizeCanonical } from '@internal/canonical-builder';
+import { reprocessCanonical, synchronizeCanonical } from '@internal/canonical-builder';
 import logger from '../../../config/logger/logger.js';
 import DynamoDBService from '../../../dynamodb/DynamoDBService.js';
 import { IntegrationError } from '../../../errors/IntegrationError.js';
@@ -29,7 +29,7 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 			}
 		}
 
-		const responses: any[] = [];
+		const requestCalls: Map<string, any> = new Map();
 		for (const ordem of chamadasPorOrdem.keys()) {
 			try {
 				const chamadasDaOrdem = chamadasPorOrdem.get(ordem);
@@ -43,13 +43,17 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 					throw new IntegrationError(`Erro ao buscar os dados da chamada: ${error.message}`, 500);
 				});
 
-				responses.push(...resolvedResponses);
+				for (const [index, chamada] of chamadasDaOrdem.entries()) {
+					const response = resolvedResponses[index];
+
+					requestCalls.set(chamada.nome, response);
+				}
 			} catch (error: any) {
 				throw new IntegrationError(`Erro ao buscar os dados da chamada: ${error.message}`, 500);
 			}
 		}
 
-		let dadoCanonico = await processCanonicoDataService(canonicoExistente, responses, dadosParametros);
+		let dadoCanonico = await processCanonicoDataService(canonicoExistente, requestCalls, dadosParametros);
 
 		const dynamoDBServiceForCanonicoData: DynamoDBService = new DynamoDBService(canonicoExistente.nome);
 		await dynamoDBServiceForCanonicoData.putItem(dadoCanonico);
@@ -91,7 +95,7 @@ export async function reprocessaCanonicoService(id: string, payloadReprocessamen
 	try {
 		const canonicoExistente = await getCanonicoByIdService(id);
 
-		await reproccessCanonical(canonicoExistente, payloadReprocessamento);
+		await reprocessCanonical(canonicoExistente, payloadReprocessamento);
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao reprocessar o canônico de ID ${id}: ${error.message}`, 500);
 	}
