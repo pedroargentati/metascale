@@ -194,3 +194,92 @@ describe('validateCanonico', () => {
 		expect(() => validateCanonico(data)).not.toThrow();
 	});
 });
+
+describe('validateCanonico - formatoChave', () => {
+	it('deve lançar um IntegrationError se formatoChave estiver ausente', () => {
+		const data = {
+			nome: 'Nome',
+			descricao: 'Descricao',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
+			chamadas: [],
+		};
+
+		expect(() => validateCanonico(data)).toThrow(IntegrationError);
+		expect(() => validateCanonico(data)).toThrow('O campo formatoChave é obrigatório.');
+	});
+
+	it('deve lançar um IntegrationError se formatoChave estiver mal formatado', () => {
+		const data = {
+			nome: 'Nome',
+			descricao: 'Descricao',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
+			formatoChave: '{invalid_format}',
+			chamadas: [
+				{
+					nome: 'getCustomer',
+					parametros: [{ nome: 'id' }],
+				},
+			],
+		};
+
+		expect(() => validateCanonico(data)).toThrow(IntegrationError);
+		expect(() => validateCanonico(data)).toThrow(
+			'O campo formatoChave deve ter a estrutura correta: "{nome:parametro}" ou "{nome:parametro}{separador}{nome:parametro}".',
+		);
+	});
+
+	it('deve lançar um erro se formatoChave conter chaves não encontradas nas chamadas', () => {
+		const data = {
+			nome: 'Nome',
+			descricao: 'Descricao',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
+			formatoChave: '{getInvalid:id}',
+			chamadas: [
+				{
+					nome: 'getCustomer',
+					parametros: [{ nome: 'id' }],
+				},
+			],
+		};
+
+		expect(() => validateCanonico(data)).toThrow();
+		expect(() => validateCanonico(data)).toThrow('A chamada getInvalid não foi encontrada formatoChamada.');
+	});
+
+	it('deve lançar um erro se o parâmetro no formatoChave não for encontrado nos parâmetros das chamadas', () => {
+		const data = {
+			nome: 'Nome',
+			descricao: 'Descricao',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
+			formatoChave: '{getCustomer:invalidParam}',
+			chamadas: [
+				{
+					nome: 'getCustomer',
+					parametros: [{ nome: 'id' }],
+				},
+			],
+		};
+
+		expect(() => validateCanonico(data)).toThrow();
+		expect(() => validateCanonico(data)).toThrow(
+			"O parâmetro 'invalidParam' não foi encontrado na chamada 'getCustomer'.",
+		);
+	});
+
+	it('não deve lançar erro se formatoChave estiver corretamente formatado', () => {
+		const data = {
+			nome: 'Nome',
+			descricao: 'Descricao',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
+			formatoChave: '{getCustomer:id}',
+			chamadas: [
+				{
+					nome: 'getCustomer',
+					parametros: [{ nome: 'id' }],
+				},
+			],
+		};
+
+		expect(() => validateCanonico(data)).not.toThrow();
+	});
+});
