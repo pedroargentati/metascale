@@ -91,6 +91,8 @@ export const updatePartialCanonicoService = async (id: string, data: any): Promi
 		if (data.statusCanonico) {
 			await atualizaStatusDoCanonico(id, data.statusCanonico);
 		}
+
+		return await getCanonicoByIdService(id);
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao atualizar o canônico: ${error.message}`, 500);
 	}

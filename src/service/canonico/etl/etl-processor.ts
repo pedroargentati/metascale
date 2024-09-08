@@ -8,25 +8,58 @@ import {
 import { getCanonicoByIdService } from '../index.js';
 
 /**
- * Monta a string chave do registro a partir dos parâmetros das chamadas
+ * Quebra a string de formato de chave em partes agrupadas por chaves {}.
  *
- * @param chamadas - Chamadas que foram disparadas no carregamento
- * @param dadosParametros - Dados dos parâmetros.
+ * Exemplo: "{getCustomer:id}/{getProduct:id}/{getCustomerProduct:id}" -> ["getCustomer:id", "getProduct:id", "getCustomerProduct:id"]
+ *
+ * @param formatoChave - Formato da chave.
+ * @returns Partes da chave.
+ */
+function quebrarStringPorChaves(formatoChave: string): string[] {
+	const regex: RegExp = /\{(.*?)\}/g;
+	const matches: RegExpMatchArray = formatoChave.match(regex)!;
+	const resultados: string[] = matches.map((match) => match.slice(1, -1));
+
+	return resultados;
+}
+
+/**
+ * Monta a string chave do registro a partir dos parâmetros das chamadas e do formato da chave do canônico.
+ *
+ * @param canonico - Canônico que terá a chave calculada.
+ * @param dadosParametros - Dados dos parâmetros base para a montagem da chave.
  * @returns Chave String que representa o dado carregado.
  */
-const calculaChavePelosParametrosDasChamadas = (chamadas: any[], dadosParametros: any): string => {
-	let chave = '';
-	for (const chamada of chamadas) {
-		const parametros = chamada.parametros;
-		chave += parametros.reduce((acc: string, parametro: IParametro) => {
-			const valor = dadosParametros[chamada.nome][parametro.nome];
-			return acc + valor;
-		}, '');
-	}
+const calculaChavePelosParametrosDasChamadas = (canonico: any, dadosParametros: any): string => {
+	const formatoChave = canonico.formatoChave;
 
-	if (!chave) {
-		throw new IntegrationError('Não existem parâmetros para calcular a chave do registro a ser carregado.', 400);
-	}
+	const partesDaChave = quebrarStringPorChaves(formatoChave);
+
+	let formatoChaveRemontada = '';
+	let chave = partesDaChave.reduce((acc: string, parte: string) => {
+		formatoChaveRemontada += `{${parte}}`;
+
+		const fimDaParteAtual = formatoChaveRemontada.length;
+		const inicioProximaParte = formatoChave.indexOf('{', fimDaParteAtual);
+
+		let delimitador: string = '';
+		if (inicioProximaParte !== -1) {
+			delimitador = formatoChave.substring(fimDaParteAtual, inicioProximaParte);
+			formatoChaveRemontada += delimitador;
+		}
+
+		const [nomeChamada, nomeParametro] = parte.split(':');
+		const valorParametro = dadosParametros[nomeChamada][nomeParametro];
+
+		if (!valorParametro) {
+			throw new IntegrationError(
+				`Faltam parâmetros para montar a chave do canônico ${canonico.nome} utilizando o formato de chave ${canonico.formatoChave}`,
+				400,
+			);
+		}
+
+		return acc + valorParametro + delimitador;
+	}, '');
 
 	return chave;
 };
@@ -44,10 +77,8 @@ export const processCanonicoDataService = async (
 	requestCalls: Map<string, any>,
 	dadosParametros: any,
 ): Promise<any> => {
-	const chamadas = canonico.chamadas;
-
 	const dadoCanonico: { ID: string; versao: number; data: any; dependencias: any } = {
-		ID: calculaChavePelosParametrosDasChamadas(chamadas, dadosParametros),
+		ID: calculaChavePelosParametrosDasChamadas(canonico, dadosParametros),
 		versao: canonico.versao,
 		data: null,
 		dependencias: {},
@@ -101,7 +132,7 @@ async function trataDependenciasDeMerge(canonicoExistente: any, requestCalls: Ma
 
 		parametrosCarregamentoDependencia.forEach((dadosParametro) => {
 			dadosDependencias[canonicoDependente.nome].push(
-				calculaChavePelosParametrosDasChamadas(canonicoDependente.chamadas, dadosParametro),
+				calculaChavePelosParametrosDasChamadas(canonicoDependente, dadosParametro),
 			);
 		});
 	});
