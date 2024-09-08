@@ -7,3 +7,5 @@
 07/09/2024 19:10:40:405 [REPROCESS] info: Buscando item na tabela canonico...
 07/09/2024 19:10:41:411 [REPROCESS] info: Retorno da tabela canonico com a key {"nome":"aaa"} no dynamoDB: undefined
 07/09/2024 19:10:41:411 [REPROCESS] load: Erro ao carregar o canônico com nome aaa: Erro ao carregar o canônico de ID aaa: Cannot destructure property 'chamadas' of 'canonicoExistente' as it is null.
+07/09/2024 22:21:56:565 [REPROCESS] info: Inicialização baseada no tipo de instância: API
+07/09/2024 22:21:56:565 [REPROCESS] info: Servidor está escutando: http://localhost:8080
