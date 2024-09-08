@@ -5,6 +5,7 @@ import {
 	CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 	enumCanonicoTipoPosProcessamento,
 } from '../../../utils/constants.js';
+import { quebrarStringPorChaves } from '../etl/etl-processor.js';
 
 /** Métodos Validadores */
 export const validateCanonico = (data: any): void => {
@@ -22,15 +23,6 @@ export const validateCanonico = (data: any): void => {
 			400,
 		);
 	}
-
-	const formatoChave: string | undefined = data.formatoChave;
-
-	if (!formatoChave) {
-		throw new IntegrationError('O campo formatoChave é obrigatório.', 400);
-	}
-
-	// Validação do formatoChave
-	validarFormatoChave(formatoChave);
 
 	const { chamadas } = data;
 
@@ -92,11 +84,20 @@ export const validateCanonico = (data: any): void => {
 		});
 	}
 
+	const formatoChave: string | undefined = data.formatoChave;
+
+	if (!formatoChave) {
+		throw new IntegrationError('O campo formatoChave é obrigatório.', 400);
+	}
+
+	// Validação do formatoChave
+	validarFormatoChave(formatoChave, chamadas);
+
 	if (cumulativeIntegrationExceptions.length) throw new CumulativeIntegrationError(cumulativeIntegrationExceptions);
 };
 
 /** Função auxiliar para validar o formato da chave */
-const validarFormatoChave = (formatoChave: string): void => {
+const validarFormatoChave = (formatoChave: string, chamadas: any[]): void => {
 	// Aceitar um ou mais pares de {nome:parametro} separados por qualquer sequência de caracteres, exceto {}
 	const regexChaveUnicaOuMais: RegExp = /^\{[a-zA-Z]+:[a-zA-Z]+\}(.*\{[a-zA-Z]+:[a-zA-Z]+\})*$/;
 	const regexChave: RegExp = /\{([a-zA-Z]+):([a-zA-Z]+)\}/g;
@@ -121,6 +122,23 @@ const validarFormatoChave = (formatoChave: string): void => {
 				'O campo formatoChave está mal formatado. Cada chave deve seguir o padrão "{nome:parametro}".',
 				400,
 			);
+		}
+	}
+
+	const partes: string[] = quebrarStringPorChaves(formatoChave);
+	const nomesChamadas: string[] = chamadas.map((chamada) => chamada.nome);
+	const parametrosChamadas: string[] = chamadas.flatMap((chamada) =>
+		chamada.parametros.map((parametro: any) => parametro.nome),
+	);
+
+	for (const parte of partes) {
+		const [nomeChamada, parametro] = parte.split(':');
+		if (!nomesChamadas.includes(nomeChamada)) {
+			throw Error(`A chamada ${nomeChamada} não foi encontrada formatoChamada.`);
+		}
+
+		if (!parametrosChamadas.includes(parametro)) {
+			throw Error(`O parâmetro '${parametro}' não foi encontrado na chamada '${nomeChamada}'.`);
 		}
 	}
 };

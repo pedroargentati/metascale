@@ -15,7 +15,7 @@ import { getCanonicoByIdService } from '../index.js';
  * @param formatoChave - Formato da chave.
  * @returns Partes da chave.
  */
-function quebrarStringPorChaves(formatoChave: string): string[] {
+export function quebrarStringPorChaves(formatoChave: string): string[] {
 	const regex: RegExp = /\{(.*?)\}/g;
 	const matches: RegExpMatchArray = formatoChave.match(regex)!;
 	const resultados: string[] = matches.map((match) => match.slice(1, -1));
