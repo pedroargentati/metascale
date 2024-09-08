@@ -23,6 +23,15 @@ export const validateCanonico = (data: any): void => {
 		);
 	}
 
+	const formatoChave: string | undefined = data.formatoChave;
+
+	if (!formatoChave) {
+		throw new IntegrationError('O campo formatoChave é obrigatório.', 400);
+	}
+
+	// Validação do formatoChave
+	validarFormatoChave(formatoChave);
+
 	const { chamadas } = data;
 
 	if (!Array.isArray(chamadas) || !chamadas.length) {
@@ -84,4 +93,34 @@ export const validateCanonico = (data: any): void => {
 	}
 
 	if (cumulativeIntegrationExceptions.length) throw new CumulativeIntegrationError(cumulativeIntegrationExceptions);
+};
+
+/** Função auxiliar para validar o formato da chave */
+const validarFormatoChave = (formatoChave: string): void => {
+	// Aceitar um ou mais pares de {nome:parametro} separados por qualquer sequência de caracteres, exceto {}
+	const regexChaveUnicaOuMais: RegExp = /^\{[a-zA-Z]+:[a-zA-Z]+\}(.*\{[a-zA-Z]+:[a-zA-Z]+\})*$/;
+	const regexChave: RegExp = /\{([a-zA-Z]+):([a-zA-Z]+)\}/g;
+
+	if (!regexChaveUnicaOuMais.test(formatoChave)) {
+		throw new IntegrationError(
+			'O campo formatoChave deve ter a estrutura correta: "{nome:parametro}" ou "{nome:parametro}{separador}{nome:parametro}".',
+			400,
+		);
+	}
+
+	const matches: RegExpMatchArray | null = formatoChave.match(regexChave);
+
+	if (!matches || matches.length === 0) {
+		throw new IntegrationError('O campo formatoChave contém chaves inválidas.', 400);
+	}
+
+	for (const match of matches) {
+		const resultado = /\{([a-zA-Z]+):([a-zA-Z]+)\}/.exec(match);
+		if (!resultado || resultado.length < 3) {
+			throw new IntegrationError(
+				'O campo formatoChave está mal formatado. Cada chave deve seguir o padrão "{nome:parametro}".',
+				400,
+			);
+		}
+	}
 };
