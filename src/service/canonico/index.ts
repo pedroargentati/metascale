@@ -173,6 +173,8 @@ const salvarCanonico = async (data: any): Promise<any> => {
 		data.versao += 1;
 	}
 
+	data.statusCanonico = CANONICO_STATUS_ATIVO;
+
 	await dynamoDBService.putItem(data);
 };
 
