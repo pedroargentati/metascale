@@ -11,6 +11,7 @@ services:
       - '8080:8080'
     environment:
       - INSTANCE_TYPE=API
+      - DEV_MODE=true
     networks:
       - testeVivoNetwork
 
@@ -18,5 +19,7 @@ services:
     image: 'metascale:prod'
     environment:
       - INSTANCE_TYPE=KAFKA
+      - KAFKA_BROKERS=kafka:9094
+      - DEV_MODE=true
     networks:
       - testeVivoNetwork

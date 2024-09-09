@@ -11,6 +11,7 @@
     "topic.prefix": "db1",
     "database.include.list": "VivoTest",
     "schema.history.internal.kafka.bootstrap.servers": "kafka:9094",
-    "schema.history.internal.kafka.topic": "schemahistory.vivotest"
+    "schema.history.internal.kafka.topic": "schemahistory.vivotest",
+    "snapshot.mode": "always"
   }
 }

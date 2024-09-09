@@ -1,0 +1,1 @@
+INSERT INTO customer (customer_name, customer_email, customer_phone, city, state) VALUES ('T1', 't@email.com', '(11) 95555-1234', 'Sao Paulo', 'SP');

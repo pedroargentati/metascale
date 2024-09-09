@@ -8,17 +8,26 @@ import { getCanonicoByIdService } from '../index.js';
 import { processCanonicoDataService } from './etl-processor.js';
 
 /**
- * @description Carrega o canônico.
+ * @description Carrega o dado do canônico.
  *
  * @param {string} id - ID do canônico.
  * @param {any} dadosParametros - Dados dos parâmetros.
- * @returns Canônico.
+ * @returns Dado canônico.
  */
 export const loadCanonicoService = async (id: string, dadosParametros: any): Promise<any> => {
-	try {
-		const canonicoExistente = await getCanonicoByIdService(id);
+	return await loadCanonico(await getCanonicoByIdService(id), dadosParametros);
+};
 
-		const { chamadas } = canonicoExistente;
+/**
+ * @description Carrega o dado do canônico.
+ *
+ * @param {string} canonico - Canônico sendo carregado.
+ * @param {any} dadosParametros - Dados dos parâmetros.
+ * @returns Dado canônico.
+ */
+const loadCanonico = async (canonico: any, dadosParametros: any): Promise<any> => {
+	try {
+		const { chamadas } = canonico;
 
 		const chamadasPorOrdem = new Map();
 		for (const chamada of chamadas) {
@@ -40,7 +49,10 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 				);
 
 				const resolvedResponses = await Promise.all(requisicoesDisparadas).catch((error) => {
-					throw new IntegrationError(`Erro ao buscar os dados da chamada: ${error.message}`, 500);
+					throw new IntegrationError(
+						`Ocorreu um erro em alguma das requisições envolvidas no load: ${error.message}`,
+						500,
+					);
 				});
 
 				for (const [index, chamada] of chamadasDaOrdem.entries()) {
@@ -53,14 +65,14 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
 			}
 		}
 
-		let dadoCanonico = await processCanonicoDataService(canonicoExistente, requestCalls, dadosParametros);
+		let dadoCanonico = await processCanonicoDataService(canonico, requestCalls, dadosParametros);
 
-		const dynamoDBServiceForCanonicoData: DynamoDBService = new DynamoDBService(canonicoExistente.nome);
+		const dynamoDBServiceForCanonicoData: DynamoDBService = new DynamoDBService(canonico.nome);
 		await dynamoDBServiceForCanonicoData.putItem(dadoCanonico);
 
 		return dadoCanonico;
 	} catch (error: any) {
-		throw new IntegrationError(`Erro ao carregar o canônico de ID ${id}: ${error.message}`, 500);
+		throw new IntegrationError(`Erro no load do canônico ${canonico.nome}: ${error.message}`, 500);
 	}
 };
 
@@ -70,18 +82,19 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
  * @param canonico Canônico a ser sincronizado.
  * @param kafkaMessage Mensagem a ser consumida no kafka.
  */
-export async function sincronizaCanonicoService(canonico: any, kafkaMessage: any): Promise<any> {
-	logger.info(
-		`[SERVICE :: Canonico] Iniciando sincronização do canônico ${canonico.nome} do tópico ${kafkaMessage.name}...`,
-	);
+export async function sincronizaCanonicoService(canonico: any, topico: string, kafkaMessage: any): Promise<any> {
+	logger.info(`[SERVICE :: Canonico] Iniciando sincronização do canônico ${canonico.nome} do tópico ${topico}...`);
 	try {
-		await synchronizeCanonical(canonico, kafkaMessage);
+		await synchronizeCanonical(
+			canonico,
+			topico,
+			kafkaMessage,
+			async (dadosParametro) => await loadCanonico(canonico, dadosParametro),
+		);
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao sincronizar o canônico de ID ${canonico?.id}: ${error.message}`, 500);
 	} finally {
-		logger.info(
-			`[SERVICE :: Canonico] Fim da sincronização do canônico ${canonico.nome} do tópico ${kafkaMessage.name}.`,
-		);
+		logger.info(`[SERVICE :: Canonico] Fim da sincronização do canônico ${canonico.nome} do tópico ${topico}.`);
 	}
 }
 
@@ -95,7 +108,9 @@ export async function reprocessaCanonicoService(id: string, payloadReprocessamen
 	try {
 		const canonicoExistente = await getCanonicoByIdService(id);
 
-		await reprocessCanonical(canonicoExistente, payloadReprocessamento);
+		await reprocessCanonical(canonicoExistente, payloadReprocessamento, async (dadosParametro) => {
+			return await loadCanonico(canonicoExistente, dadosParametro);
+		});
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao reprocessar o canônico de ID ${id}: ${error.message}`, 500);
 	}

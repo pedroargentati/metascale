@@ -32,7 +32,7 @@ async function consumeAllCanonicos() {
 						);
 
 						try {
-							await sincronizaCanonicoService(canonico, message);
+							await sincronizaCanonicoService(canonico, topico, message);
 						} catch (error: any) {
 							logger.log(
 								'synchronize',
