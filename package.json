@@ -24,7 +24,7 @@
 		"aws-msk-iam-sasl-signer-js": "github:aws/aws-msk-iam-sasl-signer-js",
 		"axios": "^1.7.2",
 		"dotenv": "^16.4.5",
-		"express": "^4.19.2",
+		"express": "^5.0.0",
 		"kafkajs": "^2.2.4",
 		"swagger-jsdoc": "^6.2.8",
 		"swagger-ui-express": "^5.0.1",
