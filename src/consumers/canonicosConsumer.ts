@@ -24,31 +24,32 @@ async function consumeAllCanonicos() {
 			}
 
 			for (const topico of canonico.topicos) {
-				kafkaService
-					.consume(topico, async (message: any) => {
-						const startTime: number = new Date().getTime();
-						logger.info(
-							`[APP :: Kafka] Iniciando processamento para o canônico ${canonico.nome} no tópico ${topico}.`,
-						);
+				// Cria um novo consumidor para cada tópico de maneira independente
+				const consumer = kafkaService.consume(topico, async (message: any) => {
+					const startTime: number = new Date().getTime();
+					logger.info(
+						`[APP :: Kafka] Iniciando processamento para o canônico ${canonico.nome} no tópico ${topico}.`,
+					);
 
-						try {
-							await sincronizaCanonicoService(canonico, topico, message);
-						} catch (error: any) {
-							logger.log(
-								'synchronize',
-								`Erro ao sincronizar o canônico: ID: ${canonico?.id} | Tópico: ${topico} | Mensagem: ${JSON.stringify(message)} :: ${error.message}`,
-							);
-						} finally {
-							const endTime: number = new Date().getTime();
-							const duration: number = endTime - startTime;
-							logger.info(
-								`[APP :: Kafka] Tempo de processamento para o canônico ${canonico.nome} no tópico ${topico}: ${duration} ms`,
-							);
-						}
-					})
-					.catch((error: any) => {
-						logger.error(`[APP :: Kafka] Erro ao consumir tópico ${topico}: ${error.message}`);
-					});
+					try {
+						await sincronizaCanonicoService(canonico, topico, message);
+					} catch (error: any) {
+						logger.log(
+							'synchronize',
+							`Erro ao sincronizar o canônico: ID: ${canonico?.id} | Tópico: ${topico} | Mensagem: ${JSON.stringify(message)} :: ${error.message}`,
+						);
+					} finally {
+						const endTime: number = new Date().getTime();
+						const duration: number = endTime - startTime;
+						logger.info(
+							`[APP :: Kafka] Tempo de processamento para o canônico ${canonico.nome} no tópico ${topico}: ${duration} ms`,
+						);
+					}
+				});
+
+				consumer.catch((error: any) =>
+					logger.error(`[APP :: Kafka] Erro ao consumir tópico ${topico}: ${error.message}`),
+				);
 			}
 		}
 	} catch (error: any) {
