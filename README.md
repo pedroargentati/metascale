@@ -112,22 +112,33 @@ yarn start
 
 ## Autores
 
-| **Gabriel Kazuki**                                                                                               |
-| Desenvolvedor Full-Stack responsável pela arquitetura e desenvolvimento do MetaScale.                            |
-| [GitHub](https://github.com/GKazukiOnishi) • [LinkedIn](https://www.linkedin.com/in/gabriel-onishi)              |
+<div align="center">
 
-| **Pedro Argentati**                                                                                              |
-| Desenvolvedor Full-Stack responsável pelo desenvolvimento do MetaScale.                                          |
-| [GitHub](https://github.com/pedroargentati) • [LinkedIn](https://www.linkedin.com/in/pedro-argentati)            |
+| **Gabriel Kazuki**                                                                                             |
+|:-------------------------------------------------------------------------------------------------------------:|
+| Desenvolvedor Full-Stack responsável pela arquitetura e desenvolvimento do MetaScale.                          |
+| [GitHub](https://github.com/GKazukiOnishi) • [LinkedIn](https://www.linkedin.com/in/gabriel-onishi)            |
 
-| **Breno de Souza**                                                                                               |
-| Analista de dados resposável pelo desenvolvimento de análises e métricas utilizando Grafana.                     |
-| [GitHub](https://github.com/breno-souza) • [LinkedIn](https://www.linkedin.com/in/breno-souza)                   |
+| **Pedro Argentati**                                                                                            |
+|:-------------------------------------------------------------------------------------------------------------:|
+| Desenvolvedor Full-Stack responsável pelo desenvolvimento do MetaScale.                                        |
+| [GitHub](https://github.com/pedroargentati) • [LinkedIn](https://www.linkedin.com/in/pedro-argentati)          |
 
-| **Rafael Tannous**                                                                                               |
-| Analista de dados resposável pelo desenvolvimento de análises e métricas utilizando Grafana.                     |
-| [GitHub](https://github.com/rafaeltannous) • [LinkedIn](https://www.linkedin.com/in/rafael-tannous)              |
+| **Breno de Souza**                                                                                             |
+|:-------------------------------------------------------------------------------------------------------------:|
+| Analista de dados responsável pelo desenvolvimento de análises e métricas utilizando Grafana.                 |
+| [GitHub](https://github.com/breno-souza) • [LinkedIn](https://www.linkedin.com/in/breno-souza)                 |
 
-| **Felipe Otto**                                                                                                  |
-| Analista de Redes responsável pela configuração da VPC, EC2 e Load Balancer na AWS.                              |
-| [GitHub](https://github.com/felipe-otto) • [LinkedIn](https://www.linkedin.com/in/felipe-otto)                   |
+| **Rafael Tannous**                                                                                             |
+|:-------------------------------------------------------------------------------------------------------------:|
+| Analista de dados responsável pelo desenvolvimento de análises e métricas utilizando Grafana.                 |
+| [GitHub](https://github.com/rafaeltannous) • [LinkedIn](https://www.linkedin.com/in/rafael-tannous)            |
+
+| **Felipe Otto**                                                                                                |
+|:-------------------------------------------------------------------------------------------------------------:|
+| Analista de Redes responsável pela configuração da VPC, EC2 e Load Balancer na AWS.                            |
+| [GitHub](https://github.com/felipe-otto) • [LinkedIn](https://www.linkedin.com/in/felipe-otto)                 |
+
+</div>
+
+
