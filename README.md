@@ -54,7 +54,7 @@ yarn install
 ```
 ### 4. Configurar variáveis de ambient
 
-Crie o arquivo .env seguindo o template abaixo:
+Crie o arquivo `.env` seguindo o template abaixo:
 ```env
 PORT={API_PORT}
 
