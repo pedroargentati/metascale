@@ -313,7 +313,7 @@ router.delete('/canonico/:id', asyncHandler(deleteCanonico));
  * /produce:
  *   post:
  *     tags:
- *       - Job
+ *       - Kafka
  *     summary: Produzir uma mensagem para um tópico do Kafka.
  *     description: Produz uma mensagem para um tópico do Kafka.
  *     requestBody:
@@ -344,7 +344,7 @@ router.post('/produce', produceMessage);
  * /consume:
  *   post:
  *     tags:
- *       - Job
+ *       - Kafka
  *     summary: Iniciar o consumo de mensagens de um tópico do Kafka.
  *     description: Inicia o consumo de mensagens de um tópico do Kafka.
  *     requestBody:

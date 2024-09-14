@@ -23,6 +23,7 @@ Metascale - Cicada
 
 - Node.js (versão 14 ou superior)
 - npm (ou yarn)
+- Docker Desktop
 
 ## Instalação [🔝](#instalação)
 
@@ -72,26 +73,32 @@ INSTANCE_TYPE={API ou KAFKA}
 DEV_MODE=true
 ```
 
-### 5. Compilar o código TypeScript
+### 5. Modos de Inicialização da Aplicação
 
-Antes de rodar o projeto, é necessário compilar o código TypeScript:
+#### API
 
-```bash
-npm run build
-```
-ou
-```bash
-yarn build
-```
+- Um servidor Express será inicializado na porta configurada nas variáveis de ambiente (caso esteja configurada), ou, por padrão, na porta `8080`.
+- Todas as chamadas à API estarão disponíveis após a inicialização. Para mais detalhes sobre os endpoints e funcionalidades, acesse a [Documentação da API](http://localhost:8080/api-docs/#/).
+
+#### Kafka
+
+- Ao ser inicializada, a aplicação busca todos os canônicos cadastrados no DynamoDB. Para cada tópico associado ao respectivo canônico, a aplicação irá se inscrever nesses tópicos e consumir todas as mensagens disponíveis.
+- Após consumir as mensagens, a aplicação dispara o método `synchronize` do projeto **canonical-builder**, que é responsável por sincronizar as informações consumidas.
+- **Atenção**: Certifique-se de que o servidor Kafka está em execução corretamente e que as configurações no arquivo `.env` estão corretas.
 
 ### 6. Rodar o projeto
 
+- Entrar na pasta de infra:
 ```bash
-npm start
+cd infra
 ```
-ou
+- Entrar na pasta local:
 ```bash
-yarn start
+cd local
+```
+- Subir as o bat se setup para subir as imagens docker.
+```bash
+setup.bat
 ```
 
 ## Tecnologias Utilizadas
