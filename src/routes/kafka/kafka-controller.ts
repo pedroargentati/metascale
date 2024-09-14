@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import KafkaService from '../../service/kafka/kafka-service.js';
-import logger from '../../config/logger/logger.js';
+import { logger } from '../../config/logger/logger.js';
 
 /**
  * @description Produz uma mensagem para um tópico do Kafka.
@@ -29,7 +29,7 @@ export const consumeMessages = (req: Request, res: Response) => {
 	try {
 		const { topic } = req.body;
 		KafkaService.consume(topic, (message: any) => {
-			console.log(`Mensagem recebida: ${JSON.stringify(message)}`);
+			logger.info(`Mensagem recebida: ${JSON.stringify(message)}`);
 		});
 		res.status(200).send('Consumo da mensagem iniciado.');
 	} catch (error) {

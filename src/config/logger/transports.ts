@@ -1,12 +1,6 @@
 import winston from 'winston';
 import WinstonCloudWatch from 'winston-cloudwatch';
-import {
-	createBusinessFormat,
-	createSyncFormat,
-	createLoadFormat,
-	createReprocessFormat,
-	createDefaultFormat,
-} from './formats.js';
+import { createDefaultFormat, createDebugFormat } from './formats.js';
 import { IS_DEV } from '../../utils/constants.js';
 
 const awsRegion = process.env.AWS_REGION || 'us-east-2';
@@ -26,24 +20,14 @@ export const createTransports = () => {
 				),
 			}),
 			new winston.transports.File({ filename: 'logs/error.log', level: 'error', format: createDefaultFormat() }),
-			new winston.transports.File({ filename: 'logs/business.log', format: createBusinessFormat() }),
-			new winston.transports.File({ filename: 'logs/synchronize.log', format: createSyncFormat() }),
-			new winston.transports.File({ filename: 'logs/load.log', level: 'load', format: createLoadFormat() }),
-			new winston.transports.File({ filename: 'logs/reprocess.log', format: createReprocessFormat() }),
-			new winston.transports.File({ filename: 'logs/combined.log', format: createDefaultFormat() }),
+			new winston.transports.File({ filename: 'logs/debug.log', level: 'debug', format: createDebugFormat() }),
+			new winston.transports.File({ filename: 'logs/info.log', level: 'info', format: createDefaultFormat() }),
 		);
 	} else {
 		const logGroupName = process.env.AWS_LOG_GROUP_NAME || '/ecs/MetascaleAPI';
 
 		// Modo produção - logs enviados para o AWS CloudWatch
 		transports.push(
-			new WinstonCloudWatch({
-				logGroupName,
-				logStreamName: 'business-logs',
-				level: 'business',
-				awsRegion,
-				jsonMessage: true,
-			}),
 			new WinstonCloudWatch({
 				logGroupName,
 				logStreamName: 'synchronize-logs',

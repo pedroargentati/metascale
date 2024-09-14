@@ -1,4 +1,4 @@
-import logger from '../config/logger/logger.js';
+import { logger } from '../config/logger/logger.js';
 import { sincronizaCanonicoService } from '../service/canonico/etl/index.js';
 import { getCanonicoService } from '../service/canonico/index.js';
 import kafkaService from '../service/kafka/kafka-service.js';

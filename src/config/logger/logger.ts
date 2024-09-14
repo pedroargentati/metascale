@@ -1,41 +1,40 @@
 import winston, { createLogger } from 'winston';
 
 import dotenv from 'dotenv';
-import { createDefaultFormat } from './formats.js';
+import { createDefaultFormat, createLoadFormat, createReprocessFormat, createSyncFormat } from './formats.js';
 import { createTransports } from './transports.js';
 
 // Carregar variáveis de ambiente
 dotenv.config();
 
-// Definir níveis de log
-const levels: Record<string, number> = {
-	business: 0,
-	synchronize: 1,
-	load: 2,
-	reprocess: 3,
-	info: 4,
-	warn: 5,
-	error: 6,
-};
-
 // Aplicar cores para cada nível
 winston.addColors({
-	business: 'orange',
-	synchronize: 'blue',
-	reprocess: 'magenta',
-	load: 'cyan',
 	info: 'green',
 	warn: 'yellow',
 	error: 'red',
 });
 
 // Criar o logger com os transportes e formatação padrão
-const logger = createLogger({
-	level: 'info',
-	levels: levels,
+export const logger = createLogger({
 	format: createDefaultFormat(),
 	transports: createTransports(),
 	exitOnError: false,
 });
 
-export default logger;
+export const loggerReprocess = createLogger({
+	format: createReprocessFormat(),
+	transports: [new winston.transports.File({ filename: 'logs/reprocess.log' })],
+	exitOnError: false,
+});
+
+export const loggerSyncronize = createLogger({
+	format: createSyncFormat(),
+	transports: [new winston.transports.File({ filename: 'logs/syncronize.log' })],
+	exitOnError: false,
+});
+
+export const loggerLoad = createLogger({
+	format: createLoadFormat(),
+	transports: [new winston.transports.File({ filename: 'logs/load.log' })],
+	exitOnError: false,
+});

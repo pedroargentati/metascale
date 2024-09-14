@@ -16,7 +16,7 @@ import {
 import { ReturnValue } from '@aws-sdk/client-dynamodb';
 
 /** Services */
-import logger from '../config/logger/logger.js';
+import { logger } from '../config/logger/logger.js';
 
 /** Erros */
 import { IntegrationError } from '../errors/IntegrationError.js';

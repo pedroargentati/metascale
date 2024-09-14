@@ -1,5 +1,5 @@
 import { reprocessCanonical, synchronizeCanonical } from '@internal/canonical-builder';
-import logger from '../../../config/logger/logger.js';
+import { logger } from '../../../config/logger/logger.js';
 import DynamoDBService from '../../../dynamodb/DynamoDBService.js';
 import { IntegrationError } from '../../../errors/IntegrationError.js';
 import { IParametro } from '../../../interfaces/parametros.js';

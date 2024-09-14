@@ -1,5 +1,5 @@
 import kafka from '../../config/kafka/kafka.config.js';
-import logger from '../../config/logger/logger.js';
+import { logger } from '../../config/logger/logger.js';
 
 /**
  * @description Classe KafkaService para produzir e consumir mensagens do Kafka.

@@ -5,7 +5,7 @@ import * as core from 'express-serve-static-core';
 import routes from './routes/routes.js';
 import consumeAllCanonicos from './consumers/canonicosConsumer.js';
 import { INSTANCE_TYPE_API } from './utils/constants.js';
-import logger from './config/logger/logger.js';
+import { logger } from './config/logger/logger.js';
 
 let app: core.Express | null = null;
 

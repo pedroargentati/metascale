@@ -8,8 +8,8 @@ import {
 	updatePartialCanonicoService,
 } from '../../service/canonico/index.js';
 import { IntegrationError } from '../../errors/IntegrationError.js';
-import logger from '../../config/logger/logger.js';
 import { loadCanonicoService, reprocessaCanonicoService } from '../../service/canonico/etl/index.js';
+import { logger, loggerLoad, loggerReprocess } from '../../config/logger/logger.js';
 
 export async function get(req: Request, res: Response) {
 	res.send('Bem-vindo à API!');
@@ -17,7 +17,7 @@ export async function get(req: Request, res: Response) {
 
 // GET ALL
 export async function getAllCanonico(req: Request, res: Response): Promise<any> {
-	logger.info('[ROUTES :: Canonico] Iniciando getAllCanonico.');
+	logger.debug('[ROUTES :: Canonico] Iniciando getAllCanonico.');
 	try {
 		const canonicos = await getCanonicoService();
 		res.status(200).send(canonicos);
@@ -29,7 +29,7 @@ export async function getAllCanonico(req: Request, res: Response): Promise<any> 
 
 // GET BY ID
 export async function getCanonicoById(req: Request, res: Response): Promise<any> {
-	logger.info('[ROUTES :: Canonico] Iniciando getCanonicoById.');
+	logger.debug('[ROUTES :: Canonico] Iniciando getCanonicoById.');
 	const { id } = req.params;
 	try {
 		const canonico = await getCanonicoByIdService(id);
@@ -42,7 +42,7 @@ export async function getCanonicoById(req: Request, res: Response): Promise<any>
 
 // POST
 export async function createCanonico(req: Request, res: Response): Promise<any> {
-	logger.info('[ROUTES :: Canonico] Iniciando createCanonico.');
+	logger.debug('[ROUTES :: Canonico] Iniciando createCanonico.');
 	const data = req.body;
 	try {
 		const result = await createCanonicoService(data);
@@ -55,7 +55,7 @@ export async function createCanonico(req: Request, res: Response): Promise<any> 
 
 // PUT
 export async function updateCanonico(req: Request, res: Response): Promise<any> {
-	logger.info('[ROUTES :: Canonico] Iniciando updateCanonico.');
+	logger.debug('[ROUTES :: Canonico] Iniciando updateCanonico.');
 	const { id } = req.params;
 	const data = req.body;
 	try {
@@ -69,7 +69,7 @@ export async function updateCanonico(req: Request, res: Response): Promise<any> 
 
 // PATCH
 export async function updatePartialCanonico(req: Request, res: Response): Promise<any> {
-	logger.info('[ROUTES :: Canonico] Iniciando updatePartialCanonico.');
+	logger.debug('[ROUTES :: Canonico] Iniciando updatePartialCanonico.');
 	const { id } = req.params;
 	const data = req.body;
 	try {
@@ -83,7 +83,7 @@ export async function updatePartialCanonico(req: Request, res: Response): Promis
 
 // DELETE
 export async function deleteCanonico(req: Request, res: Response): Promise<any> {
-	logger.info('[ROUTES :: Canonico] Iniciando deleteCanonico.');
+	logger.debug('[ROUTES :: Canonico] Iniciando deleteCanonico.');
 	const { id } = req.params;
 	try {
 		const response = await deleteCanonicoService(id);
@@ -96,28 +96,28 @@ export async function deleteCanonico(req: Request, res: Response): Promise<any> 
 
 // LOAD
 export async function loadCanonico(req: Request, res: Response): Promise<any> {
-	logger.info('[ROUTES :: Canonico] Iniciando loadCanonico.');
+	loggerLoad.debug('[ROUTES :: Canonico] Iniciando loadCanonico.');
 	const { id } = req.params;
 	const dadosParametros = req.body;
 	try {
 		const response = await loadCanonicoService(id, dadosParametros);
 		res.status(200).send(response);
 	} catch (error: any) {
-		logger.log('load', `Erro ao carregar o canônico com nome ${id}: ${error.message}`);
+		loggerLoad.error(`Erro ao carregar o canônico com nome ${id}: ${error.message}`);
 		throw error;
 	}
 }
 
 // reprocessa
 export async function reprocessaCanonico(req: Request, res: Response): Promise<any> {
-	logger.info('[ROUTES :: Canonico] Iniciando reprocessaCanonico.');
+	loggerReprocess.debug('[ROUTES :: Canonico] Iniciando reprocessaCanonico.');
 	const { id } = req.params;
 	const payloadReprocessamento = req.body;
 	try {
 		const response = await reprocessaCanonicoService(id, payloadReprocessamento);
 		res.status(200).send(response);
 	} catch (error: any) {
-		logger.log('reprocess', `Erro ao reprocessar o canônico com nome ${id}: ${error.message}`);
+		loggerReprocess.error(`Erro ao reprocessar o canônico com nome ${id}: ${error.message}`);
 		throw error;
 	}
 }

@@ -14,7 +14,7 @@ const createCustomFormat = (label: string) => {
 };
 
 // Formatos específicos para cada tipo de log
-export const createBusinessFormat = () => combine(baseFormat, createCustomFormat('BUSINESS'));
+export const createDebugFormat = () => combine(baseFormat, createCustomFormat('DEBUG'));
 export const createSyncFormat = () => combine(baseFormat, createCustomFormat('SYNCHRONIZE'));
 export const createLoadFormat = () => combine(baseFormat, createCustomFormat('LOAD'));
 export const createReprocessFormat = () => combine(baseFormat, createCustomFormat('REPROCESS'));
