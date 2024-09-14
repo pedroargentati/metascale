@@ -1,6 +1,5 @@
 import { buildCanonical, extractCanonicalParameters } from '@internal/canonical-builder';
 import { IntegrationError } from '../../../errors/IntegrationError.js';
-import { IParametro } from '../../../interfaces/parametros.js';
 import {
 	CANONICO_TIPO_POS_PROCESSAMENTO_CUSTOM,
 	CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
