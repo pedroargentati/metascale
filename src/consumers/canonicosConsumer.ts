@@ -7,11 +7,11 @@ import { getCanonicoService } from '../service/canonico/index.js';
  * Consome todas as mensagens dos tópicos canônicos.
  */
 async function consumeAllCanonicos() {
-	logger.info('[APP :: Kafka] Iniciando consumeAllCanonicos...');
+	logger.debug('[APP :: Kafka] Iniciando consumeAllCanonicos...');
 	const allCanonicos: Record<string, any>[] = await getCanonicoService();
 
 	if (!allCanonicos?.length) {
-		logger.info('[APP :: Kafka] Nenhum canônico encontrado para consumir.');
+		logger.debug('[APP :: Kafka] Nenhum canônico encontrado para consumir.');
 		return;
 	}
 
@@ -23,13 +23,13 @@ async function consumeAllCanonicos() {
 		// Subscrição para todos os tópicos canônicos
 		for (const canonico of allCanonicos) {
 			if (!canonico.topicos) {
-				logger.info(`[APP :: Kafka] Canônico ${canonico.nome} não possui tópicos. Continuando...`);
+				logger.debug(`[APP :: Kafka] Canônico ${canonico.nome} não possui tópicos. Continuando...`);
 				continue;
 			}
 
 			for (const topico of canonico.topicos) {
 				await consumer.subscribe({ topic: topico, fromBeginning: true });
-				logger.info(`[APP :: Kafka] Subscrito no tópico ${topico} para o canônico ${canonico.nome}`);
+				logger.debug(`[APP :: Kafka] Subscrito no tópico ${topico} para o canônico ${canonico.nome}`);
 			}
 		}
 

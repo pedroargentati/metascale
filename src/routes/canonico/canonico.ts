@@ -96,7 +96,7 @@ export async function deleteCanonico(req: Request, res: Response): Promise<any> 
 
 // LOAD
 export async function loadCanonico(req: Request, res: Response): Promise<any> {
-	loggerLoad.debug('[ROUTES :: Canonico] Iniciando loadCanonico.');
+	loggerLoad.info('[ROUTES :: Canonico] Iniciando loadCanonico.');
 	const { id } = req.params;
 	const dadosParametros = req.body;
 	try {
@@ -110,7 +110,7 @@ export async function loadCanonico(req: Request, res: Response): Promise<any> {
 
 // reprocessa
 export async function reprocessaCanonico(req: Request, res: Response): Promise<any> {
-	loggerReprocess.debug('[ROUTES :: Canonico] Iniciando reprocessaCanonico.');
+	loggerReprocess.info('[ROUTES :: Canonico] Iniciando reprocessaCanonico.');
 	const { id } = req.params;
 	const payloadReprocessamento = req.body;
 	try {
