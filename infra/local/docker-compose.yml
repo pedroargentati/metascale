@@ -7,7 +7,6 @@ networks:
 services:
   db:
     image: gkazukionishi/vivo-mock-db
-    restart: always
     environment:
       MYSQL_DATABASE: 'db'
       MYSQL_USER: 'user'
@@ -126,18 +125,24 @@ services:
 
   metascale-kafka-1:
     image: 'gkazukionishi/metascale'
+    restart: always
     environment:
       - INSTANCE_TYPE=KAFKA
       - KAFKA_BROKERS=kafka:9094
       - DEV_MODE=true
+    depends_on:
+      - kafka
     networks:
       - testeVivoNetwork
 
   metascale-kafka-2:
     image: 'gkazukionishi/metascale'
+    restart: always
     environment:
       - INSTANCE_TYPE=KAFKA
       - KAFKA_BROKERS=kafka:9094
       - DEV_MODE=true
     networks:
       - testeVivoNetwork
+    depends_on:
+      - kafka
