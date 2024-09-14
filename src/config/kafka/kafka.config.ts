@@ -25,9 +25,10 @@ if (!IS_DEV) {
 		},
 	});
 } else {
+	const brokers = process.env.KAFKA_BROKERS?.split(',') || [];
 	kafka = new Kafka({
 		clientId: process.env.KAFKA_CLIENT_ID,
-		brokers: process.env.KAFKA_BROKERS!.split(','),
+		brokers: brokers,
 		logLevel: logLevel.INFO,
 	});
 }
