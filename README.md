@@ -52,7 +52,7 @@ ou
 ```bash
 yarn install
 ```
-### 4. Configurar variáveis de ambient
+### 4. Configurar variáveis de ambiente
 
 Crie o arquivo `.env` seguindo o template abaixo:
 ```env
@@ -86,20 +86,23 @@ DEV_MODE=true
 - Após consumir as mensagens, a aplicação dispara o método `synchronize` do projeto **canonical-builder**, que é responsável por sincronizar as informações consumidas.
 - **Atenção**: Certifique-se de que o servidor Kafka está em execução corretamente e que as configurações no arquivo `.env` estão corretas.
 
-### 6. Rodar o projeto
+## 6. Rodar o Projeto
 
-- Entrar na pasta de infra:
+Para iniciar o projeto, siga os passos abaixo:
+
+1. **Entrar na Pasta de Infraestrutura**
 ```bash
 cd infra
 ```
-- Entrar na pasta local:
+2. **Dentro da pasta infra, navegue até a pasta `local`:**
 ```bash
 cd local
 ```
-- Subir as o bat se setup para subir as imagens docker.
+3. **Execute o script `setup.bat` para configurar e iniciar as imagens Docker necessárias:**
 ```bash
 setup.bat
 ```
+Certifique-se de que você tenha o Docker instalado e configurado corretamente em sua máquina antes de executar o script.
 
 ## Tecnologias Utilizadas
 <div align="center">
