@@ -8,7 +8,7 @@ import { logger } from '../../config/logger/logger.js';
  * @param {Response} res - O objeto de resposta do Express.
  */
 export const produceMessage = async (req: Request, res: Response) => {
-	logger.info('[ROUTES :: Kafka] Iniciando produceMessage.');
+	logger.debug('[ROUTES :: Kafka] Iniciando produceMessage.');
 	try {
 		const { topic, message } = req.body;
 		await KafkaService.produce(topic, message);
@@ -25,11 +25,11 @@ export const produceMessage = async (req: Request, res: Response) => {
  * @param {Response} res - O objeto de resposta do Express.
  */
 export const consumeMessages = (req: Request, res: Response) => {
-	logger.info('[ROUTES :: Kafka] Iniciando consumeMessages.');
+	logger.debug('[ROUTES :: Kafka] Iniciando consumeMessages.');
 	try {
 		const { topic } = req.body;
 		KafkaService.consume(topic, (message: any) => {
-			logger.info(`Mensagem recebida: ${JSON.stringify(message)}`);
+			logger.debug(`Mensagem recebida: ${JSON.stringify(message)}`);
 		});
 		res.status(200).send('Consumo da mensagem iniciado.');
 	} catch (error) {

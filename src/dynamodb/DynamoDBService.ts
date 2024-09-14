@@ -55,7 +55,7 @@ class DynamoDBService {
 	 * @returns Promessa resolvendo em sucesso ou erro.
 	 */
 	public async putItem(item: Record<string, any>): Promise<PutCommandOutput> {
-		logger.info(`Adicionando item na tabela ${this.tableName}...`);
+		logger.debug(`Adicionando item na tabela ${this.tableName}...`);
 		const params = {
 			TableName: this.tableName,
 			Item: item,
@@ -63,7 +63,7 @@ class DynamoDBService {
 
 		try {
 			const data = await dynamoDB.send(new PutCommand(params));
-			logger.info(`Item adicionado com sucesso na tabela ${this.tableName}`);
+			logger.debug(`Item adicionado com sucesso na tabela ${this.tableName}`);
 			return data;
 		} catch (error) {
 			throw new IntegrationError(`Erro ao adicionar item na tabela ${this.tableName}: ${error}`, 500);
@@ -76,7 +76,7 @@ class DynamoDBService {
 	 * @returns Promessa resolvendo em objeto contendo o item.
 	 */
 	public async getItem(key: Record<string, any>): Promise<Record<string, NativeAttributeValue> | null> {
-		logger.info(`Buscando item na tabela ${this.tableName}...`);
+		logger.debug(`Buscando item na tabela ${this.tableName}...`);
 		const params = {
 			TableName: this.tableName,
 			Key: key,
@@ -85,7 +85,7 @@ class DynamoDBService {
 		try {
 			const data = await dynamoDB.send(new GetCommand(params));
 
-			logger.info(
+			logger.debug(
 				`Retorno da tabela ${this.tableName} com a key ${JSON.stringify(key)} no dynamoDB: ${JSON.stringify(data?.Item)}`,
 			);
 
@@ -109,7 +109,7 @@ class DynamoDBService {
 		expressionAttributeValues: Record<string, any>,
 		expressionAttributeNames?: Record<string, string>,
 	): Promise<UpdateCommandOutput> {
-		logger.info(`Atualizando item na tabela ${this.tableName}...`);
+		logger.debug(`Atualizando item na tabela ${this.tableName}...`);
 		const params = {
 			TableName: this.tableName,
 			Key: key,
@@ -121,7 +121,7 @@ class DynamoDBService {
 
 		try {
 			const data = await dynamoDB.send(new UpdateCommand(params));
-			logger.info(`Item atualizado com sucesso na tabela ${this.tableName}`);
+			logger.debug(`Item atualizado com sucesso na tabela ${this.tableName}`);
 			return data;
 		} catch (error) {
 			throw new IntegrationError(`Erro ao atualizar item na tabela ${this.tableName}: ${error}`, 500);
@@ -134,7 +134,7 @@ class DynamoDBService {
 	 * @returns Promessa resolvendo em sucesso ou erro.
 	 */
 	public async deleteItem(key: Record<string, any>): Promise<DeleteCommandOutput> {
-		logger.info(`Deletando item da tabela ${this.tableName}...`);
+		logger.debug(`Deletando item da tabela ${this.tableName}...`);
 		const params = {
 			TableName: this.tableName,
 			Key: key,
@@ -142,7 +142,7 @@ class DynamoDBService {
 
 		try {
 			const data = await dynamoDB.send(new DeleteCommand(params));
-			logger.info(`Item deletado com sucesso na tabela ${this.tableName}`);
+			logger.debug(`Item deletado com sucesso na tabela ${this.tableName}`);
 			return data;
 		} catch (error) {
 			throw new IntegrationError(`Erro ao deletar item na tabela ${this.tableName}: ${error}`, 500);
@@ -156,7 +156,7 @@ class DynamoDBService {
 	 * @returns Promessa resolvendo em uma lista contendo todos os itens.
 	 */
 	public async getAllItems(requestParams: Record<string, any> | {}): Promise<Record<string, any>[]> {
-		logger.info(`Buscando todos os itens da tabela ${this.tableName}...`);
+		logger.debug(`Buscando todos os itens da tabela ${this.tableName}...`);
 		const params: ScanCommandInput = {
 			TableName: this.tableName,
 			...(requestParams || {}),
@@ -164,7 +164,7 @@ class DynamoDBService {
 
 		try {
 			const data = await dynamoDB.send(new ScanCommand(params));
-			logger.info(`Todos os itens da tabela ${this.tableName} foram buscados com sucesso`);
+			logger.debug(`Todos os itens da tabela ${this.tableName} foram buscados com sucesso`);
 			return data.Items || [];
 		} catch (error) {
 			throw new IntegrationError(`Erro ao buscar todos os itens da tabela ${this.tableName}: ${error}`, 500);
@@ -180,7 +180,7 @@ class DynamoDBService {
 	 * @see https://docs.aws.amazon.com/pt_br/amazondynamodb/latest/developerguide/WorkingWithTables.html
 	 */
 	public async createTable(): Promise<any> {
-		logger.info(`Criando tabela ${this.tableName} no DynamoDB...`);
+		logger.debug(`Criando tabela ${this.tableName} no DynamoDB...`);
 		try {
 			const params: CreateTableCommandInput = {
 				TableName: this.tableName,
@@ -193,7 +193,7 @@ class DynamoDBService {
 			};
 
 			const data = await client.send(new CreateTableCommand(params));
-			logger.info(`Tabela ${this.tableName} criada com sucesso!`);
+			logger.debug(`Tabela ${this.tableName} criada com sucesso!`);
 
 			return data;
 		} catch (error) {
