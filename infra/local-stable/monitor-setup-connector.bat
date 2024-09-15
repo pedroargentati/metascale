@@ -7,7 +7,7 @@ set string_a_procurar=Finished starting connectors and tasks
 echo Procurando a string "%string_a_procurar%" no log do container %container_name%.
 
 :loop
-  docker logs %container_name% | findstr /i "%string_a_procurar%" > nul
+  docker logs %container_name% | findstr /I /C:"%string_a_procurar%" > nul
 
   if %errorlevel% equ 0 (
     echo A string "%string_a_procurar%" foi encontrada no log do container %container_name%.
@@ -18,7 +18,7 @@ echo Procurando a string "%string_a_procurar%" no log do container %container_na
 
     goto fim
   ) else (
-    echo A string "%string_a_procurar%" não foi encontrada no log do container %container_name%.
+    echo A string "%string_a_procurar%" nao foi encontrada no log do container %container_name%.
     set errorlevel=
   )
 

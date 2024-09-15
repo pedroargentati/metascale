@@ -6,7 +6,7 @@ networks:
 
 services:
   metascale-api:
-    image: 'metascale:prod'
+    image: 'metascale'
     ports:
       - '8080:8080'
     environment:
@@ -16,7 +16,7 @@ services:
       - testeVivoNetwork
 
   metascale-kafka:
-    image: 'metascale:prod'
+    image: 'metascale'
     environment:
       - INSTANCE_TYPE=KAFKA
       - KAFKA_BROKERS=kafka:9094
