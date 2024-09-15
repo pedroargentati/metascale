@@ -8,6 +8,7 @@ Metascale - Cicada
 
 ## Índice
 
+- [Arquitetura](#arquitetura)
 - [Requisitos](#requisitos)
 - [Instalação](#instalação)
 - [Tecnologias Utilizadas](#techs)
@@ -18,6 +19,20 @@ Metascale - Cicada
 - [Autores](#autores)
 - [Licença](#licença)
 - [Agradecimentos](#agradecimentos)
+
+### Arquitetura [🔝](#arquitetura)
+
+## Metascale
+O nome da nossa solução, Metascale, origina da ideia de metadados e escalabilidade, em que nos baseamos nesses metadados para associar os retornos dos diferentes sistemas heterogêneos da Vivo, com um modelo canônico homogeneizado.
+
+De forma que a partir desse modelo canônico, conseguimos salvar as informações para um retorno performático e escalável através de soluções Cloud da AWS, como a Lambda e o DynamoDB, em que JSON’s “prontos” preparados a partir do canônico são registrados no Dynamo, e o Lambda, por ser uma solução serverless, trataria as necessidades de performance e escalabilidade automaticamente, respondendo aos picos conforme a necessidade.
+
+Entrando em detalhes no que chamamos de metadados, um exemplo de uso seria associar o atributo “description” do JSON retornado no serviço XYZ da Vivo, com o atributo “descrição” do modelo canônico “Produto”. A vantagem dessa abordagem está na facilidade de associação de novos serviços com a solução, e suas evoluções, tendo em vista que em outro serviço de produto, o nome do atributo correspondente à “descrição” do canônico, poderia ter o nome “desc”. Da mesma forma, caso surja a necessidade de usar algum outro atributo, bastaria alterar o metadado da solução e funcionaria sem nenhum problema, o que não seria possível ao acoplar os retornos de ambos serviços à solução.
+
+Assim como comentado na apresentação do desafio, a palavra-chave estaria em “Desacoplamento”, e foi o que buscamos com o Metascale.
+
+## Arquitetura da Solução
+
 
 ## Requisitos [🔝](#requisitos)
 
@@ -103,6 +118,7 @@ cd local
 setup.bat
 ```
 Certifique-se de que você tenha o Docker instalado e configurado corretamente em sua máquina antes de executar o script.
+
 
 ## Tecnologias Utilizadas
 <div align="center">
