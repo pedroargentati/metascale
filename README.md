@@ -31,8 +31,12 @@ Entrando em detalhes no que chamamos de metadados, um exemplo de uso seria assoc
 
 Assim como comentado na apresentação do desafio, a palavra-chave estaria em “Desacoplamento”, e foi o que buscamos com o Metascale.
 
-## Arquitetura da Solução
-
+<h1 align='center'>
+Arquitetura da Solução
+</h1>
+<div align="center">
+	<img src="https://github.com/user-attachments/assets/f2fbe165-ae00-4f9f-8d4a-3af846e3d4eb" />
+</div>
 
 ## Requisitos [🔝](#requisitos)
 
