@@ -29,6 +29,7 @@ async function initializeKafkaConsumer() {
 		await consumeAllCanonicos();
 	} catch (error) {
 		logger.error('Erro ao iniciar o consumidor Kafka:', error);
+		throw error;
 	}
 }
 

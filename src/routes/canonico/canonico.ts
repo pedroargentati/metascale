@@ -96,7 +96,7 @@ export async function deleteCanonico(req: Request, res: Response): Promise<any> 
 
 // LOAD
 export async function loadCanonico(req: Request, res: Response): Promise<any> {
-	loggerLoad.info('[ROUTES :: Canonico] Iniciando loadCanonico.');
+	logger.debug('[ROUTES :: Canonico] Iniciando loadCanonico.');
 	const { id } = req.params;
 	const dadosParametros = req.body;
 	try {
@@ -104,13 +104,14 @@ export async function loadCanonico(req: Request, res: Response): Promise<any> {
 		res.status(200).send(response);
 	} catch (error: any) {
 		loggerLoad.error(`Erro ao carregar o canônico com nome ${id}: ${error.message}`);
+		logger.error(`[ROUTES :: Canonico] Erro ao carregar o canônico com nome ${id}: ${error.message}`);
 		throw error;
 	}
 }
 
 // reprocessa
 export async function reprocessaCanonico(req: Request, res: Response): Promise<any> {
-	loggerReprocess.info('[ROUTES :: Canonico] Iniciando reprocessaCanonico.');
+	logger.debug('[ROUTES :: Canonico] Iniciando reprocessaCanonico.');
 	const { id } = req.params;
 	const payloadReprocessamento = req.body;
 	try {
@@ -118,6 +119,7 @@ export async function reprocessaCanonico(req: Request, res: Response): Promise<a
 		res.status(200).send(response);
 	} catch (error: any) {
 		loggerReprocess.error(`Erro ao reprocessar o canônico com nome ${id}: ${error.message}`);
+		logger.error(`[ROUTES :: Canonico] Erro ao reprocessar o canônico com nome ${id}: ${error.message}`);
 		throw error;
 	}
 }

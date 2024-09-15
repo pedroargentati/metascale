@@ -146,3 +146,39 @@ services:
       - testeVivoNetwork
     depends_on:
       - kafka
+
+  metascale-access-cliente:
+    image: gkazukionishi/metascale-access
+    environment:
+      - AWS_ACCESS_KEY_ID=
+      - AWS_SECRET_ACCESS_KEY=
+      - AWS_REGION=us-east-2
+      - CANONICO=cliente
+    ports:
+      - '9000:8080'
+    networks:
+      - testeVivoNetwork
+
+  metascale-access-produto:
+    image: gkazukionishi/metascale-access
+    environment:
+      - AWS_ACCESS_KEY_ID=
+      - AWS_SECRET_ACCESS_KEY=
+      - AWS_REGION=us-east-2
+      - CANONICO=produto
+    ports:
+      - '9001:8080'
+    networks:
+      - testeVivoNetwork
+
+  metascale-access-clienteProduto:
+    image: gkazukionishi/metascale-access
+    environment:
+      - AWS_ACCESS_KEY_ID=
+      - AWS_SECRET_ACCESS_KEY=
+      - AWS_REGION=us-east-2
+      - CANONICO=clienteProduto
+    ports:
+      - '9002:8080'
+    networks:
+      - testeVivoNetwork
