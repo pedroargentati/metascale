@@ -94,6 +94,14 @@ No cenário em que o cliente alterou alguma informação relacionada aos seus pr
 
 Com isso, a Vivo seria capaz de avisar a nossa solução sem a necessidade de alteração em seu código fonte, apenas configurando essa estrutura conforme a necessidade. Garantindo assim que, de forma assíncrona, os dados atualizados dos clientes da Vivo sejam carregados novamente no **DynamoDB** com a performance e a latência necessária, através do processamento do **Debezium** e do andamento da mensageria **Kafka**.
 
+## Falta de Informação no DynamoDB
+
+No cenário em que a informação solicitada ainda não está carregada no **DynamoDB**, pois o processo não priorizou o seu carregamento previamente, surge o pior cenário da solução. Nele, por motivos inesperados, algum cliente que não tenha sido priorizado tenta acessar o **App Vivo**, necessitando aguardar que o **Metascale** realize o carregamento da informação completa nos sistemas da Vivo.
+
+Nesse caso, o tempo de espera seria semelhante ao anterior à solução, acrescido do tempo necessário para o processo de ETL do **Metascale**, que pode ou não ser capaz de otimizar a busca de informações. Isso dependerá se determinadas buscas nos sistemas da Vivo envolvem informações não diretamente ligadas ao novo cliente, mas a outros dados, como informações relacionadas a produtos sem associação direta a um cliente específico.
+
+Esperamos que esse cenário não ocorra com frequência. No entanto, caso ocorra, a expectativa é que apenas esse primeiro carregamento seja demorado, não apresentando problemas de latência após a primeira carga ser realizada no **DynamoDB**.
+
 ## Gerenciamento de Atualizações e Concorrência
 
 Nesses casos, o que ocorre é que, enquanto o **Metascale** não tenha recebido o aviso originário do **Debezium**, ele retornará a informação ainda localizada no **DynamoDB**. No entanto, assim que o **Metascale** consome o "tópico" da fila do **Kafka**, indicando uma atualização de informação, ele invalidará o registro do **DynamoDB**, disparando um processo eficiente de atualização apenas das informações alteradas, até que o registro esteja coerente com a informação mais atual.
