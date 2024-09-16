@@ -57,7 +57,7 @@ Assim como comentado na apresentação do desafio, a palavra-chave estaria em *�
 <h3 align="center">Desenho da solução</h3>
 
 <div align="center">
-	<img src="https://github.com/user-attachments/assets/aff4e41c-b1cb-48c7-b15c-4fb1424e1bd6" />
+	<img src="https://github.com/user-attachments/assets/772788f2-d145-4359-ab7a-aab94447d9ff" />
 </div>
 
 ##
