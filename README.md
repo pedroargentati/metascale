@@ -68,6 +68,11 @@ Antes que a informação fique pronta, pode ser necessário realizar alguns trat
 
 Essa arquitetura garante que as informações sejam corretamente tratadas e apresentadas ao cliente, independentemente de estarem disponíveis diretamente no **DynamoDB** ou exigirem o processamento adicional do **Metascale**.
 
+A partir desse disparador, conseguimos ter a garantia de que a informação do **DynamoDB** sempre estará atualizada e pronta para retorno ao cliente. De forma que no cenário atual, **apenas seria necessário retornar um JSON ou montar a informação a partir de outros JSON(s) já carregado(s)** da informação desejada ao App Vivo para visualização do cliente, através das funções Lambda da *AWS* acessando o **DynamoDB** diretamente.
+
+### Garantindo a Sincronização automática do DynamoDB
+No cenário em que o cliente alterou alguma informação relacionada aos seus produtos, o App da Vivo teria se comunicado diretamente com seus sistemas para requisições de atualização, contornando a nossa solução. Todavia caso o cliente esteja contratando um novo produto, por exemplo, a nossa solução deveria ser capaz de retornar a informação atualizada após a finalização da requisição de atualização, de forma que não bastaria aguardar uma atualização do DynamoDB sem que nenhum sistema avisasse a nossa solução.
+
 ## Requisitos [🔝](#requisitos)
 
 - Node.js (versão 14 ou superior)
@@ -192,7 +197,7 @@ Certifique-se de que você tenha o Docker instalado e configurado corretamente e
 | **Rafael Tannous**                                                                                             |
 |:-------------------------------------------------------------------------------------------------------------:|
 | Analista de dados responsável pelo desenvolvimento de análises e métricas utilizando Grafana.                 |
-| [GitHub](https://github.com/rafaeltannous) • [LinkedIn](https://www.linkedin.com/in/rafael-tannous)            |
+| [GitHub]([https://github.com/rafaeltannous](https://github.com/rafatannousfiap)) • [LinkedIn](https://www.linkedin.com/in/rafaeltannous/)            |
 
 | **Felipe Otto**                                                                                                |
 |:-------------------------------------------------------------------------------------------------------------:|
