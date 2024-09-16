@@ -19,7 +19,7 @@ services:
       - '3306'
     networks:
       - testeVivoNetwork
-  
+
   mock-api:
     image: gkazukionishi/metascale-api-mock-test
     restart: always
@@ -35,7 +35,7 @@ services:
       - db
     networks:
       - testeVivoNetwork
-  
+
   connect:
     image: quay.io/debezium/connect:2.7
     restart: always
@@ -46,7 +46,7 @@ services:
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 2
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 2
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 2
-      BOOTSTRAP_SERVERS: "b-1.metascalekafkacluster.6b6vih.c7.kafka.us-east-2.amazonaws.com:9092"
+      BOOTSTRAP_SERVERS: "b-1.metascalekafkacluster.udeecr.c7.kafka.us-east-2.amazonaws.com:9092"
     ports:
       - '8083:8083'
     expose:

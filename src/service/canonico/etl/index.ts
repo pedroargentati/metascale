@@ -38,6 +38,10 @@ const loadCanonico = async (canonico: any, dadosParametros: any): Promise<any> =
 			}
 		}
 
+		logger.info(
+			`[SERVICE :: Canonico] Iniciando carregamento com os seguintes dados: ${JSON.stringify(dadosParametros)}`,
+		);
+
 		const requestCalls: Map<string, any> = new Map();
 		for (const ordem of chamadasPorOrdem.keys()) {
 			try {
