@@ -169,6 +169,31 @@ Para mitigar esses casos, uma possibilidade seria investigar mais a fundo os log
 
 Esse fluxo garante que as alterações nos dados dos sistemas da Vivo sejam capturadas em tempo real pelo **Debezium**, publicadas no **Kafka** e processadas pelo **Metascale**, que depois armazena o resultado no **DynamoDB** para ser consumido de forma otimizada pelo **App Vivo**. O sistema é altamente escalável e responsivo, garantindo a integridade e disponibilidade dos dados para os clientes da Vivo.
 
+## Requisitos Funcionais e Não Funcionais
+
+| N°    | Requisito                                                     | Descrição                                                                                     | Status    |
+|-------|---------------------------------------------------------------|-------------------------------------------------------------------------------------------------|-----------|
+| RF01  | Buscar informações no sistema da Vivo                         | Habilita a busca de informações nos sistemas Vivo.                                               | ✔️        |
+| RF02  | Atualizar informações conforme sistemas da Vivo               | O Metascale mantém a coerência dos dados à medida que os sistemas da Vivo os atualizam.          | ✔️        |
+| RF03  | Carregar lote de dados                                        | O Metascale carrega em lotes as informações dos sistemas da Vivo.                                | ✔️        |
+| RF04  | Atualizar metadados                                           | O sistema recebe atualizações nos metadados para manter a comunicação precisa entre os sistemas. | ✔️        |
+| RF05  | Personalizar informações com regras de negócio e tratamentos  | É possível adicionar tratamentos personalizados aos dados salvos no Metascale.                  | ✔️        |
+| RF06  | Monitorar o funcionamento da solução                          | Acesso a funções de monitoramento e observabilidade é essencial para a solução.                  | ✔️        |
+| RF07  | Corrigir informações dos clientes no Metascale                | Possibilitar manutenções nos dados do Metascale.                                                 | ✔️        |
+| RF08  | Avisos e alertas de situações atípicas do sistema             | Implementar avisos e alertas em situações atípicas, como picos de chamadas.                      | ✔️        |
+| RNF01 | Gestão de Dados Canônicos                                     | Integração de dados de fontes legadas, garantindo homogeneização e padronização.                 | ✔️        |
+| RNF02 | Desempenho de Pico                                             | Mantém alta disponibilidade e desempenho, suportando até 15 mil chamadas por minuto por API.     | ✔️        |
+| RNF03 | Baixa latência para acesso às informações de bases externas    | Atualizações de dados ocorrem em até 15 minutos no sistema Metascale.                            | ✔️        |
+| RNF04 | Escalabilidade Sem Impacto                                     | Capaz de expandir capacidade e funcionalidades sem impactar o desempenho atual.                  | ✔️        |
+| RNF05 | Conformidade Regulatória                                       | Conforme regulamentos de proteção de dados, como GDPR, LGPD, entre outros.                       | ✔️        |
+| RNF06 | Performance de resposta                                        | Responder às requisições dos clientes em até 80ms.                                               | ✔️        |
+| RNF07 | Uso de tecnologias modernas e estáveis                        | Tecnologias modernas e estáveis reduzem riscos e simplificam manutenção.                        | ✔️        |
+| RNF08 | Resiliência e tolerância a falhas                              | Tratamentos implementados para cenários de falhas, desastres e sobrecarregamento.                | ✔️        |
+
+RF: Requisitos Funcionais.  
+RNF: Requisitos Não Funcionais.
+
+
 ---
 
 <h3 align="center">Arquitetura do Componente Metascale</h3>
