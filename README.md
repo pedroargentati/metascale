@@ -105,6 +105,42 @@ No cenário em que o cliente alterou alguma informação relacionada aos seus pr
 
 Com isso, a Vivo seria capaz de avisar a nossa solução sem a necessidade de alteração em seu código fonte, apenas configurando essa estrutura conforme a necessidade. Garantindo assim que, de forma assíncrona, os dados atualizados dos clientes da Vivo sejam carregados novamente no **DynamoDB** com a performance e a latência necessária, através do processamento do **Debezium** e do andamento da mensageria **Kafka**.
 
+## Merge dos Canônicos
+
+O processo de **merge** (fusão) dos canônicos é essencial quando os dados do modelo canônico são compostos por informações que vêm de múltiplas fontes ou "dimensões". Essas dimensões podem representar diferentes tabelas ou sistemas, como uma tabela de produtos e uma tabela de planos de pagamento, por exemplo.
+
+### Cenário
+
+Suponha que tanto a tabela de produtos quanto a de planos de pagamento possuam um atributo em comum, como o campo `description`. Em vez de atualizar manualmente todas as ocorrências desse atributo em cada dimensão de forma separada, o método **merge** no componente `canonical-builder` facilita a integração dessas informações de forma unificada.
+
+### Como Funciona
+
+Quando o **merge** é executado:
+
+1. **Busca e Integração de Dados**: O método realiza uma busca em todas as dimensões que compartilham o mesmo atributo (por exemplo, o campo `description`).
+   
+2. **Unificação**: Ele consolida esses dados em uma única resposta, retornando a informação unificada e atualizada. Isso evita redundâncias e inconsistências, garantindo que a informação apresentada seja coerente e completa, considerando todas as fontes de dados.
+
+3. **Otimização**: Em vez de realizar múltiplas consultas ou atualizações em cada sistema ou tabela separadamente, o **merge** simplifica esse processo ao permitir uma única chamada que agrega as informações de todas as dimensões relevantes.
+
+### Vantagens do Merge
+
+- **Eficiência**: O processo de fusão automatiza a busca e atualização dos dados, economizando tempo e reduzindo a complexidade do código.
+  
+- **Coerência dos Dados**: Ao consolidar as informações de diferentes fontes, o método garante que os dados sejam coerentes, eliminando o risco de inconsistências entre sistemas.
+  
+- **Escalabilidade**: Conforme o número de fontes e dimensões aumenta, o método **merge** continua a fornecer uma solução escalável, permitindo a fusão eficiente de dados sem a necessidade de atualizações manuais.
+
+### Exemplo de Uso
+
+Vamos considerar um exemplo prático:
+
+- O canônico contém informações sobre produtos e planos de pagamento.
+- Tanto o produto quanto o plano de pagamento têm o atributo `description`.
+  
+Usando o método **merge**, você pode unificar a `description` de ambas as dimensões em uma única resposta, garantindo que os dados corretos de ambas as fontes sejam retornados de maneira integrada.
+
+
 ## Falta de Informação no DynamoDB
 
 No cenário em que a informação solicitada ainda não está carregada no **DynamoDB**, pois o processo não priorizou o seu carregamento previamente, surge o pior cenário da solução. Nele, por motivos inesperados, algum cliente que não tenha sido priorizado tenta acessar o **App Vivo**, necessitando aguardar que o **Metascale** realize o carregamento da informação completa nos sistemas da Vivo.
