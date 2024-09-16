@@ -17,8 +17,6 @@ Metascale - Cicada
 
 ## 📝 Índice
 
-# Sumário
-
 - [🧐 Arquitetura](#-arquitetura)
   - [Metascale](#metascale)
   - [Funcionamento da Solução](#funcionamento-da-solução)
