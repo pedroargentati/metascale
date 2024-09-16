@@ -1,12 +1,21 @@
 <h1 align='center'>
 Metascale - Cicada
 </h1>
+<p align="center">
+  <a href="" rel="noopener">
+ <img width=350px height=200px src="https://i.imgur.com/oXHVMKJ.png" alt="Project logo"></a>
+</p>
 
-![metascale-logo](https://github.com/user-attachments/assets/1e16633c-0723-416b-8552-0e4e93fb30be)
+<div align="center">
+
+[![Status](https://img.shields.io/badge/status-active-success.svg)]()
+[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
 
-## Índice
+## 📝 Índice
 
 - [Arquitetura](#arquitetura)
 - [Requisitos](#requisitos)
@@ -20,9 +29,9 @@ Metascale - Cicada
 - [Licença](#licença)
 - [Agradecimentos](#agradecimentos)
 
-### Arquitetura [🔝](#arquitetura)
+## 🧐 Arquitetura [🔝](#arquitetura)
 
-## Metascale
+### Metascale
 O nome da nossa solução, Metascale, origina da ideia de metadados e escalabilidade, em que nos baseamos nesses metadados para associar os retornos dos diferentes sistemas heterogêneos da Vivo, com um modelo canônico homogeneizado.
 
 De forma que a partir desse modelo canônico, conseguimos salvar as informações para um retorno performático e escalável através de soluções Cloud da AWS, como a Lambda e o DynamoDB, em que JSON’s “prontos” preparados a partir do canônico são registrados no Dynamo, e o Lambda, por ser uma solução serverless, trataria as necessidades de performance e escalabilidade automaticamente, respondendo aos picos conforme a necessidade.
@@ -30,6 +39,21 @@ De forma que a partir desse modelo canônico, conseguimos salvar as informaçõe
 Entrando em detalhes no que chamamos de metadados, um exemplo de uso seria associar o atributo “description” do JSON retornado no serviço XYZ da Vivo, com o atributo “descrição” do modelo canônico “Produto”. A vantagem dessa abordagem está na facilidade de associação de novos serviços com a solução, e suas evoluções, tendo em vista que em outro serviço de produto, o nome do atributo correspondente à “descrição” do canônico, poderia ter o nome “desc”. Da mesma forma, caso surja a necessidade de usar algum outro atributo, bastaria alterar o metadado da solução e funcionaria sem nenhum problema, o que não seria possível ao acoplar os retornos de ambos serviços à solução.
 
 Assim como comentado na apresentação do desafio, a palavra-chave estaria em “Desacoplamento”, e foi o que buscamos com o Metascale.
+
+##
+
+### Funcionamento da Solução
+
+Abaixo, destacamos três cenários que percorrem a arquitetura da solução toda, explicando o que aconteceria em cada caso:
+
+
+### CARREGAMENTO E PROCESSAMENTO INICIAL NO DYNAMODB
+Quando a informação solicitada pelo cliente no App Vivo já está carregada e pronta no DynamoDB, o componente denominado Metascale já teria processado as informações dos produtos do cliente através de um processo ETL, em que requisições GET seriam disparadas aos sistemas Vivo para obter todos os dados necessários previamente, associando e tratando devidamente as informações usando os metadados e montando o modelo canônico correspondente.
+
+Para isso ter ocorrido, o processo terá sido disparado pela API.
+
+A API é capaz de aceitar requisições de busca de informações ainda não carregadas ou defasadas do DynamoDB, disparando o processo de ETL conforme as requisições. Sendo útil para cenários mais específicos ou pontuais em que o carregamento necessite ocorrer.
+
 
 <h1 align='center'>
 Arquitetura da Solução
@@ -44,7 +68,7 @@ Arquitetura da Solução
 - npm (ou yarn)
 - Docker Desktop
 
-## Instalação [🔝](#instalação)
+## 🎈 Instalação [🔝](#instalação)
 
 ### 1. Clonar o repositório
 
@@ -140,7 +164,7 @@ Certifique-se de que você tenha o Docker instalado e configurado corretamente e
 
 </div>
 
-## Autores
+## ✍️ Autores
 
 <div align="center">
 
