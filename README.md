@@ -32,13 +32,13 @@ Metascale - Cicada
 ## 🧐 Arquitetura [🔝](#arquitetura)
 
 ### Metascale
-O nome da nossa solução, Metascale, origina da ideia de metadados e escalabilidade, em que nos baseamos nesses metadados para associar os retornos dos diferentes sistemas heterogêneos da Vivo, com um modelo canônico homogeneizado.
+O nome da nossa solução, **Metascale**, origina da ideia de **metadados e escalabilidade**, em que nos baseamos nesses metadados para associar os retornos dos diferentes sistemas heterogêneos da Vivo, com um modelo canônico homogeneizado.
 
-De forma que a partir desse modelo canônico, conseguimos salvar as informações para um retorno performático e escalável através de soluções Cloud da AWS, como a Lambda e o DynamoDB, em que JSON’s “prontos” preparados a partir do canônico são registrados no Dynamo, e o Lambda, por ser uma solução serverless, trataria as necessidades de performance e escalabilidade automaticamente, respondendo aos picos conforme a necessidade.
+De forma que a partir desse modelo canônico, conseguimos salvar as informações para um retorno performático e escalável através de soluções **Cloud da AWS**, como o *Lambda* e o *DynamoDB*, em que *JSON’s “prontos”* preparados a partir do canônico são registrados no Dynamo, e o Lambda, por ser uma solução serverless, trataria as necessidades de performance e escalabilidade automaticamente, respondendo aos picos conforme a necessidade.
 
-Entrando em detalhes no que chamamos de metadados, um exemplo de uso seria associar o atributo “description” do JSON retornado no serviço XYZ da Vivo, com o atributo “descrição” do modelo canônico “Produto”. A vantagem dessa abordagem está na facilidade de associação de novos serviços com a solução, e suas evoluções, tendo em vista que em outro serviço de produto, o nome do atributo correspondente à “descrição” do canônico, poderia ter o nome “desc”. Da mesma forma, caso surja a necessidade de usar algum outro atributo, bastaria alterar o metadado da solução e funcionaria sem nenhum problema, o que não seria possível ao acoplar os retornos de ambos serviços à solução.
+Entrando em detalhes no que chamamos de metadados, um exemplo de uso seria associar o atributo *“description”* do JSON retornado no serviço XYZ da Vivo, com o atributo *“descrição”* do modelo canônico *“Produto”*. A vantagem dessa abordagem está na facilidade de associação de novos serviços com a solução, e suas evoluções, tendo em vista que em outro serviço de produto, o nome do atributo correspondente à *“descrição”* do canônico, poderia ter o nome *“desc”*. Da mesma forma, caso surja a necessidade de usar algum outro atributo, bastaria alterar o metadado da solução e funcionaria sem nenhum problema, o que não seria possível ao acoplar os retornos de ambos serviços à solução.
 
-Assim como comentado na apresentação do desafio, a palavra-chave estaria em “Desacoplamento”, e foi o que buscamos com o Metascale.
+Assim como comentado na apresentação do desafio, a palavra-chave estaria em *“Desacoplamento”*, e foi o que buscamos com o **Metascale**.
 
 <h3 align="center">Desenho da solução</h3>
 
@@ -72,6 +72,31 @@ A partir desse disparador, conseguimos ter a garantia de que a informação do *
 
 ### Garantindo a Sincronização automática do DynamoDB
 No cenário em que o cliente alterou alguma informação relacionada aos seus produtos, o App da Vivo teria se comunicado diretamente com seus sistemas para requisições de atualização, contornando a nossa solução. Todavia caso o cliente esteja contratando um novo produto, por exemplo, a nossa solução deveria ser capaz de retornar a informação atualizada após a finalização da requisição de atualização, de forma que não bastaria aguardar uma atualização do DynamoDB sem que nenhum sistema avisasse a nossa solução.
+
+## Captura de Alterações (CDC) com Debezium e Kafka
+
+1. **Captura de Alterações (CDC) com Debezium**:
+   - O **Debezium** é um componente de captura de mudanças (*Change Data Capture* - CDC) que monitora os bancos de dados dos sistemas da Vivo. Ele é responsável por detectar alterações (inserções, atualizações e exclusões) em tempo real.
+   - Sempre que ocorre uma mudança nos sistemas Vivo (representados como *black-box*), o **Debezium** extrai essas informações e transforma as mudanças em eventos de dados.
+
+2. **Publicação de Eventos no Kafka**:
+   - Após a captura das mudanças, o **Debezium** publica esses eventos em tópicos do **Kafka**. O Kafka funciona como um sistema de mensageria distribuído, permitindo o gerenciamento eficiente de grandes volumes de dados em tempo real.
+   - Esses eventos publicados no **Kafka** representam os dados que precisam ser processados pelo próximo componente na arquitetura.
+
+3. **Processamento dos Dados pelo Metascale**:
+   - O **Kafka**, ao receber os eventos do **Debezium**, dispara as mensagens para a aplicação **Metascale**. O **Metascale** é responsável por processar os dados recebidos, realizando as transformações necessárias no contexto de um processo **ETL** (Extract, Transform, Load).
+   - O **Metascale** trata os dados, aplicando a lógica de negócio, e os prepara em um formato canônico que será posteriormente consumido pelo sistema final.
+
+4. **Envio dos Dados ao DynamoDB**:
+   - Após o processamento dos dados pelo **Metascale**, o resultado é enviado para o banco de dados **DynamoDB**. Esse banco de dados armazena os dados transformados de forma eficiente e otimizada para consultas futuras.
+   - Sempre que o **App Vivo** fizer uma solicitação de informações, o **Lambda** irá consultar o **DynamoDB** para buscar as informações já processadas. Caso os dados não estejam disponíveis, o **Lambda** acionará o **Metascale** novamente para buscar as informações e realizar o ETL.
+
+## Resumo
+
+Esse fluxo garante que as alterações nos dados dos sistemas da Vivo sejam capturadas em tempo real pelo **Debezium**, publicadas no **Kafka** e processadas pelo **Metascale**, que depois armazena o resultado no **DynamoDB** para ser consumido de forma otimizada pelo **App Vivo**. O sistema é altamente escalável e responsivo, garantindo a integridade e disponibilidade dos dados para os clientes da Vivo.
+
+---
+
 
 ## Requisitos [🔝](#requisitos)
 
