@@ -32,7 +32,6 @@ Metascale - Cicada
   - [Gerenciamento de Atualizações e Concorrência](#gerenciamento-de-atualizações-e-concorrência)
   - [Regras e Restrições](#regras-e-restrições)
   - [Resumo](#resumo)
-
 - [Requisitos](#requisitos)
 - [Instalação](#instalação)
 - [Tecnologias Utilizadas](#techs)
