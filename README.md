@@ -40,6 +40,10 @@ Entrando em detalhes no que chamamos de metadados, um exemplo de uso seria assoc
 
 Assim como comentado na apresentação do desafio, a palavra-chave estaria em “Desacoplamento”, e foi o que buscamos com o Metascale.
 
+<div align="center">
+	<img src="https://github.com/user-attachments/assets/f2fbe165-ae00-4f9f-8d4a-3af846e3d4eb" />
+</div>
+
 ##
 
 ### Funcionamento da Solução
@@ -53,14 +57,6 @@ Quando a informação solicitada pelo cliente no App Vivo já está carregada e 
 Para isso ter ocorrido, o processo terá sido disparado pela API.
 
 A API é capaz de aceitar requisições de busca de informações ainda não carregadas ou defasadas do DynamoDB, disparando o processo de ETL conforme as requisições. Sendo útil para cenários mais específicos ou pontuais em que o carregamento necessite ocorrer.
-
-
-<h1 align='center'>
-Arquitetura da Solução
-</h1>
-<div align="center">
-	<img src="https://github.com/user-attachments/assets/f2fbe165-ae00-4f9f-8d4a-3af846e3d4eb" />
-</div>
 
 ## Requisitos [🔝](#requisitos)
 
