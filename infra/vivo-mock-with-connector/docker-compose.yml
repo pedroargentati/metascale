@@ -1,0 +1,55 @@
+version: '3.8'
+
+networks:
+  testeVivoNetwork:
+    external: true
+
+services:
+  db:
+    image: gkazukionishi/vivo-mock-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'user'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    networks:
+      - testeVivoNetwork
+  
+  mock-api:
+    image: gkazukionishi/metascale-api-mock-test
+    restart: always
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/VivoTest
+      - SPRING_DATASOURCE_PASSWORD=user
+      - SPRING_DATASOURCE_USERNAME=user
+    ports:
+      - '3333:8080'
+    expose:
+      - '3333'
+    depends_on:
+      - db
+    networks:
+      - testeVivoNetwork
+  
+  connect:
+    image: quay.io/debezium/connect:2.7
+    restart: always
+    environment:
+      CONFIG_STORAGE_TOPIC: 'my_connect_configs'
+      OFFSET_STORAGE_TOPIC: 'my_connect_offsets'
+      STATUS_STORAGE_TOPIC: 'my_connect_statuses'
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 2
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 2
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 2
+      BOOTSTRAP_SERVERS: "b-1.metascalekafkacluster.6b6vih.c7.kafka.us-east-2.amazonaws.com:9092"
+    ports:
+      - '8083:8083'
+    expose:
+      - '8083'
+    networks:
+      - testeVivoNetwork
