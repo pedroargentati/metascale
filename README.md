@@ -17,7 +17,24 @@ Metascale - Cicada
 
 ## 📝 Índice
 
-- [Arquitetura](#arquitetura)
+# Sumário
+
+- [🧐 Arquitetura](#-arquitetura)
+  - [Metascale](#metascale)
+  - [Funcionamento da Solução](#funcionamento-da-solução)
+  - [Carregamento e Processamento Inicial no DynamoDB](#carregamento-e-processamento-inicial-no-dynamodb)
+  - [Fall-Back do Lambda](#fall-back-do-lambda)
+  - [Garantindo a Sincronização Automática do DynamoDB](#garantindo-a-sincronização-automática-do-dynamodb)
+  - [Captura de Alterações (CDC) com Debezium e Kafka](#captura-de-alterações-cdc-com-debezium-e-kafka)
+    - [1. Captura de Alterações (CDC) com Debezium](#1-captura-de-alterações-cdc-com-debezium)
+    - [2. Publicação de Eventos no Kafka](#2-publicação-de-eventos-no-kafka)
+    - [3. Processamento dos Dados pelo Metascale](#3-processamento-dos-dados-pelo-metascale)
+    - [4. Envio dos Dados ao DynamoDB](#4-envio-dos-dados-ao-dynamodb)
+  - [Falta de Informação no DynamoDB](#falta-de-informação-no-dynamodb)
+  - [Gerenciamento de Atualizações e Concorrência](#gerenciamento-de-atualizações-e-concorrência)
+  - [Regras e Restrições](#regras-e-restrições)
+  - [Resumo](#resumo)
+
 - [Requisitos](#requisitos)
 - [Instalação](#instalação)
 - [Tecnologias Utilizadas](#techs)
@@ -111,7 +128,7 @@ Esse comportamento pode ser associado com uma transação de banco de dados, em 
 
 Para mitigar esses casos, uma possibilidade seria investigar mais a fundo os logs analisados pelo **Debezium**, utilizando flags estratégicas para indicar alterações de informação e garantir que a atualização ocorra antes de qualquer retorno. Outra abordagem seria a implementação de **Webhooks** como alternativa para disparar eventos que notificam a finalização da alteração.
 
-# Regras e Restrições
+## Regras e Restrições
 
 - Dependência do funcionamento da AWS.
 - Dependência com os sistemas da Vivo para carregamento de informações.
