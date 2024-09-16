@@ -193,17 +193,6 @@ Esse fluxo garante que as alterações nos dados dos sistemas da Vivo sejam capt
 RF: Requisitos Funcionais.  
 RNF: Requisitos Não Funcionais.
 
-
----
-
-<h3 align="center">Arquitetura do Componente Metascale</h3>
-## 
-<div align="center">
-	<img src="https://github.com/user-attachments/assets/2c79c1ac-42e6-4274-8f66-f72fe97975ac" />
-</div>
-
-
-
 ## Requisitos [🔝](#requisitos)
 
 - Node.js (versão 14 ou superior)
