@@ -64,8 +64,6 @@ Assim como comentado na apresentação do desafio, a palavra-chave estaria em *�
 
 ### Funcionamento da Solução
 
-Abaixo, destacamos três cenários que percorrem a arquitetura da solução toda, explicando o que aconteceria em cada caso:
-
 ### Carragamento e Processamento Inicial no DynamoDB
 
 Quando a informação solicitada pelo cliente no **App Vivo** já está carregada e pronta no **DynamoDB**, o componente denominado **Metascale** já teria processado as informações dos produtos do cliente através de um processo de **ETL**. Nesse processo, requisições *GET* são disparadas para os sistemas da Vivo com o objetivo de obter todos os dados necessários previamente, associando e tratando as informações utilizando os metadados e montando o modelo canônico correspondente.
