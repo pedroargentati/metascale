@@ -78,9 +78,10 @@ No cenário em que o cliente alterou alguma informação relacionada aos seus pr
 1. **Captura de Alterações (CDC) com Debezium**:
    - O **Debezium** é um componente de captura de mudanças (*Change Data Capture* - CDC) que monitora os bancos de dados dos sistemas da Vivo. Ele é responsável por detectar alterações (inserções, atualizações e exclusões) em tempo real.
    - Sempre que ocorre uma mudança nos sistemas Vivo (representados como *black-box*), o **Debezium** extrai essas informações e transforma as mudanças em eventos de dados.
+   - Caso o cliente esteja contratando um novo produto, por exemplo, a nossa solução será capaz de retornar a informação atualizada após a finalização da requisição de atualização, de forma que não bastaria aguardar uma atualização do **DynamoDB** sem que nenhum sistema avisasse a nossa solução.
 
 2. **Publicação de Eventos no Kafka**:
-   - Após a captura das mudanças, o **Debezium** publica esses eventos em tópicos do **Kafka**. O Kafka funciona como um sistema de mensageria distribuído, permitindo o gerenciamento eficiente de grandes volumes de dados em tempo real.
+   - Após a captura das mudanças, o **Debezium** publica esses eventos em tópicos do **Kafka**, que está conectado ao componente **Metascale**. O **Kafka** funciona como um sistema de mensageria distribuído, permitindo o gerenciamento eficiente de grandes volumes de dados em tempo real.
    - Esses eventos publicados no **Kafka** representam os dados que precisam ser processados pelo próximo componente na arquitetura.
 
 3. **Processamento dos Dados pelo Metascale**:
@@ -90,6 +91,17 @@ No cenário em que o cliente alterou alguma informação relacionada aos seus pr
 4. **Envio dos Dados ao DynamoDB**:
    - Após o processamento dos dados pelo **Metascale**, o resultado é enviado para o banco de dados **DynamoDB**. Esse banco de dados armazena os dados transformados de forma eficiente e otimizada para consultas futuras.
    - Sempre que o **App Vivo** fizer uma solicitação de informações, o **Lambda** irá consultar o **DynamoDB** para buscar as informações já processadas. Caso os dados não estejam disponíveis, o **Lambda** acionará o **Metascale** novamente para buscar as informações e realizar o ETL.
+
+Com isso, a Vivo seria capaz de avisar a nossa solução sem a necessidade de alteração em seu código fonte, apenas configurando essa estrutura conforme a necessidade. Garantindo assim que, de forma assíncrona, os dados atualizados dos clientes da Vivo sejam carregados novamente no **DynamoDB** com a performance e a latência necessária, através do processamento do **Debezium** e do andamento da mensageria **Kafka**.
+
+## Gerenciamento de Atualizações e Concorrência
+
+Nesses casos, o que ocorre é que, enquanto o **Metascale** não tenha recebido o aviso originário do **Debezium**, ele retornará a informação ainda localizada no **DynamoDB**. No entanto, assim que o **Metascale** consome o "tópico" da fila do **Kafka**, indicando uma atualização de informação, ele invalidará o registro do **DynamoDB**, disparando um processo eficiente de atualização apenas das informações alteradas, até que o registro esteja coerente com a informação mais atual.
+
+Esse comportamento pode ser associado com uma transação de banco de dados, em que enquanto o "commit" final dos sistemas da Vivo não tenha acontecido, a informação anterior será retornada. Após o "commit", ela seria atualizada e retornada com as informações novas. Apesar do risco de um retorno parcial das informações mais recentes, a arquitetura atual da Vivo, que trabalha com microsserviços, já considera o assincronismo como uma consequência, dado que depende de diversos bancos de dados para a mesma informação.
+
+Para mitigar esses casos, uma possibilidade seria investigar mais a fundo os logs analisados pelo **Debezium**, utilizando flags estratégicas para indicar alterações de informação e garantir que a atualização ocorra antes de qualquer retorno. Outra abordagem seria a implementação de **Webhooks** como alternativa para disparar eventos que notificam a finalização da alteração.
+
 
 ## Resumo
 
