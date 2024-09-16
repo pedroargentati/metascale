@@ -71,6 +71,7 @@ Essa arquitetura garante que as informações sejam corretamente tratadas e apre
 A partir desse disparador, conseguimos ter a garantia de que a informação do **DynamoDB** sempre estará atualizada e pronta para retorno ao cliente. De forma que no cenário atual, **apenas seria necessário retornar um JSON ou montar a informação a partir de outros JSON(s) já carregado(s)** da informação desejada ao App Vivo para visualização do cliente, através das funções Lambda da *AWS* acessando o **DynamoDB** diretamente.
 
 ### Garantindo a Sincronização automática do DynamoDB
+
 No cenário em que o cliente alterou alguma informação relacionada aos seus produtos, o App da Vivo teria se comunicado diretamente com seus sistemas para requisições de atualização, contornando a nossa solução. Todavia caso o cliente esteja contratando um novo produto, por exemplo, a nossa solução deveria ser capaz de retornar a informação atualizada após a finalização da requisição de atualização, de forma que não bastaria aguardar uma atualização do DynamoDB sem que nenhum sistema avisasse a nossa solução.
 
 ## Captura de Alterações (CDC) com Debezium e Kafka
@@ -110,6 +111,13 @@ Esse comportamento pode ser associado com uma transação de banco de dados, em 
 
 Para mitigar esses casos, uma possibilidade seria investigar mais a fundo os logs analisados pelo **Debezium**, utilizando flags estratégicas para indicar alterações de informação e garantir que a atualização ocorra antes de qualquer retorno. Outra abordagem seria a implementação de **Webhooks** como alternativa para disparar eventos que notificam a finalização da alteração.
 
+# Regras e Restrições
+
+- Dependência do funcionamento da AWS.
+- Dependência com os sistemas da Vivo para carregamento de informações.
+- Necessidade de implementar o Debezium corretamente para os avisos de CDC, configurando as conexões com as bases de dados da Vivo.
+- Necessidade de configurar os metadados corretamente para sincronizar os sistemas com o Metascale.
+- Se houver a necessidade de adicionar algum tipo de tratamento personalizado ao modelo canônico a ser montado, será necessário configurar os serviços de customização adequadamente.
 
 ## Resumo
 
