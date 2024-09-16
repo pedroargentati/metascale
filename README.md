@@ -40,6 +40,8 @@ Entrando em detalhes no que chamamos de metadados, um exemplo de uso seria assoc
 
 Assim como comentado na apresentação do desafio, a palavra-chave estaria em “Desacoplamento”, e foi o que buscamos com o Metascale.
 
+<h3 align="center">Desenho da solução</h3>
+
 <div align="center">
 	<img src="https://github.com/user-attachments/assets/f2fbe165-ae00-4f9f-8d4a-3af846e3d4eb" />
 </div>
@@ -50,13 +52,21 @@ Assim como comentado na apresentação do desafio, a palavra-chave estaria em �
 
 Abaixo, destacamos três cenários que percorrem a arquitetura da solução toda, explicando o que aconteceria em cada caso:
 
+### Carragamento e Processamento Inicial no DynamoDB
 
-### CARREGAMENTO E PROCESSAMENTO INICIAL NO DYNAMODB
-Quando a informação solicitada pelo cliente no App Vivo já está carregada e pronta no DynamoDB, o componente denominado Metascale já teria processado as informações dos produtos do cliente através de um processo ETL, em que requisições GET seriam disparadas aos sistemas Vivo para obter todos os dados necessários previamente, associando e tratando devidamente as informações usando os metadados e montando o modelo canônico correspondente.
+Quando a informação solicitada pelo cliente no **App Vivo** já está carregada e pronta no **DynamoDB**, o componente denominado **Metascale** já teria processado as informações dos produtos do cliente através de um processo de **ETL**. Nesse processo, requisições *GET* são disparadas para os sistemas da Vivo com o objetivo de obter todos os dados necessários previamente, associando e tratando as informações utilizando os metadados e montando o modelo canônico correspondente.
 
-Para isso ter ocorrido, o processo terá sido disparado pela API.
+### Fall-Back do Lambda
 
-A API é capaz de aceitar requisições de busca de informações ainda não carregadas ou defasadas do DynamoDB, disparando o processo de ETL conforme as requisições. Sendo útil para cenários mais específicos ou pontuais em que o carregamento necessite ocorrer.
+Entretanto, caso a informação não esteja disponível no **DynamoDB**, o Lambda possui um mecanismo de *fall-back*. Nesse cenário, o Lambda chama a API do Metascale (este projeto) para realizar todo o processo de ETL. A API é responsável por buscar o modelo canônico correspondente, recuperar as informações nas aplicações *blackbox* da Vivo e montar o resultado para exibição ao cliente.
+
+Antes que a informação fique pronta, pode ser necessário realizar alguns tratamentos específicos no *payload*. Para esses casos, criamos outra aplicação, disponível no [repositório Metascale Builder](https://github.com/pedroargentati/metascale-builder), que permite que os próprios desenvolvedores da Vivo possam:
+
+- **Modificar e realizar pós-processamento no payload:** Utilizando o método `build`, os desenvolvedores podem realizar qualquer tipo de modificação no *payload*.
+- **Extrair dados dos parâmetros necessários:** Com o método `extract`, é possível extrair os dados necessários diretamente do *payload*.
+- **Realizar o *merge* de canônicos:** O método `merge` permite juntar *n* canônicos, da forma que o desenvolvedor preferir.
+
+Essa arquitetura garante que as informações sejam corretamente tratadas e apresentadas ao cliente, independentemente de estarem disponíveis diretamente no **DynamoDB** ou exigirem o processamento adicional do **Metascale**.
 
 ## Requisitos [🔝](#requisitos)
 
