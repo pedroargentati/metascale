@@ -93,10 +93,21 @@ export async function sincronizaCanonicoService(canonico: any, topico: string, k
 			canonico,
 			topico,
 			kafkaMessage,
-			async (dadosParametro) => await loadCanonico(canonico, dadosParametro),
-		);
+			async (dadosParametro) =>
+				await loadCanonico(canonico, dadosParametro).catch((error) => {
+					throw new IntegrationError(
+						`Erro no callback de load durante a sincronização do ${canonico.nome}: ${error.message}`,
+						500,
+					);
+				}),
+		).catch((error) => {
+			throw new IntegrationError(
+				`Erro na customização de sincronização do canônico ${canonico.nome}, tópico ${topico}: ${error.message}`,
+				500,
+			);
+		});
 	} catch (error: any) {
-		throw new IntegrationError(`Erro ao sincronizar o canônico de ID ${canonico?.id}: ${error.message}`, 500);
+		throw new IntegrationError(`Erro ao sincronizar o canônico ${canonico.nome}: ${error.message}`, 500);
 	} finally {
 		logger.debug(`[SERVICE :: Canonico] Fim da sincronização do canônico ${canonico.nome} do tópico ${topico}.`);
 	}

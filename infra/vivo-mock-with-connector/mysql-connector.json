@@ -10,8 +10,8 @@
     "database.server.id": "184054",
     "topic.prefix": "db1",
     "database.include.list": "VivoTest",
-    "schema.history.internal.kafka.bootstrap.servers": "b-1.metascalekafkacluster.udeecr.c7.kafka.us-east-2.amazonaws.com:9092",
+    "schema.history.internal.kafka.bootstrap.servers": "b-1.metascalekafkacluster.t9zqxv.c7.kafka.us-east-2.amazonaws.com:9092",
     "schema.history.internal.kafka.topic": "schemahistory.vivotest",
-    "snapshot.mode": "always"
+    "snapshot.mode": "initial"
   }
 }

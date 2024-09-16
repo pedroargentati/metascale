@@ -78,7 +78,7 @@ async function consumeAllCanonicos() {
 	}
 }
 
-const errorTypes = ['unhandledRejection', 'uncaughtException'];
+const errorTypes = ['uncaughtException'];
 const signalTraps = ['SIGTERM', 'SIGINT', 'SIGUSR2'];
 
 errorTypes.forEach((type) => {
