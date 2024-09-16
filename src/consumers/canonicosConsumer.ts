@@ -10,18 +10,18 @@ const consumer = kafka.consumer({ groupId: process.env.KAFKA_GROUP_ID || 'metasc
  * Consome todas as mensagens dos tópicos canônicos.
  */
 async function consumeAllCanonicos() {
-	logger.debug('[APP :: Kafka] Iniciando consumeAllCanonicos...');
+	logger.info('[APP :: Kafka] Iniciando consumeAllCanonicos...');
 	const allCanonicos: Record<string, any>[] = await getCanonicoService();
 
 	if (!allCanonicos?.length) {
-		logger.debug('[APP :: Kafka] Nenhum canônico encontrado para consumir.');
+		logger.info('[APP :: Kafka] Nenhum canônico encontrado para consumir.');
 		return;
 	}
 
 	const todosTopicos = [];
 	for (const canonico of allCanonicos) {
 		if (!canonico.topicos) {
-			logger.debug(`[APP :: Kafka] Canônico ${canonico.nome} não possui tópicos. Continuando...`);
+			logger.info(`[APP :: Kafka] Canônico ${canonico.nome} não possui tópicos. Continuando...`);
 			continue;
 		}
 
@@ -34,7 +34,7 @@ async function consumeAllCanonicos() {
 	try {
 		// Subscrição para todos os tópicos canônicos
 		await consumer.subscribe({ topics: todosTopicosUnicos });
-		logger.debug(`[APP :: Kafka] Subscrito nos tópicos ${todosTopicos}`);
+		logger.info(`[APP :: Kafka] Subscrito nos tópicos ${todosTopicos}`);
 
 		// Processamento das mensagens dos tópicos
 		await consumer.run({
@@ -45,7 +45,7 @@ async function consumeAllCanonicos() {
 
 					canonicos.forEach(async (canonico) => {
 						const startTime: number = new Date().getTime();
-						logger.debug(
+						logger.info(
 							`[APP :: Kafka] Iniciando processamento para o canônico ${canonico.nome} no tópico ${topic}.`,
 						);
 
@@ -61,7 +61,7 @@ async function consumeAllCanonicos() {
 						} finally {
 							const endTime: number = new Date().getTime();
 							const duration: number = endTime - startTime;
-							logger.debug(
+							logger.info(
 								`[APP :: Kafka] Tempo de processamento para o canônico ${canonico.nome} no tópico ${topic}: ${duration} ms`,
 							);
 						}

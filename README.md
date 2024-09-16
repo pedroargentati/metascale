@@ -60,8 +60,6 @@ Assim como comentado na apresentação do desafio, a palavra-chave estaria em *�
 	<img src="https://github.com/user-attachments/assets/772788f2-d145-4359-ab7a-aab94447d9ff" />
 </div>
 
-##
-
 ### Funcionamento da Solução
 
 Abaixo, destacamos três cenários que percorrem a arquitetura da solução toda, explicando o que aconteceria em cada caso:
@@ -144,6 +142,8 @@ Esse fluxo garante que as alterações nos dados dos sistemas da Vivo sejam capt
 <div align="center">
 	<img src="https://github.com/user-attachments/assets/2c79c1ac-42e6-4274-8f66-f72fe97975ac" />
 </div>
+
+
 
 ## Requisitos [🔝](#requisitos)
 
