@@ -32,16 +32,12 @@ Metascale - Cicada
   - [Gerenciamento de Atualizações e Concorrência](#gerenciamento-de-atualizações-e-concorrência)
   - [Regras e Restrições](#regras-e-restrições)
   - [Resumo](#resumo)
+- [Requisitos Funcionais e Não Funcionais](#requisitos)
+- [Vídeo explicativo da solução](#video)
 - [Requisitos](#requisitos)
 - [Instalação](#instalação)
 - [Tecnologias Utilizadas](#techs)
-- [Uso](#uso)
-- [Funcionalidades](#funcionalidades)
-- [Capturas de Tela](#capturas-de-tela)
-- [Contribuição](#contribuição)
 - [Autores](#autores)
-- [Licença](#licença)
-- [Agradecimentos](#agradecimentos)
 
 ## 🧐 Arquitetura [🔝](#arquitetura)
 
@@ -192,6 +188,9 @@ Esse fluxo garante que as alterações nos dados dos sistemas da Vivo sejam capt
 
 RF: Requisitos Funcionais.  
 RNF: Requisitos Não Funcionais.
+
+## Vídeo explicativo da solução
+Para entender melhor nossa solução e vê-la em ação, [clique aqui para assistir ao vídeo](https://youtu.be/N6Umn1ctNS4)!
 
 ## Requisitos [🔝](#requisitos)
 
