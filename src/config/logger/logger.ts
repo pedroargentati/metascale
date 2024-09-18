@@ -3,6 +3,7 @@ import winston, { createLogger } from 'winston';
 import dotenv from 'dotenv';
 import { createDefaultFormat, createLoadFormat, createReprocessFormat, createSyncFormat } from './formats.js';
 import { createTransports } from './transports.js';
+import { IS_DEV } from '../../utils/constants.js';
 
 // Carregar variáveis de ambiente
 dotenv.config();
@@ -17,24 +18,24 @@ winston.addColors({
 // Criar o logger com os transportes e formatação padrão
 export const logger = createLogger({
 	format: createDefaultFormat(),
-	transports: createTransports(),
+	transports: createTransports('default'),
 	exitOnError: false,
 });
 
 export const loggerReprocess = createLogger({
 	format: createReprocessFormat(),
-	transports: [new winston.transports.File({ filename: 'logs/reprocess.log' })],
+	transports: createTransports('reprocess'),
 	exitOnError: false,
 });
 
 export const loggerSyncronize = createLogger({
 	format: createSyncFormat(),
-	transports: [new winston.transports.File({ filename: 'logs/syncronize.log' })],
+	transports: createTransports('syncronize'),
 	exitOnError: false,
 });
 
 export const loggerLoad = createLogger({
 	format: createLoadFormat(),
-	transports: [new winston.transports.File({ filename: 'logs/load.log' })],
+	transports: createTransports('load'),
 	exitOnError: false,
 });
