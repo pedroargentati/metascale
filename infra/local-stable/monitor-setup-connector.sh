@@ -11,7 +11,7 @@ while true; do
     if [ -n "$resultado" ]; then
         echo "A string \"$string_a_procurar\" foi encontrada no log do container $container_name."
 
-        ./../zookeeper_kafka_local/setup-connector.sh
+        ./setup-connector.sh
 
         break
     else

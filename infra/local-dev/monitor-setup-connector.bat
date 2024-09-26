@@ -1,7 +1,7 @@
 @echo off
 
 set here=%cd%
-set container_name=local-stable-connect-1
+set container_name=local-dev-connect-1
 set string_a_procurar=Finished starting connectors and tasks
 
 echo Procurando a string "%string_a_procurar%" no log do container %container_name%.

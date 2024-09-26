@@ -10,3 +10,4 @@ combined.log
 package-lock.json
 .pem
 logs
+keys

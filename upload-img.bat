@@ -1,4 +1,4 @@
 @echo off
 
 call setup.bat
-call docker-aws-push-img.bat
+call ./infra/aws/docker-aws-push-img.bat

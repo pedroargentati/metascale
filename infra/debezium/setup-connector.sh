@@ -10,13 +10,8 @@ curl -H "Accept:application/json" localhost:8083/connectors/
 
 echo "."
 
-here=$(pwd)
-cd ../zookeeper_kafka_local
-
 echo "Criando conector"
 curl -i -X POST -H "Accept: application/json" -H "Content-Type: application/json" -d @mysql-connector.json localhost:8083/connectors/
-
-cd $here
 
 echo "."
 
