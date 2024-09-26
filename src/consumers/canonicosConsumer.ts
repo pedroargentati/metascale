@@ -45,23 +45,23 @@ async function consumeAllCanonicos() {
 
 					canonicos.forEach(async (canonico) => {
 						const startTime: number = new Date().getTime();
-						logger.info(
+						logger.debug(
 							`[APP :: Kafka] Iniciando processamento para o canônico ${canonico.nome} no tópico ${topic}.`,
 						);
 
 						try {
 							await sincronizaCanonicoService(canonico, topic, receivedMessage);
 						} catch (error: any) {
-							loggerSyncronize.info(
-								`Erro ao sincronizar o canônico: ID: ${canonico?.id} | Tópico: ${topic} | Mensagem: ${JSON.stringify(receivedMessage)} :: ${error.message}`,
+							loggerSyncronize.error(
+								`Erro ao sincronizar o canônico: ID: ${canonico?.nome} | Tópico: ${topic} | Mensagem: ${JSON.stringify(receivedMessage)} :: ${error.message}`,
 							);
 							logger.error(
-								`[APP :: Kafka] Erro ao sincronizar o canônico: ID: ${canonico?.id} | Tópico: ${topic} | Mensagem: ${JSON.stringify(receivedMessage)} :: ${error.message}`,
+								`[APP :: Kafka] Erro ao sincronizar o canônico: ID: ${canonico?.nome} | Tópico: ${topic} | Mensagem: ${JSON.stringify(receivedMessage)} :: ${error.message}`,
 							);
 						} finally {
 							const endTime: number = new Date().getTime();
 							const duration: number = endTime - startTime;
-							logger.info(
+							logger.debug(
 								`[APP :: Kafka] Tempo de processamento para o canônico ${canonico.nome} no tópico ${topic}: ${duration} ms`,
 							);
 						}
