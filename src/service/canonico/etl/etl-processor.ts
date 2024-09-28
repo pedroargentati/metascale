@@ -90,7 +90,7 @@ export const processCanonicoDataService = async (
 		dadoCanonico.data = await buildCanonical(canonico, dadosParametros, requestCalls);
 	}
 
-	dadoCanonico.dependencias = await trataDependenciasDeMerge(canonico, requestCalls);
+	dadoCanonico.dependencias = await trataDependenciasDeMerge(canonico, requestCalls, dadosParametros);
 
 	return dadoCanonico;
 };
@@ -101,7 +101,11 @@ export const processCanonicoDataService = async (
  * @param canonicoExistente Canônico existente.
  * @param requestCalls Chamadas de requisição.
  */
-async function trataDependenciasDeMerge(canonicoExistente: any, requestCalls: Map<string, any>): Promise<any> {
+async function trataDependenciasDeMerge(
+	canonicoExistente: any,
+	requestCalls: Map<string, any>,
+	dadosParametros: any,
+): Promise<any> {
 	const dependencias: string[] = canonicoExistente.dependencias ?? [];
 
 	if (dependencias.length === 0) {
@@ -119,7 +123,7 @@ async function trataDependenciasDeMerge(canonicoExistente: any, requestCalls: Ma
 	const reqExtractCanonicalParameters: Promise<any>[] = [];
 	dependenciasCanonico.forEach((canonicoDependente) => {
 		reqExtractCanonicalParameters.push(
-			extractCanonicalParameters(canonicoExistente, canonicoDependente, requestCalls),
+			extractCanonicalParameters(canonicoExistente, canonicoDependente, requestCalls, dadosParametros),
 		);
 	});
 	const parametrosDependencias = await Promise.all(reqExtractCanonicalParameters);
