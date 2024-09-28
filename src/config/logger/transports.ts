@@ -19,6 +19,7 @@ export const createTransports = (logName?: string) => {
 					winston.format.colorize(),
 					createDefaultFormat(),
 				),
+				level: 'debug',
 			}),
 			new winston.transports.File({
 				filename: `logs/${logName}.log`,
