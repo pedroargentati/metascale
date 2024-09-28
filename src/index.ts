@@ -6,6 +6,7 @@ import routes from './routes/routes.js';
 import consumeAllCanonicos from './consumers/canonicosConsumer.js';
 import { INSTANCE_TYPE_API } from './utils/constants.js';
 import { logger } from './config/logger/logger.js';
+import cors from 'cors';
 
 let app: core.Express | null = null;
 
@@ -13,6 +14,15 @@ let app: core.Express | null = null;
 function initializeServer() {
 	app = express();
 	app.use(express.json());
+
+	// Configurando CORS para permitir requisições de outras origens
+	app.use(
+		cors({
+			origin: 'http://localhost:5173',
+			methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos HTTP permitidos
+			allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
+		}),
+	);
 
 	const port = process.env.PORT || 8080;
 	app.use('/', routes);
