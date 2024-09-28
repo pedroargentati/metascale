@@ -18,4 +18,5 @@ export const createDebugFormat = () => combine(baseFormat, createCustomFormat('D
 export const createSyncFormat = () => combine(baseFormat, createCustomFormat('SYNCHRONIZE'));
 export const createLoadFormat = () => combine(baseFormat, createCustomFormat('LOAD'));
 export const createReprocessFormat = () => combine(baseFormat, createCustomFormat('REPROCESS'));
+export const createCanonicalFormat = () => combine(baseFormat, createCustomFormat('CANONICAL'));
 export const createDefaultFormat = () => combine(baseFormat, createCustomFormat(''));
