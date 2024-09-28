@@ -3,7 +3,6 @@ import winston, { createLogger } from 'winston';
 import dotenv from 'dotenv';
 import { createDefaultFormat, createLoadFormat, createReprocessFormat, createSyncFormat } from './formats.js';
 import { createTransports } from './transports.js';
-import { IS_DEV } from '../../utils/constants.js';
 
 // Carregar variáveis de ambiente
 dotenv.config();
