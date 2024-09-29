@@ -11,4 +11,4 @@ INSERT INTO product (id, product_name, product_type, parent_id) VALUES
 
 -- Inserção de dados fictícios para a tabela 'userproduct' com múltiplos produtos por usuário e diferentes statuses
 INSERT INTO userproduct (user_id, product_id, start_date, end_date, description, type, recurring_period, value, status) VALUES
-('1', 'P002', '2024-01-01', '2024-12-31', 'Assinatura do Produto A', 'RECURRING', 'ANNUAL', 299.99, 'ACTIVE');
+('1', 'P003', '2024-01-01', '2024-12-31', 'Assinatura do Produto A', 'RECURRING', 'ANNUAL', 299.99, 'ACTIVE');

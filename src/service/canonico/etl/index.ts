@@ -50,7 +50,7 @@ const loadCanonico = async (canonico: any, dadosParametros: any): Promise<any> =
 			}
 		}
 
-		logger.info(
+		logger.debug(
 			`[SERVICE :: Canonico] Iniciando carregamento com os seguintes dados: ${JSON.stringify(dadosParametros)}`,
 		);
 
