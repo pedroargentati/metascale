@@ -1,20 +1,42 @@
 import http from 'k6/http';
-import { check, sleep } from 'k6';
+import { sleep, check } from 'k6';
 
 // Configurações de execução do teste
 export const options = {
-	stages: [
-		{ duration: '30s', target: 10 }, // Sobe para 10 usuários simultâneos em 30 segundos
-		{ duration: '1m', target: 10 }, // Mantém 10 usuários por 1 minuto
-		{ duration: '30s', target: 0 }, // Diminui para 0 usuários
-	],
+	scenarios: {
+		load_test: {
+			executor: 'constant-vus',
+			vus: 20, // Número de VUs (usuários virtuais) simultâneos
+			duration: '1s', // Duração de 1 segundo para fazer as requisições simultâneas
+		},
+	},
 	thresholds: {
-		http_req_duration: ['p(95)<500'], // 95% das requisições devem responder em menos de 500ms
+		http_req_duration: ['p(95)<1000'], // 95% das requisições devem responder em menos de 1000ms
 	},
 };
 
+const BASE_URL = 'http://localhost:8080'; // Atualize com a URL base da sua API
+const ENDPOINT = '/canonico/cliente/load'; // Endpoint específico
+
 export default function () {
-	const res = http.get('http://localhost:8080/canonico/produtos/load');
+	// Calcular o clientId sequencialmente de 1 a 999
+	let globalIteration = __ITER * 10 + __VU; // __ITER começa em 0
+	let clientId = globalIteration % 999 || 999; // Garante que clientId é de 1 a 999
+
+	const payload = JSON.stringify({
+		getCustomer: {
+			id: clientId.toString(),
+		},
+	});
+
+	const params = {
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	};
+
+	const res = http.post(`${BASE_URL}${ENDPOINT}`, payload, params);
+
 	check(res, {
 		'status code é 200': (r) => r.status === 200,
 		'resposta é rápida': (r) => r.timings.duration < 500,
