@@ -4,7 +4,7 @@ import {
 	CANONICO_TIPO_POS_PROCESSAMENTO_CUSTOM,
 	CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 } from '../../../utils/constants.js';
-import { processCanonicoDataService } from './etl-processor.js';
+import { calculaChavePelosParametrosDasChamadas, processCanonicoDataService } from './etl-processor.js';
 
 // Mock da função buildCanonical para os testes
 jest.mock('@internal/canonical-builder', () => ({
@@ -35,8 +35,9 @@ describe('processCanonicoDataService', () => {
 			formatoChave: '{chamada1:param1}/{chamada1:param2}/{chamada2:param1}',
 			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 		};
+		const id = calculaChavePelosParametrosDasChamadas(mockCanonico, mockDadosParametros);
 
-		const resultado = await processCanonicoDataService(mockCanonico, mockRequestCalls, mockDadosParametros);
+		const resultado = await processCanonicoDataService(mockCanonico, id, mockRequestCalls, mockDadosParametros);
 
 		expect(resultado.ID).toBe('valor1/valor2/valor3'); // Verificar a chave correta
 		expect(resultado.versao).toBe(1);
@@ -50,8 +51,15 @@ describe('processCanonicoDataService', () => {
 			formatoChave: '{chamada1:param1}/{chamada1:param2}/{chamada2:param1}',
 			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 		};
+		const mockCanonico = {
+			versao: 1,
+			chamadas: mockChamadas,
+			formatoChave: '{chamada1:param1}/{chamada1:param2}/{chamada2:param1}',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
+		};
+		const id = calculaChavePelosParametrosDasChamadas(mockCanonico, mockDadosParametros);
 
-		await expect(processCanonicoDataService(mockCanonicoSemParametros, mockRequestCalls, {})).rejects.toThrow(
+		await expect(processCanonicoDataService(mockCanonicoSemParametros, id, mockRequestCalls, {})).rejects.toThrow(
 			IntegrationError,
 		);
 	});
@@ -66,8 +74,20 @@ describe('processCanonicoDataService', () => {
 
 		// Mock do retorno da função buildCanonical
 		(buildCanonical as jest.Mock).mockResolvedValue('dadosCustomizados');
+		const mockCanonico = {
+			versao: 1,
+			chamadas: mockChamadas,
+			formatoChave: '{chamada1:param1}/{chamada1:param2}/{chamada2:param1}',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
+		};
+		const id = calculaChavePelosParametrosDasChamadas(mockCanonico, mockDadosParametros);
 
-		const resultado = await processCanonicoDataService(mockCanonicoCustom, mockRequestCalls, mockDadosParametros);
+		const resultado = await processCanonicoDataService(
+			mockCanonicoCustom,
+			id,
+			mockRequestCalls,
+			mockDadosParametros,
+		);
 
 		expect(resultado.ID).toBe('valor1/valor2/valor3'); // Verificar a chave correta
 		expect(resultado.versao).toBe(1);
