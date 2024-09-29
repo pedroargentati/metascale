@@ -14,22 +14,16 @@ export const createTransports = (logName?: string) => {
 		// Modo desenvolvimento - logs em arquivos e console
 		transports.push(
 			new winston.transports.Console({
-				format: winston.format.combine(
-					winston.format.timestamp(),
-					winston.format.colorize(),
-					createDefaultFormat(),
-				),
+				format: winston.format.combine(winston.format.colorize(), createDebugFormat()),
 				level: 'debug',
 			}),
 			new winston.transports.File({
 				filename: `logs/${logName}.log`,
 				level: 'info',
-				format: createDefaultFormat(),
 			}),
 			new winston.transports.File({
 				filename: `logs/${logName}-error.log`,
 				level: 'error',
-				format: createDefaultFormat(),
 			}),
 		);
 	} else {
@@ -62,7 +56,6 @@ export const createCanonicalTransports = () => {
 			new winston.transports.File({
 				filename: `logs/canonical.log`,
 				level: 'info',
-				format: createDefaultFormat(),
 			}),
 		);
 	} else {

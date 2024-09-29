@@ -15,11 +15,14 @@ function initializeServer() {
 	app = express();
 	app.use(express.json());
 
+	// Obtem as origens permitidas para requisições
+	const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',');
+
 	// Configurando CORS para permitir requisições de outras origens
 	app.use(
 		cors({
-			origin: 'http://localhost:5173',
-			methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos HTTP permitidos
+			origin: allowedOrigins ?? '*',
+			methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], // Métodos HTTP permitidos
 			allowedHeaders: ['Content-Type', 'Authorization'], // Cabeçalhos permitidos
 		}),
 	);
