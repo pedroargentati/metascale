@@ -49,7 +49,7 @@ export const calculaChavePelosParametrosDasChamadas = (canonico: any, dadosParam
 		}
 
 		const [nomeChamada, nomeParametro] = parte.split(':');
-		const valorParametro = dadosParametros[nomeChamada][nomeParametro];
+		const valorParametro = dadosParametros?.[nomeChamada]?.[nomeParametro];
 
 		if (!valorParametro) {
 			throw new IntegrationError(

@@ -45,23 +45,14 @@ describe('processCanonicoDataService', () => {
 	});
 
 	test('deve lançar IntegrationError se não houver parâmetros para calcular a chave', async () => {
-		const mockCanonicoSemParametros = {
-			versao: 1,
-			chamadas: [{ nome: 'chamada1', parametros: [] }],
-			formatoChave: '{chamada1:param1}/{chamada1:param2}/{chamada2:param1}',
-			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
-		};
 		const mockCanonico = {
 			versao: 1,
 			chamadas: mockChamadas,
 			formatoChave: '{chamada1:param1}/{chamada1:param2}/{chamada2:param1}',
 			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 		};
-		const id = calculaChavePelosParametrosDasChamadas(mockCanonico, mockDadosParametros);
 
-		await expect(processCanonicoDataService(mockCanonicoSemParametros, id, mockRequestCalls, {})).rejects.toThrow(
-			IntegrationError,
-		);
+		expect(() => calculaChavePelosParametrosDasChamadas(mockCanonico, {})).toThrow(IntegrationError);
 	});
 
 	test('deve processar dadoCanonico com tipoPosProcessamento CUSTOM', async () => {
