@@ -32,7 +32,8 @@ create table productdescription (
 	text varchar(255),
 	url varchar(255),
 	category enum ('DATES', 'GENERAL', 'PROMOTION'),
-	primary key (id)
+	primary key (id),
+	FOREIGN KEY (id) REFERENCES product(id)
 );
 
 create table userproduct (
