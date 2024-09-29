@@ -2,7 +2,7 @@
 	"name": "metascale",
 	"version": "1.0.0",
 	"description": "Challange Vivo",
-	"main": "./src/index.ts",
+	"main": "./dist/src/index.js",
 	"scripts": {
 		"test": "jest --config jest.config.ts",
 		"test:watch:all": "jest --watchAll",
@@ -20,7 +20,7 @@
 		"@aws-sdk/client-cloudwatch-logs": "^3.645.0",
 		"@aws-sdk/client-dynamodb": "^3.616.0",
 		"@aws-sdk/lib-dynamodb": "^3.616.0",
-		"@internal/canonical-builder": "^1.0.55",
+		"@internal/canonical-builder": "^1.0.62",
 		"aws-msk-iam-sasl-signer-js": "github:aws/aws-msk-iam-sasl-signer-js",
 		"axios": "^1.7.2",
 		"cors": "^2.8.5",
@@ -33,6 +33,10 @@
 		"winston-cloudwatch": "^6.3.0"
 	},
 	"devDependencies": {
+		"@babel/cli": "^7.25.6",
+		"@babel/core": "^7.25.2",
+		"@babel/preset-env": "^7.25.4",
+		"@babel/preset-typescript": "^7.24.7",
 		"@jest/globals": "^29.7.0",
 		"@types/cors": "^2.8.17",
 		"@types/dotenv": "^8.2.0",
@@ -46,6 +50,7 @@
 		"@types/winston": "^2.4.4",
 		"@typescript-eslint/eslint-plugin": "^7.16.0",
 		"@typescript-eslint/parser": "^7.16.0",
+		"babel-jest": "^29.7.0",
 		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.1.3",

@@ -1,21 +1,18 @@
-import type { Config } from '@jest/types';
+import type { JestConfigWithTsJest } from 'ts-jest';
 
-/**
- * @see https://jestjs.io/docs/configuration
- */
-
-// Sync object
-const config: Config.InitialOptions = {
-	preset: 'ts-jest',
+const config: JestConfigWithTsJest = {
 	testEnvironment: 'node',
-	moduleFileExtensions: ['ts', 'js'],
 	transform: {
-		'^.+\\.ts$': 'ts-jest',
+		'^.+\\.(js|jsx|ts)$': 'babel-jest',
 	},
-	testMatch: ['**/*.test.ts'],
+	testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+	moduleNameMapper: {
+		'(.+)\\.js': '$1',
+	},
+
+	collectCoverage: true /** padrão é coletar cobertura */,
 	coverageDirectory: 'coverage',
 	collectCoverageFrom: ['src/**/*.{ts,js}', '!src/**/*.d.ts'],
-	collectCoverage: true /** padrão é coletar cobertura */,
 	coveragePathIgnorePatterns: [
 		'index.ts',
 		'client.ts',
