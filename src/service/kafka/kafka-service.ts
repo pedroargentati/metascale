@@ -26,7 +26,7 @@ class KafkaService {
 	 * @param {function} callback - A função de callback para processar cada mensagem.
 	 */
 	async consume(topic: string, callback: (message: any) => void) {
-		logger.info(`[KAFKA :: Consumidor] Consumindo tópico ${topic}...`);
+		logger.debug(`[KAFKA :: Consumidor] Consumindo tópico ${topic}...`);
 		try {
 			const consumer = kafka.consumer({ groupId: process.env.KAFKA_GROUP_ID || 'metascale-group' });
 			await consumer.connect();

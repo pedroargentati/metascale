@@ -1,11 +1,11 @@
 import { reprocessCanonical, synchronizeCanonical } from '@internal/canonical-builder';
-import { logger } from '../../../config/logger/logger.js';
+import { logCanonicalError, logCanonicalInfo, logger } from '../../../config/logger/logger.js';
 import DynamoDBService from '../../../dynamodb/DynamoDBService.js';
 import { IntegrationError } from '../../../errors/IntegrationError.js';
 import { IParametro } from '../../../interfaces/parametros.js';
 import { fetchDataController } from '../../client/client.js';
 import { getCanonicoByIdService } from '../index.js';
-import { processCanonicoDataService } from './etl-processor.js';
+import { calculaChavePelosParametrosDasChamadas, processCanonicoDataService } from './etl-processor.js';
 
 /**
  * @description Carrega o dado do canônico.
@@ -26,7 +26,19 @@ export const loadCanonicoService = async (id: string, dadosParametros: any): Pro
  * @returns Dado canônico.
  */
 const loadCanonico = async (canonico: any, dadosParametros: any): Promise<any> => {
+	let id: string;
 	try {
+		id = calculaChavePelosParametrosDasChamadas(canonico, dadosParametros);
+	} catch (error: any) {
+		throw new IntegrationError(
+			`Erro no load: cálculo de chave do canônico ${canonico.nome}: ${error.message}`,
+			500,
+		);
+	}
+
+	try {
+		logCanonicalInfo(canonico.nome, id, `Iniciando load`);
+
 		const { chamadas } = canonico;
 
 		const chamadasPorOrdem = new Map();
@@ -38,7 +50,7 @@ const loadCanonico = async (canonico: any, dadosParametros: any): Promise<any> =
 			}
 		}
 
-		logger.info(
+		logger.debug(
 			`[SERVICE :: Canonico] Iniciando carregamento com os seguintes dados: ${JSON.stringify(dadosParametros)}`,
 		);
 
@@ -69,13 +81,16 @@ const loadCanonico = async (canonico: any, dadosParametros: any): Promise<any> =
 			}
 		}
 
-		let dadoCanonico = await processCanonicoDataService(canonico, requestCalls, dadosParametros);
+		let dadoCanonico = await processCanonicoDataService(canonico, id, requestCalls, dadosParametros);
 
 		const dynamoDBServiceForCanonicoData: DynamoDBService = new DynamoDBService(canonico.nome);
 		await dynamoDBServiceForCanonicoData.putItem(dadoCanonico);
 
+		logCanonicalInfo(canonico.nome, id, `Finalizando load`);
+
 		return dadoCanonico;
 	} catch (error: any) {
+		logCanonicalError(canonico.nome, id, 'Erro no load do canônico');
 		throw new IntegrationError(`Erro no load do canônico ${canonico.nome}: ${error.message}`, 500);
 	}
 };

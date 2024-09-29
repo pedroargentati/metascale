@@ -1,8 +1,14 @@
 import winston, { createLogger } from 'winston';
 
 import dotenv from 'dotenv';
-import { createDefaultFormat, createLoadFormat, createReprocessFormat, createSyncFormat } from './formats.js';
-import { createTransports } from './transports.js';
+import {
+	createCanonicalFormat,
+	createDefaultFormat,
+	createLoadFormat,
+	createReprocessFormat,
+	createSyncFormat,
+} from './formats.js';
+import { createCanonicalTransports, createTransports } from './transports.js';
 
 // Carregar variáveis de ambiente
 dotenv.config();
@@ -38,3 +44,17 @@ export const loggerLoad = createLogger({
 	transports: createTransports('load'),
 	exitOnError: false,
 });
+
+const loggerCanonical = createLogger({
+	format: createCanonicalFormat(),
+	transports: createCanonicalTransports(),
+	exitOnError: false,
+});
+
+export const logCanonicalInfo = (nomeCanonico: string, id: string, message: string) => {
+	loggerCanonical.info(`[${nomeCanonico}] [${id}] ${message}`);
+};
+
+export const logCanonicalError = (nomeCanonico: string, id: string, message: string) => {
+	loggerCanonical.error(`[${nomeCanonico}] [${id}] ${message}`);
+};

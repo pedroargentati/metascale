@@ -1,1 +1,14 @@
-INSERT INTO customer (customer_name, customer_email, customer_phone, city, state) VALUES ('T1', 't@email.com', '(11) 95555-1234', 'Sao Paulo', 'SP');
+INSERT INTO users (id, name, email, phone, city, state) VALUES
+('1', 'Alex Silva', 'alex.silva@example.com', '+51939791073', 'São Paulo', 'SP');
+
+-- Inserção de dados fictícios para a tabela 'productdescription' com id igual ao id de 'product'
+INSERT INTO productdescription (id, text, url, category) VALUES
+('P001', 'Descrição do Produto A - versão básica', 'http://example.com/produtoA/basico', 'GENERAL');
+
+-- Inserção de dados fictícios para a tabela 'product'
+INSERT INTO product (id, product_name, product_type, parent_id) VALUES
+('P001', 'Produto A', 'MOBILE', NULL);
+
+-- Inserção de dados fictícios para a tabela 'userproduct' com múltiplos produtos por usuário e diferentes statuses
+INSERT INTO userproduct (user_id, product_id, start_date, end_date, description, type, recurring_period, value, status) VALUES
+('1', 'P003', '2024-01-01', '2024-12-31', 'Assinatura do Produto A', 'RECURRING', 'ANNUAL', 299.99, 'ACTIVE');

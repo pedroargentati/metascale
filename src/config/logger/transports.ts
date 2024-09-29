@@ -1,35 +1,29 @@
 import winston from 'winston';
 import WinstonCloudWatch from 'winston-cloudwatch';
-import { createDefaultFormat, createDebugFormat } from './formats.js';
-import { IS_DEV } from '../../utils/constants.js';
+import { LOG_TYPE_FILE } from '../../utils/constants.js';
+import { createDebugFormat } from './formats.js';
 
 const awsRegion = process.env.AWS_REGION;
 const logGroupName = process.env.AWS_LOG_GROUP_NAME || '/app/Metascale';
+const logType = process.env.LOG_TYPE || 'FILE';
 
 // Função para criar os transportes de log
 export const createTransports = (logName?: string) => {
 	let transports = [];
 
-	if (IS_DEV) {
-		// Modo desenvolvimento - logs em arquivos e console
+	if (logType === LOG_TYPE_FILE) {
 		transports.push(
 			new winston.transports.Console({
-				format: winston.format.combine(
-					winston.format.timestamp(),
-					winston.format.colorize(),
-					createDefaultFormat(),
-				),
+				format: winston.format.combine(winston.format.colorize(), createDebugFormat()),
 				level: 'debug',
 			}),
 			new winston.transports.File({
 				filename: `logs/${logName}.log`,
 				level: 'info',
-				format: createDefaultFormat(),
 			}),
 			new winston.transports.File({
 				filename: `logs/${logName}-error.log`,
 				level: 'error',
-				format: createDefaultFormat(),
 			}),
 		);
 	} else {
@@ -57,12 +51,11 @@ export const createTransports = (logName?: string) => {
 export const createCanonicalTransports = () => {
 	let transports = [];
 
-	if (IS_DEV) {
+	if (logType === LOG_TYPE_FILE) {
 		transports.push(
 			new winston.transports.File({
 				filename: `logs/canonical.log`,
 				level: 'info',
-				format: createDefaultFormat(),
 			}),
 		);
 	} else {

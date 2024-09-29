@@ -5,6 +5,7 @@ import {
 	CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 } from '../../../utils/constants.js';
 import { getCanonicoByIdService } from '../index.js';
+import { logCanonicalInfo } from '../../../config/logger/logger.js';
 
 /**
  * Quebra a string de formato de chave em partes agrupadas por chaves {}.
@@ -29,7 +30,7 @@ export function quebrarStringPorChaves(formatoChave: string): string[] {
  * @param dadosParametros - Dados dos parâmetros base para a montagem da chave.
  * @returns Chave String que representa o dado carregado.
  */
-const calculaChavePelosParametrosDasChamadas = (canonico: any, dadosParametros: any): string => {
+export const calculaChavePelosParametrosDasChamadas = (canonico: any, dadosParametros: any): string => {
 	const formatoChave = canonico.formatoChave;
 
 	const partesDaChave = quebrarStringPorChaves(formatoChave);
@@ -73,11 +74,12 @@ const calculaChavePelosParametrosDasChamadas = (canonico: any, dadosParametros: 
  */
 export const processCanonicoDataService = async (
 	canonico: any,
+	id: string,
 	requestCalls: Map<string, any>,
 	dadosParametros: any,
 ): Promise<any> => {
 	const dadoCanonico: { ID: string; versao: number; data: any; dependencias: any } = {
-		ID: calculaChavePelosParametrosDasChamadas(canonico, dadosParametros),
+		ID: id,
 		versao: canonico.versao,
 		data: null,
 		dependencias: {},
@@ -90,7 +92,14 @@ export const processCanonicoDataService = async (
 		dadoCanonico.data = await buildCanonical(canonico, dadosParametros, requestCalls);
 	}
 
-	dadoCanonico.dependencias = await trataDependenciasDeMerge(canonico, requestCalls, dadosParametros);
+	try {
+		dadoCanonico.dependencias = await trataDependenciasDeMerge(id, canonico, requestCalls, dadosParametros);
+	} catch (error: any) {
+		throw new IntegrationError(
+			`Erro ao tratar(extrair) dependências do canônico ${canonico.nome}: ${error.message}`,
+			400,
+		);
+	}
 
 	return dadoCanonico;
 };
@@ -102,6 +111,7 @@ export const processCanonicoDataService = async (
  * @param requestCalls Chamadas de requisição.
  */
 async function trataDependenciasDeMerge(
+	id: string,
 	canonicoExistente: any,
 	requestCalls: Map<string, any>,
 	dadosParametros: any,
@@ -111,6 +121,8 @@ async function trataDependenciasDeMerge(
 	if (dependencias.length === 0) {
 		return null;
 	}
+
+	logCanonicalInfo(canonicoExistente.nome, id, `Tratando dependências de merge`);
 
 	const reqCanonicoDependencias: Promise<any>[] = [];
 	dependencias.forEach((dependencia) => {
@@ -139,6 +151,8 @@ async function trataDependenciasDeMerge(
 			);
 		});
 	});
+
+	logCanonicalInfo(canonicoExistente.nome, id, `Dependências de merge tratadas`);
 
 	return dadosDependencias;
 }
