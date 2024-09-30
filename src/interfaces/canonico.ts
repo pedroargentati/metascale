@@ -3,7 +3,7 @@ export interface ICanonico {
 	chamadas: IChamada[];
 	dependencias?: string[];
 	descricao: string;
-	versao?: number;
+	versao: number;
 	nome: string;
 	tipoPosProcessamento: string;
 	topicos?: string[];

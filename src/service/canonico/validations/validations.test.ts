@@ -1,5 +1,6 @@
 import { CumulativeIntegrationError } from '../../../errors/CumulativeIntegrationError.js';
 import { IntegrationError } from '../../../errors/IntegrationError.js';
+import { ICanonico } from '../../../interfaces/canonico.js';
 import {
 	CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 	CANONICO_TIPO_POS_PROCESSAMENTO_CUSTOM,
@@ -14,18 +15,18 @@ const enumCanonicoTipoPosProcessamento = new Map([
 
 describe('validateCanonico', () => {
 	it('deve lançar um IntegrationError se os dados forem nulos ou vazios', () => {
-		expect(() => validateCanonico(null)).toThrow(IntegrationError);
-		expect(() => validateCanonico({})).toThrow(IntegrationError);
+		expect(() => validateCanonico(null!)).toThrow(IntegrationError);
+		expect(() => validateCanonico({} as any)).toThrow(IntegrationError);
 	});
 
 	it('deve lançar um IntegrationError se os campos obrigatórios estiverem ausentes', () => {
 		const data = { nome: 'Nome', descricao: 'Descricao' }; // faltando chamadas e tipoPosProcessamento
-		expect(() => validateCanonico(data)).toThrow(IntegrationError);
+		expect(() => validateCanonico(data as any)).toThrow(IntegrationError);
 	});
 
 	it('deve lançar um IntegrationError se tipoPosProcessamento for um valor inválido', () => {
 		const data = { nome: 'Nome', descricao: 'Descricao', tipoPosProcessamento: 'INVALIDO' };
-		expect(() => validateCanonico(data)).toThrow(IntegrationError);
+		expect(() => validateCanonico(data as any)).toThrow(IntegrationError);
 	});
 
 	it('deve lançar um CumulativeIntegrationError se chamadas.ordem não for informada', () => {
@@ -43,7 +44,7 @@ describe('validateCanonico', () => {
 			formatoChave: '{getCustomer:id}',
 		};
 
-		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
+		expect(() => validateCanonico(data as any)).toThrow(CumulativeIntegrationError);
 	});
 
 	it('deve lançar um IntegrationError se tipoPosProcessamento for um valor inválido', () => {
@@ -56,8 +57,8 @@ describe('validateCanonico', () => {
 		};
 
 		// Este teste deve lançar um IntegrationError por causa do tipoPosProcessamento inválido
-		expect(() => validateCanonico(data)).toThrow(IntegrationError);
-		expect(() => validateCanonico(data)).toThrow(
+		expect(() => validateCanonico(data as any)).toThrow(IntegrationError);
+		expect(() => validateCanonico(data as any)).toThrow(
 			`O campo tipoPosProcessamento deve ter algum dos valores: ${CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT} ou ${CANONICO_TIPO_POS_PROCESSAMENTO_CUSTOM}.`,
 		);
 	});
@@ -78,7 +79,7 @@ describe('validateCanonico', () => {
 		};
 
 		try {
-			validateCanonico(data);
+			validateCanonico(data as any);
 		} catch (error) {
 			expect(error).toBeInstanceOf(CumulativeIntegrationError);
 			expect((error as CumulativeIntegrationError).exceptions).toContainEqual(
@@ -104,7 +105,7 @@ describe('validateCanonico', () => {
 			],
 		};
 
-		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
+		expect(() => validateCanonico(data as any)).toThrow(CumulativeIntegrationError);
 	});
 
 	it('deve lançar um IntegrationError se chamadas não for um array ou estiver vazio', () => {
@@ -114,10 +115,10 @@ describe('validateCanonico', () => {
 			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 			chamadas: {},
 		}; // chamadas não é um array
-		expect(() => validateCanonico(data)).toThrow(IntegrationError);
+		expect(() => validateCanonico(data as any)).toThrow(IntegrationError);
 
 		data.chamadas = []; // chamadas é um array vazio
-		expect(() => validateCanonico(data)).toThrow(IntegrationError);
+		expect(() => validateCanonico(data as any)).toThrow(IntegrationError);
 	});
 
 	it('deve lançar um CumulativeIntegrationError se chamadas tiver campos ausentes', () => {
@@ -128,7 +129,7 @@ describe('validateCanonico', () => {
 			chamadas: [{ nome: 'Chamada1' }], // faltando campos obrigatórios em chamadas
 		};
 
-		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
+		expect(() => validateCanonico(data as any)).toThrow(CumulativeIntegrationError);
 	});
 
 	it('deve lançar um CumulativeIntegrationError se chamadas.nome não for informada.', () => {
@@ -147,7 +148,7 @@ describe('validateCanonico', () => {
 			],
 		};
 
-		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
+		expect(() => validateCanonico(data as any)).toThrow(CumulativeIntegrationError);
 	});
 
 	it('deve lançar um CumulativeIntegrationError informando na mensagem que não tem o nome da chamada.', () => {
@@ -164,7 +165,7 @@ describe('validateCanonico', () => {
 		};
 
 		try {
-			validateCanonico(data);
+			validateCanonico(data as any);
 		} catch (err: any) {
 			expect(err.exceptions[0].message).toBe('O campo ordem é obrigatório para chamada (nome não informado.).');
 			expect(err.exceptions[1].message).toBe('O campo nome é obrigatório para chamada (nome não informado.).');
@@ -198,7 +199,7 @@ describe('validateCanonico', () => {
 			],
 		};
 
-		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
+		expect(() => validateCanonico(data as any)).toThrow(CumulativeIntegrationError);
 	});
 
 	it('não deve lançar um erro se todos os campos obrigatórios estiverem presentes e válidos', () => {
@@ -218,7 +219,7 @@ describe('validateCanonico', () => {
 			formatoChave: '{Chamada1:param1}',
 		};
 
-		expect(() => validateCanonico(data)).not.toThrow();
+		expect(() => validateCanonico(data as any)).not.toThrow();
 	});
 });
 
@@ -239,8 +240,8 @@ describe('validateCanonico - formatoChave', () => {
 			],
 		};
 
-		expect(() => validateCanonico(data)).toThrow(IntegrationError);
-		expect(() => validateCanonico(data)).toThrow('O campo formatoChave é obrigatório.');
+		expect(() => validateCanonico(data as any)).toThrow(IntegrationError);
+		expect(() => validateCanonico(data as any)).toThrow('O campo formatoChave é obrigatório.');
 	});
 
 	it('deve lançar um IntegrationError se formatoChave estiver mal formatado', () => {
@@ -260,8 +261,8 @@ describe('validateCanonico - formatoChave', () => {
 			],
 		};
 
-		expect(() => validateCanonico(data)).toThrow(IntegrationError);
-		expect(() => validateCanonico(data)).toThrow(
+		expect(() => validateCanonico(data as any)).toThrow(IntegrationError);
+		expect(() => validateCanonico(data as any)).toThrow(
 			'O campo formatoChave deve ter a estrutura correta: "{nome:parametro}" ou "{nome:parametro}{separador}{nome:parametro}".',
 		);
 	});
@@ -283,8 +284,8 @@ describe('validateCanonico - formatoChave', () => {
 			],
 		};
 
-		expect(() => validateCanonico(data)).toThrow();
-		expect(() => validateCanonico(data)).toThrow('A chamada getInvalid não foi encontrada formatoChamada.');
+		expect(() => validateCanonico(data as any)).toThrow();
+		expect(() => validateCanonico(data as any)).toThrow('A chamada getInvalid não foi encontrada formatoChamada.');
 	});
 
 	it('deve lançar um erro se o parâmetro no formatoChave não for encontrado nos parâmetros das chamadas', () => {
@@ -304,8 +305,8 @@ describe('validateCanonico - formatoChave', () => {
 			],
 		};
 
-		expect(() => validateCanonico(data)).toThrow();
-		expect(() => validateCanonico(data)).toThrow(
+		expect(() => validateCanonico(data as any)).toThrow();
+		expect(() => validateCanonico(data as any)).toThrow(
 			"O parâmetro 'invalidParam' não foi encontrado na chamada 'getCustomer'.",
 		);
 	});
@@ -327,6 +328,6 @@ describe('validateCanonico - formatoChave', () => {
 			],
 		};
 
-		expect(() => validateCanonico(data)).not.toThrow();
+		expect(() => validateCanonico(data as any)).not.toThrow();
 	});
 });

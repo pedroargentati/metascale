@@ -20,14 +20,14 @@ const dynamoDBService: DynamoDBService = new DynamoDBService(CANONICO_COLLECTION
  *
  * @returns Canônicos ativos.
  */
-export const getCanonicoService = async (): Promise<any> => {
+export const getCanonicoService = async (): Promise<ICanonico[]> => {
 	const params: Record<string, any> = {
 		FilterExpression: '#statusCanonico = :statusCanonico',
 		ExpressionAttributeNames: { '#statusCanonico': 'statusCanonico' },
 		ExpressionAttributeValues: { ':statusCanonico': CANONICO_STATUS_ATIVO },
 	};
 
-	const canonicos = await dynamoDBService.getAllItems(params);
+	const canonicos: ICanonico[] = await dynamoDBService.getAllItems(params);
 	if (!canonicos || !canonicos.length) {
 		throw new IntegrationError('Canônicos não encontrados.', 204);
 	}
@@ -57,7 +57,7 @@ export const getCanonicoByIdService = async (id: string): Promise<ICanonico> => 
 export const createCanonicoService = async (data: ICanonico): Promise<any> => {
 	try {
 		validateCanonico(data);
-		delete data.versao;
+		data.versao = 1;
 
 		const canonicoComMesmoNome = await getCanonico(data.nome);
 		if (canonicoComMesmoNome && canonicoComMesmoNome.statusCanonico !== CANONICO_STATUS_ATIVO) {

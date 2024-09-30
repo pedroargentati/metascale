@@ -81,7 +81,7 @@ export const processCanonicoDataService = async (
 ): Promise<any> => {
 	const dadoCanonico: { ID: string; versao: number; data: any; dependencias: any } = {
 		ID: id,
-		versao: canonico.versao ?? 1,
+		versao: canonico.versao,
 		data: null,
 		dependencias: {},
 	};
