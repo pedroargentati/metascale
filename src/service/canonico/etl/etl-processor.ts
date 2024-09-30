@@ -6,6 +6,7 @@ import {
 } from '../../../utils/constants.js';
 import { getCanonicoByIdService } from '../index.js';
 import { logCanonicalInfo } from '../../../config/logger/logger.js';
+import { ICanonico } from '../../../interfaces/canonico.js';
 
 /**
  * Quebra a string de formato de chave em partes agrupadas por chaves {}.
@@ -30,13 +31,13 @@ export function quebrarStringPorChaves(formatoChave: string): string[] {
  * @param dadosParametros - Dados dos parâmetros base para a montagem da chave.
  * @returns Chave String que representa o dado carregado.
  */
-export const calculaChavePelosParametrosDasChamadas = (canonico: any, dadosParametros: any): string => {
-	const formatoChave = canonico.formatoChave;
+export const calculaChavePelosParametrosDasChamadas = (canonico: ICanonico, dadosParametros: any): string => {
+	const formatoChave: string = canonico.formatoChave;
 
-	const partesDaChave = quebrarStringPorChaves(formatoChave);
+	const partesDaChave: string[] = quebrarStringPorChaves(formatoChave);
 
-	let formatoChaveRemontada = '';
-	let chave = partesDaChave.reduce((acc: string, parte: string) => {
+	let formatoChaveRemontada: string = '';
+	let chave: string = partesDaChave.reduce((acc: string, parte: string) => {
 		formatoChaveRemontada += `{${parte}}`;
 
 		const fimDaParteAtual = formatoChaveRemontada.length;
@@ -73,14 +74,14 @@ export const calculaChavePelosParametrosDasChamadas = (canonico: any, dadosParam
  * @returns Dados processados.
  */
 export const processCanonicoDataService = async (
-	canonico: any,
+	canonico: ICanonico,
 	id: string,
 	requestCalls: Map<string, any>,
 	dadosParametros: any,
 ): Promise<any> => {
 	const dadoCanonico: { ID: string; versao: number; data: any; dependencias: any } = {
 		ID: id,
-		versao: canonico.versao,
+		versao: canonico.versao ?? 1,
 		data: null,
 		dependencias: {},
 	};
@@ -112,7 +113,7 @@ export const processCanonicoDataService = async (
  */
 async function trataDependenciasDeMerge(
 	id: string,
-	canonicoExistente: any,
+	canonicoExistente: ICanonico,
 	requestCalls: Map<string, any>,
 	dadosParametros: any,
 ): Promise<any> {

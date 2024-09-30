@@ -7,6 +7,7 @@ import DynamoDBService from '../../dynamodb/DynamoDBService.js';
 /** Métodos de Validações/Processamento de dados. */
 import { CANONICO_STATUS_ATIVO, CANONICO_STATUS_INATIVO } from '../../utils/constants.js';
 import { validateCanonico } from './validations/validations.js';
+import { ICanonico, IChamada } from '../../interfaces/canonico.js';
 
 /** Constantes. */
 const CANONICO_COLLECTION: string = 'canonico';
@@ -39,8 +40,8 @@ export const getCanonicoService = async (): Promise<any> => {
  * @param {string} id - ID do canônico.
  * @returns Canônico.
  */
-export const getCanonicoByIdService = async (id: string): Promise<any> => {
-	const canonico = await getCanonico(id);
+export const getCanonicoByIdService = async (id: string): Promise<ICanonico> => {
+	const canonico: ICanonico = await getCanonico(id);
 	if (!isCanonicoValidoParaUso(canonico)) {
 		throw new IntegrationError('Canônico não encontrado', 404);
 	}
@@ -53,7 +54,7 @@ export const getCanonicoByIdService = async (id: string): Promise<any> => {
  * @param {any} data - Canônico a ser criado.
  * @returns Canônico.
  */
-export const createCanonicoService = async (data: any): Promise<any> => {
+export const createCanonicoService = async (data: ICanonico): Promise<any> => {
 	try {
 		validateCanonico(data);
 		delete data.versao;
@@ -81,10 +82,10 @@ export const createCanonicoService = async (data: any): Promise<any> => {
  * @description Atualiza o status do canônico.
  *
  * @param {string} id - ID do canônico.
- * @param {string} data - Canônico a ser atualizado parcialmente.
+ * @param {ICanonico} data - Canônico a ser atualizado parcialmente.
  * @returns Canônico.
  */
-export const updatePartialCanonicoService = async (id: string, data: any): Promise<any> => {
+export const updatePartialCanonicoService = async (id: string, data: ICanonico): Promise<ICanonico> => {
 	try {
 		const _ = await getCanonicoByIdService(id);
 
@@ -102,12 +103,12 @@ export const updatePartialCanonicoService = async (id: string, data: any): Promi
  * @description Atualiza o canônico.
  *
  * @param {string} id - ID do canônico.
- * @param {string} data - Canônico a ser atualizado.
+ * @param {ICanonico} data - Canônico a ser atualizado.
  * @returns Canônico.
  */
-export const updateCanonicoService = async (id: string, data: any): Promise<any> => {
+export const updateCanonicoService = async (id: string, data: ICanonico): Promise<ICanonico> => {
 	try {
-		const canonicoExistente = await getCanonicoByIdService(id);
+		const canonicoExistente: ICanonico = await getCanonicoByIdService(id);
 
 		validateCanonico(data);
 
@@ -125,9 +126,9 @@ export const updateCanonicoService = async (id: string, data: any): Promise<any>
  * @param {string} id - ID do canônico.
  * @returns Canônico.
  */
-export const deleteCanonicoService = async (id: string): Promise<any> => {
+export const deleteCanonicoService = async (id: string): Promise<ICanonico> => {
 	try {
-		const canonico = await getCanonicoByIdService(id);
+		const canonico: ICanonico = await getCanonicoByIdService(id);
 
 		await atualizaStatusDoCanonico(id, CANONICO_STATUS_INATIVO);
 
@@ -145,9 +146,9 @@ export const deleteCanonicoService = async (id: string): Promise<any> => {
  * @param {string} id - ID do canônico.
  * @returns Canônico.
  */
-const getCanonico = async (id: string): Promise<any> => {
+const getCanonico = async (id: string): Promise<ICanonico> => {
 	const canonico = await dynamoDBService.getItem({ nome: id });
-	return canonico;
+	return canonico as ICanonico;
 };
 
 /**
@@ -156,7 +157,7 @@ const getCanonico = async (id: string): Promise<any> => {
  * @param {any} canonico - Canônico.
  * @returns {boolean} - Se o canônico é válido para uso.
  */
-const isCanonicoValidoParaUso = async (canonico: any): Promise<boolean> => {
+const isCanonicoValidoParaUso = async (canonico: ICanonico): Promise<boolean> => {
 	return canonico && canonico.statusCanonico === CANONICO_STATUS_ATIVO;
 };
 
@@ -166,8 +167,8 @@ const isCanonicoValidoParaUso = async (canonico: any): Promise<boolean> => {
  * @param {string} data - Canônico a ser salvo.
  * @returns Canônico.
  */
-const salvarCanonico = async (data: any): Promise<any> => {
-	data.chamadas.sort((a: any, b: any) => a.ordem - b.ordem);
+const salvarCanonico = async (data: ICanonico): Promise<any> => {
+	data.chamadas.sort((a: IChamada, b: IChamada) => a.ordem - b.ordem);
 
 	if (!data.versao) {
 		data.versao = 1;

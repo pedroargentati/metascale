@@ -1,5 +1,6 @@
 import { CumulativeIntegrationError } from '../../../errors/CumulativeIntegrationError.js';
 import { IntegrationError } from '../../../errors/IntegrationError.js';
+import { ICanonico } from '../../../interfaces/canonico.js';
 import {
 	CANONICO_TIPO_POS_PROCESSAMENTO_CUSTOM,
 	CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
@@ -8,7 +9,7 @@ import {
 import { quebrarStringPorChaves } from '../etl/etl-processor.js';
 
 /** Métodos Validadores */
-export const validateCanonico = (data: any): void => {
+export const validateCanonico = (data: ICanonico): void => {
 	if (!data || !Object.keys(data).length) {
 		throw new IntegrationError('O corpo da requisição não pode estar vazio.', 400);
 	}
