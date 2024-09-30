@@ -24,20 +24,111 @@ const swaggerOptions: swaggerJSDoc.Options = {
 				Canonico: {
 					type: 'object',
 					properties: {
-						id: {
+						statusCanonico: {
 							type: 'string',
-							description: 'O identificador único do canônico.',
+							description: 'O status do canônico.',
 						},
-						nome: {
-							type: 'string',
-							description: 'O nome do canônico.',
+						chamadas: {
+							type: 'array',
+							items: {
+								$ref: '#/components/schemas/Chamada',
+							},
+							description: 'Lista de chamadas associadas ao canônico.',
+						},
+						dependencias: {
+							type: 'array',
+							items: {
+								type: 'string',
+							},
+							description: 'Lista de dependências do canônico (opcional).',
 						},
 						descricao: {
 							type: 'string',
-							description: 'Uma descrição do canônico.',
+							description: 'Descrição do canônico.',
+						},
+						versao: {
+							type: 'integer',
+							format: 'int32',
+							description: 'Versão do canônico.',
+						},
+						nome: {
+							type: 'string',
+							description: 'Nome do canônico.',
+						},
+						tipoPosProcessamento: {
+							type: 'string',
+							description: 'Tipo de pós-processamento do canônico.',
+						},
+						topicos: {
+							type: 'array',
+							items: {
+								type: 'string',
+							},
+							description: 'Lista de tópicos associados ao canônico.',
+						},
+						formatoChave: {
+							type: 'string',
+							description: 'Formato da chave usada pelo canônico.',
 						},
 					},
-					required: ['id', 'nome'],
+					required: [
+						'statusCanonico',
+						'chamadas',
+						'descricao',
+						'versao',
+						'nome',
+						'tipoPosProcessamento',
+						'topicos',
+						'formatoChave',
+					],
+				},
+				Chamada: {
+					type: 'object',
+					properties: {
+						ordem: {
+							type: 'integer',
+							format: 'int32',
+							description: 'Ordem da chamada.',
+						},
+						nome: {
+							type: 'string',
+							description: 'Nome da chamada.',
+						},
+						parametros: {
+							type: 'array',
+							items: {
+								$ref: '#/components/schemas/Parametro',
+							},
+							description: 'Lista de parâmetros da chamada.',
+						},
+						url: {
+							type: 'string',
+							description: 'URL da chamada.',
+						},
+						descricao: {
+							type: 'string',
+							description: 'Descrição da chamada.',
+						},
+					},
+					required: ['ordem', 'nome', 'parametros', 'url', 'descricao'],
+				},
+				Parametro: {
+					type: 'object',
+					properties: {
+						tipoDado: {
+							type: 'string',
+							description: 'Tipo de dado do parâmetro.',
+						},
+						nome: {
+							type: 'string',
+							description: 'Nome do parâmetro.',
+						},
+						tipo: {
+							type: 'string',
+							description: 'Tipo do parâmetro.',
+						},
+					},
+					required: ['tipoDado', 'nome', 'tipo'],
 				},
 			},
 		},
