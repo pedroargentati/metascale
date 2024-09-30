@@ -20,6 +20,7 @@ import { logger } from '../config/logger/logger.js';
 
 /** Erros */
 import { IntegrationError } from '../errors/IntegrationError.js';
+import { ICanonico } from '../interfaces/canonico.js';
 
 // Configurar o cliente DynamoDB
 const client = new DynamoDBClient({
@@ -155,7 +156,7 @@ class DynamoDBService {
 	 * @param {Record<string, any>} requestParams - parâmetros de busca.
 	 * @returns Promessa resolvendo em uma lista contendo todos os itens.
 	 */
-	public async getAllItems(requestParams: Record<string, any> | {}): Promise<Record<string, any>[]> {
+	public async getAllItems(requestParams: Record<string, any> | {}): Promise<ICanonico[]> {
 		logger.debug(`Buscando todos os itens da tabela ${this.tableName}...`);
 		const params: ScanCommandInput = {
 			TableName: this.tableName,
@@ -165,7 +166,7 @@ class DynamoDBService {
 		try {
 			const data = await dynamoDB.send(new ScanCommand(params));
 			logger.debug(`Todos os itens da tabela ${this.tableName} foram buscados com sucesso`);
-			return data.Items || [];
+			return (data.Items as ICanonico[]) || [];
 		} catch (error) {
 			throw new IntegrationError(`Erro ao buscar todos os itens da tabela ${this.tableName}: ${error}`, 500);
 		}
