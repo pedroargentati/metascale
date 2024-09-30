@@ -1,5 +1,5 @@
 import { reprocessCanonical, synchronizeCanonical } from '@internal/canonical-builder';
-import { logCanonicalError, logCanonicalInfo, logger } from '../../../config/logger/logger.js';
+import { logCanonicalError, logCanonicalInfo, logger, loggerSyncronize } from '../../../config/logger/logger.js';
 import DynamoDBService from '../../../dynamodb/DynamoDBService.js';
 import { IntegrationError } from '../../../errors/IntegrationError.js';
 import { IParametro } from '../../../interfaces/parametros.js';
@@ -141,4 +141,28 @@ export async function reprocessaCanonicoService(id: string, payloadReprocessamen
 	} catch (error: any) {
 		throw new IntegrationError(`Erro ao reprocessar o canônico de ID ${id}: ${error.message}`, 500);
 	}
+}
+
+export async function sincronizaCanonicosViaKafka(canonicos: any[], topico: string, mensagem: any) {
+	canonicos.forEach(async (canonico) => {
+		const startTime: number = new Date().getTime();
+		logger.debug(`[APP :: Kafka] Iniciando processamento para o canônico ${canonico.nome} no tópico ${topico}.`);
+
+		try {
+			await sincronizaCanonicoService(canonico, topico, mensagem);
+		} catch (error: any) {
+			loggerSyncronize.error(
+				`Erro ao sincronizar o canônico: ID: ${canonico?.nome} | Tópico: ${topico} | Mensagem: ${JSON.stringify(mensagem)} :: ${error.message}`,
+			);
+			logger.error(
+				`[APP :: Kafka] Erro ao sincronizar o canônico: ID: ${canonico?.nome} | Tópico: ${topico} | Mensagem: ${JSON.stringify(mensagem)} :: ${error.message}`,
+			);
+		} finally {
+			const endTime: number = new Date().getTime();
+			const duration: number = endTime - startTime;
+			logger.debug(
+				`[APP :: Kafka] Tempo de processamento para o canônico ${canonico.nome} no tópico ${topico}: ${duration} ms`,
+			);
+		}
+	});
 }

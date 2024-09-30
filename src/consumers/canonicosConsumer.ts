@@ -1,6 +1,6 @@
 import kafka from '../config/kafka/kafka.config.js';
 import { logger, loggerSyncronize } from '../config/logger/logger.js';
-import { sincronizaCanonicoService } from '../service/canonico/etl/index.js';
+import { sincronizaCanonicosViaKafka } from '../service/canonico/etl/index.js';
 import { getCanonicoService } from '../service/canonico/index.js';
 
 // Cria um único consumidor Kafka para todos os tópicos
@@ -43,29 +43,7 @@ async function consumeAllCanonicos() {
 					const receivedMessage = message.value ? JSON.parse(message.value.toString()) : null;
 					const canonicos = allCanonicos.filter((c) => c.topicos.includes(topic));
 
-					canonicos.forEach(async (canonico) => {
-						const startTime: number = new Date().getTime();
-						logger.debug(
-							`[APP :: Kafka] Iniciando processamento para o canônico ${canonico.nome} no tópico ${topic}.`,
-						);
-
-						try {
-							await sincronizaCanonicoService(canonico, topic, receivedMessage);
-						} catch (error: any) {
-							loggerSyncronize.error(
-								`Erro ao sincronizar o canônico: ID: ${canonico?.nome} | Tópico: ${topic} | Mensagem: ${JSON.stringify(receivedMessage)} :: ${error.message}`,
-							);
-							logger.error(
-								`[APP :: Kafka] Erro ao sincronizar o canônico: ID: ${canonico?.nome} | Tópico: ${topic} | Mensagem: ${JSON.stringify(receivedMessage)} :: ${error.message}`,
-							);
-						} finally {
-							const endTime: number = new Date().getTime();
-							const duration: number = endTime - startTime;
-							logger.debug(
-								`[APP :: Kafka] Tempo de processamento para o canônico ${canonico.nome} no tópico ${topic}: ${duration} ms`,
-							);
-						}
-					});
+					await sincronizaCanonicosViaKafka(canonicos, topic, receivedMessage);
 				} catch (error: any) {
 					loggerSyncronize.error(`[KAFKA :: Erro ao consumir mensagem do tópico ${topic}: ${error.message}`);
 					logger.error(`[APP :: Kafka] Erro ao consumir mensagem do tópico ${topic}: ${error.message}`);

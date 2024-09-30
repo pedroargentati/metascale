@@ -1,14 +1,21 @@
 import { IntegrationError } from '../../../errors/IntegrationError.js';
-import { buildCanonical } from '@internal/canonical-builder';
+import { buildCanonical, extractCanonicalParameters } from '@internal/canonical-builder';
 import {
 	CANONICO_TIPO_POS_PROCESSAMENTO_CUSTOM,
 	CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
 } from '../../../utils/constants.js';
 import { calculaChavePelosParametrosDasChamadas, processCanonicoDataService } from './etl-processor.js';
+import { getCanonicoByIdService } from '../index.js';
 
 // Mock da função buildCanonical para os testes
 jest.mock('@internal/canonical-builder', () => ({
 	buildCanonical: jest.fn(),
+	extractCanonicalParameters: jest.fn(),
+}));
+
+// Mock da função getCanonicoByIdService para os testes
+jest.mock('../index.js', () => ({
+	getCanonicoByIdService: jest.fn(),
 }));
 
 describe('processCanonicoDataService', () => {
@@ -84,5 +91,51 @@ describe('processCanonicoDataService', () => {
 		expect(resultado.versao).toBe(1);
 		expect(resultado.data).toBe('dadosCustomizados');
 		expect(buildCanonical).toHaveBeenCalledWith(mockCanonicoCustom, mockDadosParametros, mockRequestCalls);
+	});
+
+	test('deve tratar dependências de merge', async () => {
+		const mockCanonicoCustom = {
+			versao: 1,
+			chamadas: mockChamadas,
+			nome: 'canonicoCustom',
+			formatoChave: '{chamada1:param1}/{chamada1:param2}/{chamada2:param1}',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_CUSTOM,
+			dependencias: ['dependencia1'],
+		};
+
+		// Mock do retorno da função buildCanonical
+		(extractCanonicalParameters as jest.Mock).mockResolvedValue([{ get: { param1: 'a' } }]);
+
+		(getCanonicoByIdService as jest.Mock).mockResolvedValue({ nome: 'dependencia1', formatoChave: '{get:param1}' });
+
+		const id = calculaChavePelosParametrosDasChamadas(mockCanonicoCustom, mockDadosParametros);
+
+		await processCanonicoDataService(mockCanonicoCustom, id, mockRequestCalls, mockDadosParametros);
+
+		expect(extractCanonicalParameters).toHaveBeenCalledTimes(1);
+	});
+
+	test('deve lançar erro ao não conseguir tratar dependências de merge', async () => {
+		const mockCanonicoCustom = {
+			versao: 1,
+			chamadas: mockChamadas,
+			nome: 'canonicoCustom',
+			formatoChave: '{chamada1:param1}/{chamada1:param2}/{chamada2:param1}',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_CUSTOM,
+			dependencias: ['dependencia1'],
+		};
+
+		// Mock do retorno da função buildCanonical
+		(extractCanonicalParameters as jest.Mock).mockRejectedValue(new Error('Erro ao extrair dependências'));
+
+		(getCanonicoByIdService as jest.Mock).mockResolvedValue({ nome: 'dependencia1', formatoChave: '{get:param1}' });
+
+		const id = calculaChavePelosParametrosDasChamadas(mockCanonicoCustom, mockDadosParametros);
+
+		try {
+			await processCanonicoDataService(mockCanonicoCustom, id, mockRequestCalls, mockDadosParametros);
+		} catch (error) {
+			expect(error).toBeInstanceOf(IntegrationError);
+		}
 	});
 });

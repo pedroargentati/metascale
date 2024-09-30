@@ -85,6 +85,8 @@ export const validateCanonico = (data: ICanonico): void => {
 		});
 	}
 
+	if (cumulativeIntegrationExceptions.length) throw new CumulativeIntegrationError(cumulativeIntegrationExceptions);
+
 	const formatoChave: string | undefined = data.formatoChave;
 
 	if (!formatoChave) {
@@ -93,15 +95,12 @@ export const validateCanonico = (data: ICanonico): void => {
 
 	// Validação do formatoChave
 	validarFormatoChave(formatoChave, chamadas);
-
-	if (cumulativeIntegrationExceptions.length) throw new CumulativeIntegrationError(cumulativeIntegrationExceptions);
 };
 
 /** Função auxiliar para validar o formato da chave */
 const validarFormatoChave = (formatoChave: string, chamadas: any[]): void => {
 	// Aceitar um ou mais pares de {nome:parametro} separados por qualquer sequência de caracteres, exceto {}
-	const regexChaveUnicaOuMais: RegExp = /^\{[a-zA-Z]+:[a-zA-Z]+\}(.*\{[a-zA-Z]+:[a-zA-Z]+\})*$/;
-	const regexChave: RegExp = /\{([a-zA-Z]+):([a-zA-Z]+)\}/g;
+	const regexChaveUnicaOuMais: RegExp = /^\{[^{}:]+:[^{}:]+\}(.*\{[^{}:]+:[^{}:]+\})*$/;
 
 	if (!regexChaveUnicaOuMais.test(formatoChave)) {
 		throw new IntegrationError(
@@ -110,36 +109,23 @@ const validarFormatoChave = (formatoChave: string, chamadas: any[]): void => {
 		);
 	}
 
-	const matches: RegExpMatchArray | null = formatoChave.match(regexChave);
-
-	if (!matches || matches.length === 0) {
-		throw new IntegrationError('O campo formatoChave contém chaves inválidas.', 400);
-	}
-
-	for (const match of matches) {
-		const resultado = /\{([a-zA-Z]+):([a-zA-Z]+)\}/.exec(match);
-		if (!resultado || resultado.length < 3) {
-			throw new IntegrationError(
-				'O campo formatoChave está mal formatado. Cada chave deve seguir o padrão "{nome:parametro}".',
-				400,
-			);
-		}
-	}
-
 	const partes: string[] = quebrarStringPorChaves(formatoChave);
 	const nomesChamadas: string[] = chamadas.map((chamada) => chamada.nome);
 	const parametrosChamadas: string[] = chamadas.flatMap((chamada) =>
-		chamada.parametros.map((parametro: any) => parametro.nome),
+		chamada.parametros?.map((parametro: any) => parametro.nome),
 	);
 
 	for (const parte of partes) {
 		const [nomeChamada, parametro] = parte.split(':');
 		if (!nomesChamadas.includes(nomeChamada)) {
-			throw Error(`A chamada ${nomeChamada} não foi encontrada formatoChamada.`);
+			throw new IntegrationError(`A chamada ${nomeChamada} não foi encontrada formatoChamada.`, 400);
 		}
 
 		if (!parametrosChamadas.includes(parametro)) {
-			throw Error(`O parâmetro '${parametro}' não foi encontrado na chamada '${nomeChamada}'.`);
+			throw new IntegrationError(
+				`O parâmetro '${parametro}' não foi encontrado na chamada '${nomeChamada}'.`,
+				400,
+			);
 		}
 	}
 };

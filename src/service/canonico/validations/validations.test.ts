@@ -40,9 +40,10 @@ describe('validateCanonico', () => {
 					descricao: 'Descricao',
 				},
 			],
+			formatoChave: '{getCustomer:id}',
 		};
 
-		expect(() => validateCanonico(data)).toThrow();
+		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
 	});
 
 	it('deve lançar um IntegrationError se tipoPosProcessamento for um valor inválido', () => {
@@ -149,6 +150,31 @@ describe('validateCanonico', () => {
 		expect(() => validateCanonico(data)).toThrow(CumulativeIntegrationError);
 	});
 
+	it('deve lançar um CumulativeIntegrationError informando na mensagem que não tem o nome da chamada.', () => {
+		const data = {
+			nome: 'Nome',
+			descricao: 'Descricao',
+			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
+			chamadas: [
+				{
+					nome: '', // nome não informado
+					parametros: {}, // não é um array
+				},
+			],
+		};
+
+		try {
+			validateCanonico(data);
+		} catch (err: any) {
+			expect(err.exceptions[0].message).toBe('O campo ordem é obrigatório para chamada (nome não informado.).');
+			expect(err.exceptions[1].message).toBe('O campo nome é obrigatório para chamada (nome não informado.).');
+			expect(err.exceptions[2].message).toBe('O campo url é obrigatório para chamada (nome não informado.).');
+			expect(err.exceptions[3].message).toBe(
+				'O campo descrição é obrigatório para chamada (nome não informado.).',
+			);
+		}
+	});
+
 	it('deve lançar um CumulativeIntegrationError se chamadas possui o campo name repetido ', () => {
 		const data = {
 			nome: 'Nome',
@@ -189,6 +215,7 @@ describe('validateCanonico', () => {
 					parametros: [{ nome: 'param1' }],
 				},
 			],
+			formatoChave: '{Chamada1:param1}',
 		};
 
 		expect(() => validateCanonico(data)).not.toThrow();
@@ -201,7 +228,15 @@ describe('validateCanonico - formatoChave', () => {
 			nome: 'Nome',
 			descricao: 'Descricao',
 			tipoPosProcessamento: CANONICO_TIPO_POS_PROCESSAMENTO_DEFAULT,
-			chamadas: [],
+			chamadas: [
+				{
+					nome: 'getCustomer',
+					parametros: [{ nome: 'id' }],
+					ordem: 1,
+					url: 'http://example.com',
+					descricao: 'Descricao',
+				},
+			],
 		};
 
 		expect(() => validateCanonico(data)).toThrow(IntegrationError);
@@ -218,6 +253,9 @@ describe('validateCanonico - formatoChave', () => {
 				{
 					nome: 'getCustomer',
 					parametros: [{ nome: 'id' }],
+					ordem: 1,
+					url: 'http://example.com',
+					descricao: 'Descricao',
 				},
 			],
 		};
@@ -238,6 +276,9 @@ describe('validateCanonico - formatoChave', () => {
 				{
 					nome: 'getCustomer',
 					parametros: [{ nome: 'id' }],
+					ordem: 1,
+					url: 'http://example.com',
+					descricao: 'Descricao',
 				},
 			],
 		};
@@ -256,6 +297,9 @@ describe('validateCanonico - formatoChave', () => {
 				{
 					nome: 'getCustomer',
 					parametros: [{ nome: 'id' }],
+					ordem: 1,
+					url: 'http://example.com',
+					descricao: 'Descricao',
 				},
 			],
 		};
@@ -276,6 +320,9 @@ describe('validateCanonico - formatoChave', () => {
 				{
 					nome: 'getCustomer',
 					parametros: [{ nome: 'id' }],
+					ordem: 1,
+					url: 'http://example.com',
+					descricao: 'Descricao',
 				},
 			],
 		};
