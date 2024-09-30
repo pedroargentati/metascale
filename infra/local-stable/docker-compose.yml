@@ -150,10 +150,12 @@ services:
   metascale-access-cliente:
     image: gkazukionishi/metascale-access
     environment:
-      - AWS_ACCESS_KEY_ID=
-      - AWS_SECRET_ACCESS_KEY=
       - AWS_REGION=us-east-2
       - CANONICO=cliente
+      - FALLBACK_URL=http://metascale-api:8080
+      - AWS_SECRET_ACCESS_KEY=
+      - AWS_ACCESS_KEY_ID=
+      - LOG_TYPE=CLOUDWATCH
     ports:
       - '9000:8080'
     networks:
@@ -162,10 +164,12 @@ services:
   metascale-access-produto:
     image: gkazukionishi/metascale-access
     environment:
-      - AWS_ACCESS_KEY_ID=
-      - AWS_SECRET_ACCESS_KEY=
       - AWS_REGION=us-east-2
       - CANONICO=produto
+      - FALLBACK_URL=http://metascale-api:8080
+      - AWS_SECRET_ACCESS_KEY=
+      - AWS_ACCESS_KEY_ID=
+      - LOG_TYPE=CLOUDWATCH
     ports:
       - '9001:8080'
     networks:
@@ -174,10 +178,12 @@ services:
   metascale-access-clienteProduto:
     image: gkazukionishi/metascale-access
     environment:
-      - AWS_ACCESS_KEY_ID=
-      - AWS_SECRET_ACCESS_KEY=
       - AWS_REGION=us-east-2
       - CANONICO=clienteProduto
+      - FALLBACK_URL=http://metascale-api:8080
+      - AWS_SECRET_ACCESS_KEY=
+      - AWS_ACCESS_KEY_ID=
+      - LOG_TYPE=CLOUDWATCH
     ports:
       - '9002:8080'
     networks:
