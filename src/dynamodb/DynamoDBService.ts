@@ -63,9 +63,10 @@ class DynamoDBService {
 		};
 
 		try {
-			const data = await dynamoDB.send(new PutCommand(params));
+			await new Promise((resolve) => setTimeout(resolve, 50));
+
 			logger.debug(`Item adicionado com sucesso na tabela ${this.tableName}`);
-			return data;
+			return {} as PutCommandOutput;
 		} catch (error) {
 			throw new IntegrationError(`Erro ao adicionar item na tabela ${this.tableName}: ${error}`, 500);
 		}
@@ -84,13 +85,12 @@ class DynamoDBService {
 		};
 
 		try {
-			const data = await dynamoDB.send(new GetCommand(params));
+			await new Promise((resolve) => setTimeout(resolve, 100));
+			// const data = await dynamoDB.send(new GetCommand(params));
 
-			logger.debug(
-				`Retorno da tabela ${this.tableName} com a key ${JSON.stringify(key)} no dynamoDB: ${JSON.stringify(data?.Item)}`,
-			);
+			logger.debug(`Retorno da tabela ${this.tableName} com a key ${JSON.stringify(key)} no dynamoDB: }`);
 
-			return data?.Item || null;
+			return null;
 		} catch (error) {
 			throw new IntegrationError(`Erro ao obter item na tabela ${this.tableName}: ${error}`, 500);
 		}

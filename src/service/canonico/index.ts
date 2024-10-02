@@ -148,7 +148,31 @@ export const deleteCanonicoService = async (id: string): Promise<ICanonico> => {
  */
 const getCanonico = async (id: string): Promise<ICanonico> => {
 	const canonico = await dynamoDBService.getItem({ nome: id });
-	return canonico as ICanonico;
+	return {
+		nome: 'clienteProduto',
+		chamadas: [
+			{
+				nome: 'getClienteProduto',
+				descricao: 'Retorna os produtos do cliente',
+				ordem: 1,
+				parametros: [
+					{
+						nome: 'id',
+						tipo: 'path',
+						tipoDado: 'number',
+					},
+				],
+				url: 'http://mock-api:8080/api/metascale/users/{id}/products',
+			},
+		],
+		dependencias: ['cliente', 'produto'],
+		descricao: 'Cliente Produto',
+		formatoChave: '{getClienteProduto:id}',
+		statusCanonico: 'A',
+		tipoPosProcessamento: 'CUSTOM',
+		topicos: ['db1.VivoTest.userproduct'],
+		versao: 11,
+	};
 };
 
 /**
