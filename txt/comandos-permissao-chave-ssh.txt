@@ -1,0 +1,2 @@
+icacls .\private.key /inheritance:r
+icacls .\private.key /grant:r "%username%":"(R)"

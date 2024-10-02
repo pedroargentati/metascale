@@ -1,2 +1,2 @@
 @echo off
-scp -r -i ../../keys/vivo-mock.pem vivo-mock ec2-user@18.223.156.41:/home/ec2-user/vivo-mock
+scp -r -i ../../keys/vivo-mock-metascale.pem ../vivo-mock-with-connector ec2-user@3.147.89.20:/home/ec2-user/vivo-mock
