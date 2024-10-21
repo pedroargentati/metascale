@@ -1,2 +1,2 @@
 @echo off
-ssh -i ../../keys/vivo-mock-metascale.pem ec2-user@3.147.89.20
+ssh -i ../../keys/vivo-mock-metascale.pem ec2-user@18.222.48.10

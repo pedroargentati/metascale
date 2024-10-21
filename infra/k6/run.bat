@@ -1,2 +1,2 @@
 @echo off
-k6 run ./tests/access/index.ts
+k6 run ./tests/load/index.ts

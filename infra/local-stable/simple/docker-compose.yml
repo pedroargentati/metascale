@@ -1,0 +1,60 @@
+version: '3.8'
+
+networks:
+  testeVivoNetwork:
+    external: true
+
+services:
+  db:
+    image: gkazukionishi/vivo-mock-db
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'user'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '50000:3306'
+    expose:
+      - '3306'
+    networks:
+      - testeVivoNetwork
+
+  mock-api:
+    image: gkazukionishi/metascale-api-mock-test
+    restart: always
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/VivoTest
+      - SPRING_DATASOURCE_PASSWORD=user
+      - SPRING_DATASOURCE_USERNAME=user
+    ports:
+      - '3333:8080'
+    expose:
+      - '8080'
+    depends_on:
+      - db
+    networks:
+      - testeVivoNetwork
+
+  metascale-api:
+    image: 'gkazukionishi/metascale'
+    ports:
+      - '8080:8080'
+    environment:
+      - INSTANCE_TYPE=API
+      - DEV_MODE=true
+    networks:
+      - testeVivoNetwork
+
+  metascale-access-clienteProduto:
+    image: gkazukionishi/metascale-access
+    environment:
+      - CANONICO=clienteProduto
+      - FALLBACK_URL=http://metascale-api:8080
+      - LOG_TYPE=CLOUDWATCH
+      - AWS_ACCESS_KEY_ID=
+      - AWS_SECRET_ACCESS_KEY=
+      - AWS_REGION=us-east-2
+    ports:
+      - '9002:8080'
+    networks:
+      - testeVivoNetwork
